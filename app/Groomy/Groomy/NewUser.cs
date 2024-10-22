@@ -18,14 +18,14 @@ namespace Groomy
             InitializeComponent();
         }
 
-        private void switchToLogin (object sender, EventArgs e)
+        private void btn_submitNewUser_Click(object sender, EventArgs e)
         {
-            var frm = new Login();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
-            this.Hide();
+
+        }
+
+        private void btn_Quit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

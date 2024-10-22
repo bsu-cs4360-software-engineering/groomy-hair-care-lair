@@ -20,11 +20,9 @@ namespace Groomy
         private void switchToNewUserForm (object sender, EventArgs e)
         {
             var frm = new NewUser();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
-            this.Hide();
+            frm.Size = new Size(420, this.Size.Height); // Set the size of NewUser  to match the current form
+            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
+            frm.ShowDialog();
         }
     }
 }

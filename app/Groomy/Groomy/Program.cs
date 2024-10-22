@@ -13,6 +13,5 @@ namespace Groomy
             ApplicationConfiguration.Initialize();
             Application.Run(new Login());
         }
-
     }
 }

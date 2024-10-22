@@ -28,36 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Button btn_Quit;
             btn_submitNewUser = new Button();
-            btn_Back = new Button();
+            btn_Quit = new Button();
             SuspendLayout();
+            // 
+            // btn_Quit
+            // 
+            btn_Quit.Location = new Point(238, 388);
+            btn_Quit.Name = "btn_Quit";
+            btn_Quit.Size = new Size(74, 41);
+            btn_Quit.TabIndex = 2;
+            btn_Quit.Text = "Quit";
+            btn_Quit.UseVisualStyleBackColor = true;
+            btn_Quit.Click += btn_Quit_Click;
             // 
             // btn_submitNewUser
             // 
             btn_submitNewUser.Enabled = false;
-            btn_submitNewUser.Location = new Point(665, 397);
+            btn_submitNewUser.Location = new Point(318, 388);
             btn_submitNewUser.Name = "btn_submitNewUser";
-            btn_submitNewUser.Size = new Size(123, 41);
+            btn_submitNewUser.Size = new Size(74, 41);
             btn_submitNewUser.TabIndex = 1;
             btn_submitNewUser.Text = "Create New User";
             btn_submitNewUser.UseVisualStyleBackColor = true;
-            // 
-            // btn_Back
-            // 
-            btn_Back.Location = new Point(536, 397);
-            btn_Back.Name = "btn_Back";
-            btn_Back.Size = new Size(123, 41);
-            btn_Back.TabIndex = 2;
-            btn_Back.Text = "Back";
-            btn_Back.UseVisualStyleBackColor = true;
-            btn_Back.Click += switchToLogin;
+            btn_submitNewUser.Click += btn_submitNewUser_Click;
             // 
             // NewUser
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(btn_Back);
+            ClientSize = new Size(404, 441);
+            Controls.Add(btn_Quit);
             Controls.Add(btn_submitNewUser);
             Name = "NewUser";
             Text = "NewUser";
@@ -67,6 +69,5 @@
         #endregion
 
         private Button btn_submitNewUser;
-        private Button btn_Back;
     }
 }
