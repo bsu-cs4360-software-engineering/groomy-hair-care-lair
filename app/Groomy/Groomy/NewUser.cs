@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace Groomy
 {
@@ -19,9 +20,12 @@ namespace Groomy
 
         private void switchToLogin (object sender, EventArgs e)
         {
+            var frm = new Login();
+            frm.Location = this.Location;
+            frm.StartPosition = FormStartPosition.Manual;
+            frm.FormClosing += delegate { this.Show(); };
+            frm.Show();
             this.Hide();
-            Login newLogin = new Login();
-            newLogin.Show();
         }
     }
 }

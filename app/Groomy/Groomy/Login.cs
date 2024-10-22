@@ -19,9 +19,12 @@ namespace Groomy
         }
         private void switchToNewUserForm (object sender, EventArgs e)
         {
+            var frm = new NewUser();
+            frm.Location = this.Location;
+            frm.StartPosition = FormStartPosition.Manual;
+            frm.FormClosing += delegate { this.Show(); };
+            frm.Show();
             this.Hide();
-            NewUser newUserMenu = new NewUser();
-            newUserMenu.Show();
         }
     }
 }
