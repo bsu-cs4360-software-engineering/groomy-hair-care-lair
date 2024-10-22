@@ -1,0 +1,39 @@
+Master Document
+	Functional Requirements
+	Non-Functional Requirements
+	Design Documents Details
+	System Standards / Conventions
+		Languages
+		Database
+		Directory Structure
+		Naming Convention
+			Classes, Methods, Constants, Variables, etc...
+	Quick Start for Developers
+GUI
+	GUI Matching Design Document with Chosen Colors
+	Lighter Teal to Indicate Active Menu Item
+	Show Login form when User Not Logged In
+	Show Welcome Message when Loggen In
+Create User
+	Create User using:
+		First Name
+		Last Name
+		Email Address
+		Password
+		-Information saved in database
+		User taken back to Login Screen
+	Use Authentication / Login
+		User enters email and password
+		Upon failed attempt, page refreshes with empty forms
+		Upon successful attempt, page switches to loggen in home screen
+		Local Login Fine
+	Database
+		Users
+			Holds first name, last name, email address
+		Passwords
+			Uses foreign key to link to Users table
+			Passwords are hashed
+	Unit Tests
+		Unit tests required for all classes and their public methods
+		No testing of private methods
+		Classes and Methods should be testable
