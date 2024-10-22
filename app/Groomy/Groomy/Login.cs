@@ -17,12 +17,17 @@ namespace Groomy
                 this.btn_login.Enabled = false;
             }
         }
-        private void switchToNewUserForm (object sender, EventArgs e)
+        private void switchToNewUserForm(object sender, EventArgs e)
         {
             var frm = new NewUser();
-            frm.Size = new Size(420, this.Size.Height); // Set the size of NewUser  to match the current form
+            // frm.Size = new Size(420, this.Size.Height); // Set the size of NewUser  to match the current form
             frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
             frm.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

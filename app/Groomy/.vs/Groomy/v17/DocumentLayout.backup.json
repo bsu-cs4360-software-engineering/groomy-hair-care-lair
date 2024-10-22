@@ -1,34 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\",
+  "WorkspaceRootPath": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\ryan langlie\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\jon\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\ryan langlie\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\ryan langlie\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\ryan langlie\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\ryan langlie\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\jon\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\jon\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\ryan langlie\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,101 +22,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "NewUser.cs",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs",
-              "RelativeDocumentMoniker": "Groomy\\NewUser.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs*",
-              "RelativeToolTip": "Groomy\\NewUser.cs*",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAqwBsAAAAZAAAAAAAAAA==",
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
+              "RelativeDocumentMoniker": "Groomy\\Login.cs",
+              "ToolTip": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
+              "RelativeToolTip": "Groomy\\Login.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAswBYAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T21:12:17.569Z",
+              "WhenOpened": "2024-10-22T22:37:43.291Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\User.cs",
-              "RelativeDocumentMoniker": "Groomy\\User.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\User.cs",
-              "RelativeToolTip": "Groomy\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T22:20:02.873Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Login.cs",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
-              "RelativeDocumentMoniker": "Groomy\\Login.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
-              "RelativeToolTip": "Groomy\\Login.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T20:36:18.206Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Program.cs",
-              "RelativeDocumentMoniker": "Groomy\\Program.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Program.cs",
-              "RelativeToolTip": "Groomy\\Program.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAxwA4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T21:18:01.356Z",
-              "EditorCaption": ""
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "NewUser.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs",
+              "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs",
               "RelativeDocumentMoniker": "Groomy\\NewUser.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs [Design]*",
-              "RelativeToolTip": "Groomy\\NewUser.cs [Design]*",
+              "ToolTip": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs [Design]",
+              "RelativeToolTip": "Groomy\\NewUser.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T21:05:03.335Z",
+              "WhenOpened": "2024-10-22T22:43:16.321Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "Login.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
+              "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
               "RelativeDocumentMoniker": "Groomy\\Login.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs [Design]",
+              "ToolTip": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs [Design]",
               "RelativeToolTip": "Groomy\\Login.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T19:13:27.277Z",
+              "WhenOpened": "2024-10-22T22:36:02.52Z",
               "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Login.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.Designer.cs",
-              "RelativeDocumentMoniker": "Groomy\\Login.Designer.cs",
-              "ToolTip": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.Designer.cs",
-              "RelativeToolTip": "Groomy\\Login.Designer.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAB4AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T20:32:40.125Z",
-              "EditorCaption": ""
             }
           ]
         }

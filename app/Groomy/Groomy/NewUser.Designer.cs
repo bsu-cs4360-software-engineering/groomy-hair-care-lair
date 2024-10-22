@@ -30,6 +30,7 @@
         {
             Button btn_Quit;
             btn_submitNewUser = new Button();
+            label1 = new Label();
             btn_Quit = new Button();
             SuspendLayout();
             // 
@@ -54,20 +55,32 @@
             btn_submitNewUser.UseVisualStyleBackColor = true;
             btn_submitNewUser.Click += btn_submitNewUser_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 3;
+            label1.Text = "label1";
+            // 
             // NewUser
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(404, 441);
+            Controls.Add(label1);
             Controls.Add(btn_Quit);
             Controls.Add(btn_submitNewUser);
             Name = "NewUser";
             Text = "NewUser";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button btn_submitNewUser;
+        private Label label1;
     }
 }
