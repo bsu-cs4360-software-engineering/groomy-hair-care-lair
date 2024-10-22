@@ -7,11 +7,15 @@
       "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\jon\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\newuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\jon\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|c:\\users\\jon\\documents\\github\\groomy-hair-care-lair\\app\\groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}|Groomy\\Groomy.csproj|solutionrelative:groomy\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -22,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Login.cs",
               "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
               "RelativeDocumentMoniker": "Groomy\\Login.cs",
@@ -44,6 +48,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NewUser.cs",
+              "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs",
+              "RelativeDocumentMoniker": "Groomy\\NewUser.cs",
+              "ToolTip": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs",
+              "RelativeToolTip": "Groomy\\NewUser.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAfwBoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-22T22:57:14.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "NewUser.cs [Design]",
               "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\NewUser.cs",
@@ -56,15 +73,14 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Login.cs [Design]",
               "DocumentMoniker": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs",
               "RelativeDocumentMoniker": "Groomy\\Login.cs",
               "ToolTip": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Login.cs [Design]",
               "RelativeToolTip": "Groomy\\Login.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T22:36:02.52Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-10-22T22:36:02.52Z"
             }
           ]
         }
