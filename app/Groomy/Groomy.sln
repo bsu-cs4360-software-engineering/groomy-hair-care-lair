@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groomy", "Groomy\Groomy.csproj", "{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Groomy", "Groomy\Groomy.csproj", "{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomyTests", "GroomyTests\GroomyTests.csproj", "{B743939F-1F87-423D-AC58-8E62B92EB0C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43AD26C3-40CE-4C2D-B952-D1EDC00059D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B743939F-1F87-423D-AC58-8E62B92EB0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B743939F-1F87-423D-AC58-8E62B92EB0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B743939F-1F87-423D-AC58-8E62B92EB0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B743939F-1F87-423D-AC58-8E62B92EB0C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

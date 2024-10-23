@@ -53,11 +53,18 @@ namespace Groomy
             //if checks pass, return true
             return true;
         }
+        public (string, string, string, string) getNewUserFields()
+        {
+            return (fNameInput.Text, lNameInput.Text, emailInput.Text, passInput.Text);
+        }
         private void btn_submitNewUser_Click(object sender, EventArgs e)
         {
            if (validateNewUserFields() == true)
             {
                 //create new user object + save new user object to database
+                var userFields = getNewUserFields();
+                User newUser = new User(userFields.Item1, userFields.Item2, userFields.Item3, userFields.Item4);
+                //display success message box and close NewUser form
                 MessageBox.Show("User Successfully Created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }

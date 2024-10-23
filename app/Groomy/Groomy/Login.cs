@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Groomy
 {
     public partial class Login : Form
