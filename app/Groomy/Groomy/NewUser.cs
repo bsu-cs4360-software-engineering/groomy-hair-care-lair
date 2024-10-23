@@ -18,37 +18,52 @@ namespace Groomy
         {
             InitializeComponent();
         }
-
-        private void btn_submitNewUser_Click(object sender, EventArgs e)
+        private void messageBoxError(string message)
         {
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        private bool validateNewUserFields()
+        {
+            //first name check
             if (fNameInput.Text == "")
             {
-                MessageBox.Show("You did not enter a first name. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                messageBoxError("You did not enter a first name. Please try again.");
+                return false;
             }
+            //last name check
             if (lNameInput.Text == "")
             {
-                MessageBox.Show("You did not enter a last name. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                messageBoxError("You did not enter a last name. Please try again.");
+                return false;
             }
-            if (string.IsNullOrWhiteSpace(emailInput.Text) || !emailInput.Text.Contains("@"))
-
+            //valid email check
+            if (string.IsNullOrWhiteSpace(emailInput.Text) || !emailInput.Text.Contains("@")) //replace with RegEx expression
             {
-                MessageBox.Show("You did not enter a valid email. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                messageBoxError("You did not enter a valid email. Please try again.");
+                return false;
             }
-            if (passInput.Text == passConfirm.Text)
-
+            //password match check
+            if (passInput.Text != passConfirm.Text)
             {
-                // Do something when passwords match
-            }
-
-            else
-
-            {
-                MessageBox.Show("The passwords do not match. Please reenter your passwords and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                messageBoxError("The passwords do not match. Please reenter your passwords and try again.");
                 passInput.Text = "";
                 passConfirm.Text = "";
+                return false;
+            }
+            //if checks pass, return true
+            return true;
+        }
+        private void btn_submitNewUser_Click(object sender, EventArgs e)
+        {
+           if (validateNewUserFields() == true)
+            {
+                //create new user object + save new user object to database
+                MessageBox.Show("User Successfully Created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+           else
+            {
+                //do nothing
             }
         }
 
