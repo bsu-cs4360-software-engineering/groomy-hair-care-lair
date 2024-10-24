@@ -65,7 +65,6 @@ namespace Groomy
                 User newUser = new User(getNewUserFields());
                 //display success message box and close NewUser form
                 Program.Helpers.messageBoxSuccess("User Successfully Created");
-
                 UserCreated?.Invoke();
                 this.Close();
             }

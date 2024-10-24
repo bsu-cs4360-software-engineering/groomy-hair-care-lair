@@ -45,7 +45,7 @@ namespace Groomy
                 MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            internal static Dictionary<string, Dictionary<string, object>> loadUsers(string jsonFilePath)
+            internal static Dictionary<string, Dictionary<string, object>> loadDB(string jsonFilePath)
             {
                 //check if user.json exists
                 if (File.Exists(jsonFilePath) && new FileInfo(jsonFilePath).Length > 0)

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GroomyTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5f01e451b6df4624be55b194ba19bf138b095ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72b6333fe3ce71fe835133040fe8e4b4b94bec17")]
 [assembly: System.Reflection.AssemblyProductAttribute("GroomyTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GroomyTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

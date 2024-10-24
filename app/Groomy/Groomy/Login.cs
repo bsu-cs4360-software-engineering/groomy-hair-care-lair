@@ -9,9 +9,10 @@ namespace Groomy
         public Login()
         {
             InitializeComponent();
-            updateUsers();
+            updateDBs();
         }
         private Dictionary<string, Dictionary<string, object>> users;
+        private Dictionary<string, Dictionary<string, object>> passwords;
         private void updateLoginButton(object sender, EventArgs e)
         {
             if (this.txt_email.Text != "" & this.txt_password.Text != "")
@@ -30,21 +31,26 @@ namespace Groomy
         private void switchToNewUserForm(object sender, EventArgs e)
         {
             var frm = new NewUser();
-            frm.UserCreated += updateUsers;
+            frm.UserCreated += updateDBs;
             frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
             frm.ShowDialog();
         }
         private bool checkIfKnownEmail(string emailHash)
         {
-            return users.ContainsKey(emailHash);
+            return passwords.ContainsKey(emailHash);
         }
         private Dictionary<string, object> getUserData(string emailHash)
         {
             return users[emailHash];
         }
-        private void updateUsers()
+        private Dictionary<string, object> getPasswordData(string emailHash)
         {
-            users = Program.Helpers.loadUsers("users.json");
+            return passwords[emailHash];
+        }
+        private void updateDBs()
+        {
+            users = Program.Helpers.loadDB("users.json");
+            passwords = Program.Helpers.loadDB("passwords.json");
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
@@ -54,9 +60,9 @@ namespace Groomy
             if (checkIfKnownEmail(hashedEmail))
             {
                 var userData = getUserData(hashedEmail);
-                if (userData["Password"].ToString() == hashedPassword.ToString())
+                var passwordData = getPasswordData(hashedEmail);
+                if (passwordData["Password"].ToString() == hashedPassword.ToString())
                 {
-                    //successful login
                     Program.Helpers.messageBoxSuccess("Logged in Successfully.");
                 }
                 else

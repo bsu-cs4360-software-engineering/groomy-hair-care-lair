@@ -14,7 +14,8 @@ namespace Groomy.Program.Tests
         [TestMethod()]
         public void GenerateSHA256HashTest()
         {
-            Assert.Fail();
+            string testInput = "password";
+            string testOutput = 
         }
     }
 }
