@@ -66,9 +66,9 @@ namespace Groomy
             // 
             // txt_email
             // 
-            txt_email.Location = new Point(357, 242);
+            txt_email.Location = new Point(322, 242);
             txt_email.Name = "txt_email";
-            txt_email.Size = new Size(381, 23);
+            txt_email.Size = new Size(416, 23);
             txt_email.TabIndex = 0;
             txt_email.TextChanged += updateLoginButton;
             txt_email.Enter += updateLoginButton;
@@ -76,10 +76,10 @@ namespace Groomy
             // 
             // txt_password
             // 
-            txt_password.Location = new Point(357, 271);
+            txt_password.Location = new Point(322, 271);
             txt_password.Name = "txt_password";
             txt_password.PasswordChar = '*';
-            txt_password.Size = new Size(381, 23);
+            txt_password.Size = new Size(416, 23);
             txt_password.TabIndex = 2;
             txt_password.TextChanged += updateLoginButton;
             txt_password.Enter += updateLoginButton;
@@ -88,7 +88,7 @@ namespace Groomy
             // lbl_email
             // 
             lbl_email.AutoSize = true;
-            lbl_email.Location = new Point(262, 245);
+            lbl_email.Location = new Point(227, 245);
             lbl_email.Name = "lbl_email";
             lbl_email.Size = new Size(89, 15);
             lbl_email.TabIndex = 1;
@@ -97,7 +97,7 @@ namespace Groomy
             // lbl_password
             // 
             lbl_password.AutoSize = true;
-            lbl_password.Location = new Point(291, 274);
+            lbl_password.Location = new Point(227, 274);
             lbl_password.Name = "lbl_password";
             lbl_password.Size = new Size(60, 15);
             lbl_password.TabIndex = 3;
@@ -127,9 +127,9 @@ namespace Groomy
             // 
             panel1.BackColor = Color.FromArgb(21, 96, 130);
             panel1.Controls.Add(label2);
-            panel1.Location = new Point(2, 0);
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(219, 566);
+            panel1.Size = new Size(221, 566);
             panel1.TabIndex = 8;
             // 
             // label2
@@ -161,7 +161,8 @@ namespace Groomy
             Controls.Add(btn_login);
             ForeColor = Color.FromArgb(21, 96, 130);
             MaximizeBox = false;
-            MinimumSize = new Size(519, 226);
+            MaximumSize = new Size(775, 604);
+            MinimumSize = new Size(775, 604);
             Name = "Login";
             Text = "Groomy Login";
             panel1.ResumeLayout(false);
