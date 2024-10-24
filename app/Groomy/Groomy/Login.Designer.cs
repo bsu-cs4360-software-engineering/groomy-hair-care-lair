@@ -36,36 +36,44 @@ namespace Groomy
             txt_password = new TextBox();
             lbl_email = new Label();
             lbl_password = new Label();
-            label1 = new Label();
             closeBtn = new Button();
+            panel1 = new Panel();
+            label8 = new Label();
+            label9 = new Label();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btn_login
             // 
+            btn_login.BackColor = Color.FromArgb(21, 96, 130);
             btn_login.Enabled = false;
-            btn_login.Location = new Point(107, 131);
+            btn_login.ForeColor = Color.White;
+            btn_login.Location = new Point(366, 512);
             btn_login.Name = "btn_login";
             btn_login.Size = new Size(123, 41);
             btn_login.TabIndex = 4;
             btn_login.Text = "Login";
-            btn_login.UseVisualStyleBackColor = true;
+            btn_login.UseVisualStyleBackColor = false;
             btn_login.Click += btn_login_Click;
             // 
             // btn_newUsr
             // 
-            btn_newUsr.Location = new Point(236, 131);
+            btn_newUsr.BackColor = Color.FromArgb(21, 96, 130);
+            btn_newUsr.ForeColor = Color.White;
+            btn_newUsr.Location = new Point(495, 512);
             btn_newUsr.Name = "btn_newUsr";
             btn_newUsr.Size = new Size(123, 41);
             btn_newUsr.TabIndex = 5;
             btn_newUsr.Text = "New User";
-            btn_newUsr.UseVisualStyleBackColor = true;
+            btn_newUsr.UseVisualStyleBackColor = false;
             btn_newUsr.Click += switchToNewUserForm;
             // 
             // txt_email
             // 
-            txt_email.Location = new Point(107, 73);
+            txt_email.ForeColor = SystemColors.ControlText;
+            txt_email.Location = new Point(324, 237);
             txt_email.Name = "txt_email";
-            txt_email.Size = new Size(381, 23);
+            txt_email.Size = new Size(423, 23);
             txt_email.TabIndex = 0;
             txt_email.TextChanged += updateLoginButton;
             txt_email.Enter += updateLoginButton;
@@ -73,10 +81,10 @@ namespace Groomy
             // 
             // txt_password
             // 
-            txt_password.Location = new Point(107, 102);
+            txt_password.Location = new Point(324, 266);
             txt_password.Name = "txt_password";
             txt_password.PasswordChar = '*';
-            txt_password.Size = new Size(381, 23);
+            txt_password.Size = new Size(423, 23);
             txt_password.TabIndex = 2;
             txt_password.TextChanged += updateLoginButton;
             txt_password.Enter += updateLoginButton;
@@ -85,7 +93,8 @@ namespace Groomy
             // lbl_email
             // 
             lbl_email.AutoSize = true;
-            lbl_email.Location = new Point(12, 76);
+            lbl_email.ForeColor = Color.FromArgb(21, 96, 130);
+            lbl_email.Location = new Point(229, 240);
             lbl_email.Name = "lbl_email";
             lbl_email.Size = new Size(89, 15);
             lbl_email.TabIndex = 1;
@@ -94,39 +103,65 @@ namespace Groomy
             // lbl_password
             // 
             lbl_password.AutoSize = true;
-            lbl_password.Location = new Point(12, 105);
+            lbl_password.ForeColor = Color.FromArgb(21, 96, 130);
+            lbl_password.Location = new Point(229, 269);
             lbl_password.Name = "lbl_password";
             lbl_password.Size = new Size(60, 15);
             lbl_password.TabIndex = 3;
             lbl_password.Text = "Password:";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(430, 25);
-            label1.TabIndex = 7;
-            label1.Text = "Welcome to Groomy! Please sign in to get started.";
-            // 
             // closeBtn
             // 
-            closeBtn.Location = new Point(365, 131);
+            closeBtn.BackColor = Color.FromArgb(21, 96, 130);
+            closeBtn.ForeColor = Color.White;
+            closeBtn.Location = new Point(624, 512);
             closeBtn.Name = "closeBtn";
             closeBtn.Size = new Size(123, 41);
             closeBtn.TabIndex = 6;
             closeBtn.Text = "Close";
-            closeBtn.UseVisualStyleBackColor = true;
+            closeBtn.UseVisualStyleBackColor = false;
             closeBtn.Click += button1_Click;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(21, 96, 130);
+            panel1.Controls.Add(label8);
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(221, 566);
+            panel1.TabIndex = 17;
+            // 
+            // label8
+            // 
+            label8.BackColor = Color.FromArgb(29, 129, 175);
+            label8.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(0, 245);
+            label8.Name = "label8";
+            label8.Size = new Size(216, 44);
+            label8.TabIndex = 9;
+            label8.Text = "Login";
+            label8.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Arial Black", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.ForeColor = Color.FromArgb(21, 96, 130);
+            label9.Location = new Point(229, 9);
+            label9.Name = "label9";
+            label9.Size = new Size(309, 90);
+            label9.TabIndex = 16;
+            label9.Text = "Groomy";
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(503, 187);
+            ClientSize = new Size(759, 565);
+            Controls.Add(panel1);
+            Controls.Add(label9);
             Controls.Add(closeBtn);
-            Controls.Add(label1);
             Controls.Add(lbl_password);
             Controls.Add(lbl_email);
             Controls.Add(txt_password);
@@ -134,10 +169,11 @@ namespace Groomy
             Controls.Add(btn_newUsr);
             Controls.Add(btn_login);
             MaximizeBox = false;
-            MaximumSize = new Size(519, 226);
-            MinimumSize = new Size(519, 226);
+            MaximumSize = new Size(775, 604);
+            MinimumSize = new Size(775, 604);
             Name = "Login";
-            Text = "Groomy Login";
+            Text = "Login to Groomy";
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,7 +186,9 @@ namespace Groomy
         private TextBox txt_password;
         private Label lbl_email;
         private Label lbl_password;
-        private Label label1;
         private Button closeBtn;
+        private Panel panel1;
+        private Label label8;
+        private Label label9;
     }
 }
