@@ -51,22 +51,26 @@
             // 
             // btn_Quit
             // 
-            btn_Quit.Location = new Point(673, 512);
+            btn_Quit.BackColor = Color.FromArgb(21, 96, 130);
+            btn_Quit.ForeColor = Color.White;
+            btn_Quit.Location = new Point(624, 512);
             btn_Quit.Name = "btn_Quit";
-            btn_Quit.Size = new Size(74, 41);
+            btn_Quit.Size = new Size(123, 41);
             btn_Quit.TabIndex = 11;
             btn_Quit.Text = "Quit";
-            btn_Quit.UseVisualStyleBackColor = true;
+            btn_Quit.UseVisualStyleBackColor = false;
             btn_Quit.Click += btn_Quit_Click;
             // 
             // btn_submitNewUser
             // 
-            btn_submitNewUser.Location = new Point(593, 512);
+            btn_submitNewUser.BackColor = Color.FromArgb(21, 96, 130);
+            btn_submitNewUser.ForeColor = Color.White;
+            btn_submitNewUser.Location = new Point(495, 512);
             btn_submitNewUser.Name = "btn_submitNewUser";
-            btn_submitNewUser.Size = new Size(74, 41);
+            btn_submitNewUser.Size = new Size(123, 41);
             btn_submitNewUser.TabIndex = 10;
             btn_submitNewUser.Text = "Create New User";
-            btn_submitNewUser.UseVisualStyleBackColor = true;
+            btn_submitNewUser.UseVisualStyleBackColor = false;
             btn_submitNewUser.Click += btn_submitNewUser_Click;
             // 
             // label1
@@ -233,7 +237,7 @@
             MinimizeBox = false;
             MinimumSize = new Size(775, 604);
             Name = "NewUser";
-            Text = "NewUser";
+            Text = "Creat a New User";
             panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
