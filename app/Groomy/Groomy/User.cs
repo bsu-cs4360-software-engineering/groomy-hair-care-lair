@@ -20,8 +20,11 @@ namespace Groomy
             e = eMail;
             //hash password right away
             p = Program.Helpers.GenerateSHA256Hash(password);
-            // Call method to add user to JSON
-            addUser_toJson();
+
+            string userID = Program.Helpers.GenerateSHA256Hash(e);
+
+            addUser_toJson(userID);
+            addPassword_toJson(userID);
         }
         public User((string fName, string lName, string eMail, string password) userData)
         {
@@ -29,18 +32,49 @@ namespace Groomy
             l = userData.lName;
             e = userData.eMail;
             p = Program.Helpers.GenerateSHA256Hash(userData.password);
-            addUser_toJson();
+
+            string userID = Program.Helpers.GenerateSHA256Hash(e);
+
+            addUser_toJson(userID);
+            addPassword_toJson(userID);
         }
 
-        private void addUser_toJson()
+        private void addPassword_toJson(string userID)
         {
-            string userId = Program.Helpers.GenerateSHA256Hash(e);
+            var passwordData = new Dictionary<string, object>
+            {
+                { "Password", p }
+            };
+
+            string jsonFilePath = "passwords.json";
+            Dictionary<string, Dictionary<string, object>> passwords;
+
+            try
+            {
+                //tries to load passwords
+                passwords = Program.Helpers.loadDB(jsonFilePath);
+
+                //add new password to db
+                passwords[userID] = passwordData;
+
+                //Write updated password data bac to passwords.json
+                string newDB = JsonSerializer.Serialize(passwords, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(jsonFilePath, newDB);
+                Debug.WriteLine("Password Added Successsfully.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error occurred while adding user: {ex.Message}");
+            }
+        }
+
+        private void addUser_toJson(string userID)
+        {
             var userData = new Dictionary<string, object>
             {
                 { "FirstName", f },
                 { "LastName", l },
-                { "Email", e },
-                { "Password", p }
+                { "Email", e }
             };
 
             string jsonFilePath = "users.json";
@@ -49,10 +83,10 @@ namespace Groomy
             try
             {
                 //tries to load users
-                users = Program.Helpers.loadUsers(jsonFilePath);
+                users = Program.Helpers.loadDB(jsonFilePath);
 
                 // Add new user to the dictionary
-                users[userId] = userData;
+                users[userID] = userData;
 
                 // Write updated user data back to users.json
                 string newJson = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
