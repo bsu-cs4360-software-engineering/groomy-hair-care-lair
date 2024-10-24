@@ -21,12 +21,13 @@ namespace Groomy
         public string HashedPassword => p;
         public UserDatabase Database => db;
 
-        public User(string fName, string lName, string eMail, string password, UserDatabase db)
+        public User(string fName, string lName, string eMail, string password, UserDatabase database)
         {
             f = fName;
             l = lName;
             e = eMail;
             p = Helpers.GenerateSHA256Hash(password);
+            db = database;
 
             AddUser();
         }
