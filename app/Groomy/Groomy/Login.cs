@@ -31,6 +31,13 @@ namespace Groomy
             frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
             frm.ShowDialog();
         }
+        private void switchToWelcomeForm(object sender, EventArgs e)
+        {
+            var frm = new Welcome();
+            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
+            frm.Show();
+            this.Hide();
+        }
         private bool checkIfKnownEmail(string emailHash)
         {
             return UserDatabase.Instance.IsUser(emailHash);
@@ -47,6 +54,7 @@ namespace Groomy
                 if (passwordData["Password"].ToString() == hashedPassword.ToString())
                 {
                     Helpers.messageBoxSuccess("Logged in Successfully.");
+                    switchToWelcomeForm(sender, e);
                 }
                 else
                 {
