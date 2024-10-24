@@ -19,33 +19,30 @@ namespace Groomy
             InitializeComponent();
         }
 
-        public delegate void UserCreatedEventHandler();
-        public event UserCreatedEventHandler UserCreated;
-
         private bool validateNewUserFields()
         {
             //first name check
             if (fNameInput.Text == "")
             {
-                Program.Helpers.messageBoxError("You did not enter a first name. Please try again.");
+                Helpers.messageBoxError("You did not enter a first name. Please try again.");
                 return false;
             }
             //last name check
             if (lNameInput.Text == "")
             {
-                Program.Helpers.messageBoxError("You did not enter a last name. Please try again.");
+                Helpers.messageBoxError("You did not enter a last name. Please try again.");
                 return false;
             }
             //valid email check
             if (string.IsNullOrWhiteSpace(emailInput.Text) || !emailInput.Text.Contains("@")) //replace with RegEx expression
             {
-                Program.Helpers.messageBoxError("You did not enter a valid email. Please try again.");
+                Helpers.messageBoxError("You did not enter a valid email. Please try again.");
                 return false;
             }
             //password match check
             if (passInput.Text != passConfirm.Text)
             {
-                Program.Helpers.messageBoxError("The passwords do not match. Please reenter your passwords and try again.");
+                Helpers.messageBoxError("The passwords do not match. Please reenter your passwords and try again.");
                 passInput.Text = "";
                 passConfirm.Text = "";
                 return false;
@@ -62,10 +59,10 @@ namespace Groomy
            if (validateNewUserFields() == true)
             {
                 //create new user object + save new user object to database
-                User newUser = new User(getNewUserFields());
+                var (fName, lName, eMail, password) = getNewUserFields();
+                User newUser = new User(fName, lName, eMail, password, UserDatabase.Instance);
                 //display success message box and close NewUser form
-                Program.Helpers.messageBoxSuccess("User Successfully Created");
-                UserCreated?.Invoke();
+                Helpers.messageBoxSuccess("User Successfully Created");
                 this.Close();
             }
            else
