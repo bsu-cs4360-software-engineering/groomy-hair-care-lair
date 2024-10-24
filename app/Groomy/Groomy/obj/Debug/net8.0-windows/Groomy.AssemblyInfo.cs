@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Groomy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9aadbec4e4b423e48aa49f96c959cf77cf54d49")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e34b363a34227c5fd8846c629e66c085ba6be93")]
 [assembly: System.Reflection.AssemblyProductAttribute("Groomy")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Groomy")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
