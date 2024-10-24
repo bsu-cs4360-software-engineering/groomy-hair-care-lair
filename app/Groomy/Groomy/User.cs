@@ -23,6 +23,14 @@ namespace Groomy
             // Call method to add user to JSON
             addUser_toJson();
         }
+        public User((string fName, string lName, string eMail, string password) userData)
+        {
+            f = userData.fName;
+            l = userData.lName;
+            e = userData.eMail;
+            p = Program.Helpers.GenerateSHA256Hash(userData.password);
+            addUser_toJson();
+        }
 
         private void addUser_toJson()
         {
@@ -40,25 +48,16 @@ namespace Groomy
 
             try
             {
-                if (File.Exists(jsonFilePath) && new FileInfo(jsonFilePath).Length > 0)
-                {
-                    string existingJson = File.ReadAllText(jsonFilePath);
-                    users = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(existingJson);
-                }
-                else
-                {
-                    users = new Dictionary<string, Dictionary<string, object>>();
-                }
+                //tries to load users
+                users = Program.Helpers.loadUsers(jsonFilePath);
 
                 // Add new user to the dictionary
                 users[userId] = userData;
 
-                Debug.WriteLine(users);
-
                 // Write updated user data back to users.json
                 string newJson = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(jsonFilePath, newJson);
-                Debug.WriteLine("User  added successfully.");
+                Debug.WriteLine("User added successfully.");
             }
             catch (Exception ex)
             {

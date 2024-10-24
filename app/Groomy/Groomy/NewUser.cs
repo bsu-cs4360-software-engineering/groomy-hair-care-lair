@@ -18,34 +18,34 @@ namespace Groomy
         {
             InitializeComponent();
         }
-        private void messageBoxError(string message)
-        {
-            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+
+        public delegate void UserCreatedEventHandler();
+        public event UserCreatedEventHandler UserCreated;
+
         private bool validateNewUserFields()
         {
             //first name check
             if (fNameInput.Text == "")
             {
-                messageBoxError("You did not enter a first name. Please try again.");
+                Program.Helpers.messageBoxError("You did not enter a first name. Please try again.");
                 return false;
             }
             //last name check
             if (lNameInput.Text == "")
             {
-                messageBoxError("You did not enter a last name. Please try again.");
+                Program.Helpers.messageBoxError("You did not enter a last name. Please try again.");
                 return false;
             }
             //valid email check
             if (string.IsNullOrWhiteSpace(emailInput.Text) || !emailInput.Text.Contains("@")) //replace with RegEx expression
             {
-                messageBoxError("You did not enter a valid email. Please try again.");
+                Program.Helpers.messageBoxError("You did not enter a valid email. Please try again.");
                 return false;
             }
             //password match check
             if (passInput.Text != passConfirm.Text)
             {
-                messageBoxError("The passwords do not match. Please reenter your passwords and try again.");
+                Program.Helpers.messageBoxError("The passwords do not match. Please reenter your passwords and try again.");
                 passInput.Text = "";
                 passConfirm.Text = "";
                 return false;
@@ -53,7 +53,7 @@ namespace Groomy
             //if checks pass, return true
             return true;
         }
-        public (string, string, string, string) getNewUserFields()
+        private (string, string, string, string) getNewUserFields()
         {
             return (fNameInput.Text, lNameInput.Text, emailInput.Text, passInput.Text);
         }
@@ -62,10 +62,11 @@ namespace Groomy
            if (validateNewUserFields() == true)
             {
                 //create new user object + save new user object to database
-                var userFields = getNewUserFields();
-                User newUser = new User(userFields.Item1, userFields.Item2, userFields.Item3, userFields.Item4);
+                User newUser = new User(getNewUserFields());
                 //display success message box and close NewUser form
-                MessageBox.Show("User Successfully Created", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Program.Helpers.messageBoxSuccess("User Successfully Created");
+
+                UserCreated?.Invoke();
                 this.Close();
             }
            else

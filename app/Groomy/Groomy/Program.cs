@@ -1,5 +1,7 @@
 using System.Text;
 using System.Security.Cryptography;
+using System.Text.Json;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Groomy
 {
@@ -33,6 +35,28 @@ namespace Groomy
                 var hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
 
                 return hashString;
+            }
+            public static void messageBoxError(string message)
+            {
+                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            public static void messageBoxSuccess(string message)
+            {
+                MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            internal static Dictionary<string, Dictionary<string, object>> loadUsers(string jsonFilePath)
+            {
+                //check if user.json exists
+                if (File.Exists(jsonFilePath) && new FileInfo(jsonFilePath).Length > 0)
+                {
+                    string existingJson = File.ReadAllText(jsonFilePath);
+                    return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(existingJson);
+                }
+                else
+                {
+                    return new Dictionary<string, Dictionary<string, object>>();
+                }
             }
         }
     }

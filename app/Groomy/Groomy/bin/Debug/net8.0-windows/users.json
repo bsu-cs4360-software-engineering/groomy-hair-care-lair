@@ -10,5 +10,17 @@
     "LastName": "Langlie",
     "Email": "ryan@email.com",
     "Password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+  },
+  "02ee7bdc4ccf5c94808a0118eb531822f13e7e38e3810ab29ebefb2c2feb8e58": {
+    "FirstName": "user",
+    "LastName": "default",
+    "Email": "user@gmail.com",
+    "Password": "37a8eec1ce19687d132fe29051dca629d164e2c4958ba141d5f4133a33f0688f"
+  },
+  "73062d872926c2a556f17b36f50e328ddf9bff9d403939bd14b6c3b7f5a33fc2": {
+    "FirstName": "test",
+    "LastName": "user",
+    "Email": "test@email.com",
+    "Password": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
   }
 }
