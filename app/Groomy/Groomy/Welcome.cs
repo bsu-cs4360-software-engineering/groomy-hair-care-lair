@@ -24,5 +24,13 @@ namespace Groomy
             frm.Show();
             this.Hide();
         }
+
+        private void custBtn_Click(object sender, EventArgs e)
+        {
+            var frm = new Cust();
+            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
+            frm.Show();
+            this.Hide();
+        }
     }
 }
