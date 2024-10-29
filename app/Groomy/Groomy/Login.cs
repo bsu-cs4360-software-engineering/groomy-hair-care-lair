@@ -7,6 +7,7 @@ namespace Groomy
 {
     public partial class Login : Form
     {
+        IFileService fileService = new FileService();
         public Login()
         {
             InitializeComponent();
@@ -36,17 +37,18 @@ namespace Groomy
         }
         private bool checkIfKnownEmail(string emailHash)
         {
-            return UserDatabase.Instance.IsUser(emailHash);
+            return UserDatabase.Instance(fileService).IsUser(emailHash);
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
             string hashedEmail = Helpers.GenerateSHA256Hash(txt_email.Text);
             string hashedPassword = Helpers.GenerateSHA256Hash(txt_password.Text);
 
+
             if (checkIfKnownEmail(hashedEmail))
             {
-                var userData = UserDatabase.Instance.GetUser(hashedEmail);
-                var passwordData = UserDatabase.Instance.GetPassword(hashedEmail);
+                var userData = UserDatabase.Instance(fileService).GetUser(hashedEmail);
+                var passwordData = UserDatabase.Instance(fileService).GetPassword(hashedEmail);
                 if (passwordData["Password"].ToString() == hashedPassword.ToString())
                 {
                     Helpers.messageBoxSuccess("Logged in Successfully.");

@@ -60,7 +60,7 @@ namespace Groomy
             {
                 //create new user object + save new user object to database
                 var (fName, lName, eMail, password) = getNewUserFields();
-                User newUser = new User(fName, lName, eMail, password, UserDatabase.Instance);
+                User newUser = new User(fName, lName, eMail, password, UserDatabase.Instance(new FileService()));
                 //display success message box and close NewUser form
                 Helpers.messageBoxSuccess("User Successfully Created");
                 this.Close();
