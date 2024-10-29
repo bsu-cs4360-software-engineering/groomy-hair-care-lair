@@ -1,4 +1,5 @@
 ﻿using Groomy;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,59 +10,52 @@ using System.Threading.Tasks;
 
 namespace Groomy
 {
-    public struct UserData
+    public interface IFileService
     {
-        Dictionary<string, object> data;
-
-        public static implicit operator UserData(Dictionary<string, object> dictionary)
+        string ReadAllText(string path);
+        void WriteAllText(string path, string contents);
+    }
+    public class FileService : IFileService
+    {
+        public string ReadAllText(string path)
         {
-            return new UserData { data = dictionary };
+            return File.ReadAllText(path);
         }
-        public object this[string key]
+
+        public void WriteAllText(string path, string contents)
         {
-            get => data.TryGetValue(key, out var value) ? value : null;
-            set => data[key] = value;
+            File.WriteAllText(path, contents);
         }
     }
-    public struct UserPassword
+    public interface IDatabase
     {
-        Dictionary<string, object> password;
-
-        public static implicit operator UserPassword(Dictionary<string, object> password)
-        {
-            return new UserPassword { password = password };
-        }
-        public object this[string key]
-        {
-            get => password.TryGetValue(key, out var value) ? value: null;
-            set => password[key] = value;
-        }
+        public bool IsUser(string userID);
+        public void AddUser(User user);
+        public Dictionary<string, object> GetUser(string userID);
     }
-    public class UserDatabase
+    public class UserDatabase : IDatabase
     {
         private static UserDatabase _instance;
         private static readonly object _lock = new object(); // Lock for thread safety
+        private readonly IFileService _fileService;
         private const string UsersFilePath = "users.json";
         private const string PasswordsFilePath = "passwords.json";
 
-        // Private constructor to prevent instantiation from outside
-        private UserDatabase() { }
-
-        // Public static property to get the instance
-        public static UserDatabase Instance
+        private UserDatabase(IFileService fileService)
         {
-            get
+            _fileService = fileService;
+        }
+        private UserDatabase()
+        {
+        }
+
+        public static UserDatabase Instance(IFileService fileService)
+        {
+            lock (_lock)
             {
-                // Double-check locking for thread safety
                 if (_instance == null)
                 {
-                    lock (_lock)
-                    {
-                        if (_instance == null)
-                        {
-                            _instance = new UserDatabase();
-                        }
-                    }
+                    _instance = new UserDatabase(fileService);
                 }
                 return _instance;
             }
@@ -75,7 +69,7 @@ namespace Groomy
             AddUserData(user);
             AddPassword(user);
         }
-        public void AddUserData(User user)
+        private void AddUserData(User user)
         {
             var userData = new Dictionary<string, object>
             {
@@ -87,7 +81,7 @@ namespace Groomy
             users[user.userID] = userData;
             SaveUsers(users);
         }
-        public void AddPassword(User user)
+        private void AddPassword(User user)
         {
             var passwordData = new Dictionary<string, object>
             {
@@ -97,19 +91,26 @@ namespace Groomy
             passwords[user.userID] = passwordData;
             SavePasswords(passwords);
         }
-        public UserData GetUser(string userID)
+        public Dictionary<string, object> GetUser(string userID)
         {
             return LoadUsers()[userID];
         }
-        public UserPassword GetPassword(string userID)
+        public Dictionary<string, object> GetPassword(string userID)
         {
-            return LoadPasswords()[userID];
+            var passwords = LoadPasswords();
+            if (passwords.ContainsKey(userID))
+            {
+                return passwords[userID];
+            }
+            var existingKeys = string.Join(", ", passwords.Keys);
+            throw new KeyNotFoundException($"The given key '{userID}' was not present in the dictionary. Existing keys: {existingKeys}");
         }
-        public Dictionary<string, Dictionary<string, object>> LoadUsers()
+
+        private Dictionary<string, Dictionary<string, object>> LoadUsers()
         {
             return LoadDatabase(UsersFilePath);
         }
-        public Dictionary<string, Dictionary<string, object>> LoadPasswords()
+        private Dictionary<string, Dictionary<string, object>> LoadPasswords()
         {
             return LoadDatabase(PasswordsFilePath);
         }
@@ -122,8 +123,9 @@ namespace Groomy
                     return new Dictionary<string, Dictionary<string, object>>();
                 }
 
-                string json = File.ReadAllText(filePath);
-                return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(json);
+                string json = this._fileService.ReadAllText(filePath);
+                var serializedJson = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(json);
+                return serializedJson;
             }
             catch (Exception ex)
             {

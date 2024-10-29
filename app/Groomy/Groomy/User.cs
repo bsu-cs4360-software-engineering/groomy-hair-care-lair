@@ -12,16 +12,16 @@ namespace Groomy
         private string l;
         private string e;
         private string p;
-        private UserDatabase db;
+        private IDatabase db;
 
         public string FirstName => f;
         public string LastName => l;
         public string Email => e;
         public string userID => Helpers.GenerateSHA256Hash(e);
         public string HashedPassword => p;
-        public UserDatabase Database => db;
+        public IDatabase Database => db;
 
-        public User(string fName, string lName, string eMail, string password, UserDatabase database)
+        public User(string fName, string lName, string eMail, string password, IDatabase database)
         {
             f = fName;
             l = lName;

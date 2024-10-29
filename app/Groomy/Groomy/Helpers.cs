@@ -21,6 +21,24 @@ public class Helpers
 
         return hashString;
     }
+    public static string createUserJson(string firstName, string lastName, string email)
+    {
+        return $@"{{
+        ""{Helpers.GenerateSHA256Hash(email)}"": {{
+            ""FirstName"": ""{firstName}"",
+            ""LastName"": ""{lastName}"",
+            ""Email"": ""{email}""
+        }}
+    }}";
+    }
+    public static string createPasswordJson(string email, string password)
+    {
+        return $@"{{
+        ""{Helpers.GenerateSHA256Hash(email)}"": {{
+            ""Password"": ""{Helpers.GenerateSHA256Hash(password)}""
+        }}
+    }}";
+    }
     public static void messageBoxError(string message)
     {
         MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
