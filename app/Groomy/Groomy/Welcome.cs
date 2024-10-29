@@ -19,18 +19,12 @@ namespace Groomy
 
         private void label8_Click_1(object sender, EventArgs e)
         {
-            var frm = new Login();
-            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
-            frm.Show();
-            this.Hide();
+            windowFx.OpenForm("Groomy.Login", false);
         }
 
         private void custBtn_Click(object sender, EventArgs e)
         {
-            var frm = new Cust();
-            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
-            frm.Show();
-            this.Hide();
+            windowFx.OpenForm("Groomy.Cust", false);
         }
     }
 }

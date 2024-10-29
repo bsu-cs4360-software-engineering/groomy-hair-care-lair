@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            custBtn = new Label();
             label2 = new Label();
             label9 = new Label();
-            custBtn = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -44,6 +44,19 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(221, 566);
             panel1.TabIndex = 17;
+            // 
+            // custBtn
+            // 
+            custBtn.BackColor = Color.FromArgb(29, 129, 175);
+            custBtn.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            custBtn.ForeColor = Color.White;
+            custBtn.Location = new Point(0, 261);
+            custBtn.Name = "custBtn";
+            custBtn.Size = new Size(216, 44);
+            custBtn.TabIndex = 21;
+            custBtn.Text = "Customers";
+            custBtn.TextAlign = ContentAlignment.MiddleCenter;
+            custBtn.Click += custBtn_Click;
             // 
             // label2
             // 
@@ -68,19 +81,6 @@
             label9.TabIndex = 16;
             label9.Text = "Welcome to\r\n Groomy!";
             label9.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // custBtn
-            // 
-            custBtn.BackColor = Color.FromArgb(29, 129, 175);
-            custBtn.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            custBtn.ForeColor = Color.White;
-            custBtn.Location = new Point(0, 260);
-            custBtn.Name = "custBtn";
-            custBtn.Size = new Size(216, 44);
-            custBtn.TabIndex = 21;
-            custBtn.Text = "Customers";
-            custBtn.TextAlign = ContentAlignment.MiddleCenter;
-            custBtn.Click += custBtn_Click;
             // 
             // Welcome
             // 

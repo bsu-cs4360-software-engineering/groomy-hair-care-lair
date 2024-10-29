@@ -32,9 +32,9 @@
             panel1 = new Panel();
             label8 = new Label();
             label9 = new Label();
-            passConfirm = new TextBox();
+            addCity = new TextBox();
             label7 = new Label();
-            passInput = new TextBox();
+            phone = new TextBox();
             label6 = new Label();
             emailInput = new TextBox();
             label5 = new Label();
@@ -45,9 +45,27 @@
             label2 = new Label();
             label1 = new Label();
             btn_submitNewUser = new Button();
+            label10 = new Label();
+            stateSelect = new ComboBox();
+            label11 = new Label();
+            countryTxtDisplay = new TextBox();
+            label12 = new Label();
+            zipInput = new TextBox();
             btn_Quit = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
+            // 
+            // btn_Quit
+            // 
+            btn_Quit.BackColor = Color.FromArgb(21, 96, 130);
+            btn_Quit.ForeColor = Color.White;
+            btn_Quit.Location = new Point(624, 511);
+            btn_Quit.Name = "btn_Quit";
+            btn_Quit.Size = new Size(123, 41);
+            btn_Quit.TabIndex = 27;
+            btn_Quit.Text = "Quit";
+            btn_Quit.UseVisualStyleBackColor = false;
+            btn_Quit.Click += btn_Quit_Click;
             // 
             // panel1
             // 
@@ -67,7 +85,7 @@
             label8.Name = "label8";
             label8.Size = new Size(216, 44);
             label8.TabIndex = 9;
-            label8.Text = "New User";
+            label8.Text = "New Customer";
             label8.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label9
@@ -81,13 +99,12 @@
             label9.TabIndex = 30;
             label9.Text = "Registration";
             // 
-            // passConfirm
+            // addCity
             // 
-            passConfirm.Location = new Point(300, 316);
-            passConfirm.Name = "passConfirm";
-            passConfirm.PasswordChar = '*';
-            passConfirm.Size = new Size(447, 23);
-            passConfirm.TabIndex = 24;
+            addCity.Location = new Point(322, 316);
+            addCity.Name = "addCity";
+            addCity.Size = new Size(425, 23);
+            addCity.TabIndex = 24;
             // 
             // label7
             // 
@@ -95,17 +112,16 @@
             label7.ForeColor = Color.FromArgb(21, 96, 130);
             label7.Location = new Point(227, 319);
             label7.Name = "label7";
-            label7.Size = new Size(54, 15);
+            label7.Size = new Size(89, 15);
             label7.TabIndex = 25;
-            label7.Text = "Confirm:";
+            label7.Text = "Adress and City";
             // 
-            // passInput
+            // phone
             // 
-            passInput.Location = new Point(300, 288);
-            passInput.Name = "passInput";
-            passInput.PasswordChar = '*';
-            passInput.Size = new Size(447, 23);
-            passInput.TabIndex = 22;
+            phone.Location = new Point(322, 288);
+            phone.Name = "phone";
+            phone.Size = new Size(425, 23);
+            phone.TabIndex = 22;
             // 
             // label6
             // 
@@ -113,15 +129,15 @@
             label6.ForeColor = Color.FromArgb(21, 96, 130);
             label6.Location = new Point(227, 291);
             label6.Name = "label6";
-            label6.Size = new Size(60, 15);
+            label6.Size = new Size(41, 15);
             label6.TabIndex = 23;
-            label6.Text = "Password:";
+            label6.Text = "Phone";
             // 
             // emailInput
             // 
-            emailInput.Location = new Point(300, 259);
+            emailInput.Location = new Point(322, 259);
             emailInput.Name = "emailInput";
-            emailInput.Size = new Size(447, 23);
+            emailInput.Size = new Size(425, 23);
             emailInput.TabIndex = 20;
             // 
             // label5
@@ -136,16 +152,16 @@
             // 
             // lNameInput
             // 
-            lNameInput.Location = new Point(299, 230);
+            lNameInput.Location = new Point(322, 230);
             lNameInput.Name = "lNameInput";
-            lNameInput.Size = new Size(448, 23);
+            lNameInput.Size = new Size(425, 23);
             lNameInput.TabIndex = 18;
             // 
             // fNameInput
             // 
-            fNameInput.Location = new Point(300, 201);
+            fNameInput.Location = new Point(322, 201);
             fNameInput.Name = "fNameInput";
-            fNameInput.Size = new Size(447, 23);
+            fNameInput.Size = new Size(425, 23);
             fNameInput.TabIndex = 16;
             // 
             // label4
@@ -187,17 +203,6 @@
             label1.TabIndex = 29;
             label1.Text = "Create New User";
             // 
-            // btn_Quit
-            // 
-            btn_Quit.BackColor = Color.FromArgb(21, 96, 130);
-            btn_Quit.ForeColor = Color.White;
-            btn_Quit.Location = new Point(624, 511);
-            btn_Quit.Name = "btn_Quit";
-            btn_Quit.Size = new Size(123, 41);
-            btn_Quit.TabIndex = 27;
-            btn_Quit.Text = "Quit";
-            btn_Quit.UseVisualStyleBackColor = false;
-            // 
             // btn_submitNewUser
             // 
             btn_submitNewUser.BackColor = Color.FromArgb(21, 96, 130);
@@ -206,19 +211,83 @@
             btn_submitNewUser.Name = "btn_submitNewUser";
             btn_submitNewUser.Size = new Size(123, 41);
             btn_submitNewUser.TabIndex = 26;
-            btn_submitNewUser.Text = "Create New User";
+            btn_submitNewUser.Text = "Create New Customer";
             btn_submitNewUser.UseVisualStyleBackColor = false;
+            btn_submitNewUser.Click += btn_submitNewUser_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.FromArgb(21, 96, 130);
+            label10.Location = new Point(227, 377);
+            label10.Name = "label10";
+            label10.Size = new Size(90, 15);
+            label10.TabIndex = 32;
+            label10.Text = "State / Province";
+            // 
+            // stateSelect
+            // 
+            stateSelect.DropDownStyle = ComboBoxStyle.DropDownList;
+            stateSelect.FormattingEnabled = true;
+            stateSelect.Items.AddRange(new object[] { "Alabama", "Alaska", "Alberta", "Arizona", "Arkansas", "British Columbia", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Manitoba", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Brunswick", "New Hampshire", "New Jersey", "New Mexico", "New York", "Newfoundland and Labrador", "North Carolina", "North Dakota", "Nova Scotia", "Ohio", "Oklahoma", "Ontario", "Oregon", "Pennsylvania", "Prince Edward Island", "Quebec", "Rhode Island", "Saskatchewan", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" });
+            stateSelect.Location = new Point(324, 374);
+            stateSelect.Name = "stateSelect";
+            stateSelect.Size = new Size(424, 23);
+            stateSelect.Sorted = true;
+            stateSelect.TabIndex = 33;
+            stateSelect.SelectedIndexChanged += stateSelect_SelectedIndexChanged;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.ForeColor = Color.FromArgb(21, 96, 130);
+            label11.Location = new Point(227, 406);
+            label11.Name = "label11";
+            label11.Size = new Size(50, 15);
+            label11.TabIndex = 34;
+            label11.Text = "Country";
+            // 
+            // countryTxtDisplay
+            // 
+            countryTxtDisplay.Location = new Point(324, 403);
+            countryTxtDisplay.Name = "countryTxtDisplay";
+            countryTxtDisplay.ReadOnly = true;
+            countryTxtDisplay.Size = new Size(425, 23);
+            countryTxtDisplay.TabIndex = 35;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.ForeColor = Color.FromArgb(21, 96, 130);
+            label12.Location = new Point(227, 348);
+            label12.Name = "label12";
+            label12.Size = new Size(70, 15);
+            label12.TabIndex = 36;
+            label12.Text = "Postal Code";
+            // 
+            // zipInput
+            // 
+            zipInput.Location = new Point(323, 345);
+            zipInput.Name = "zipInput";
+            zipInput.Size = new Size(425, 23);
+            zipInput.TabIndex = 37;
             // 
             // newCust
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(759, 565);
+            Controls.Add(zipInput);
+            Controls.Add(label12);
+            Controls.Add(countryTxtDisplay);
+            Controls.Add(label11);
+            Controls.Add(stateSelect);
+            Controls.Add(label10);
             Controls.Add(panel1);
             Controls.Add(label9);
-            Controls.Add(passConfirm);
+            Controls.Add(addCity);
             Controls.Add(label7);
-            Controls.Add(passInput);
+            Controls.Add(phone);
             Controls.Add(label6);
             Controls.Add(emailInput);
             Controls.Add(label5);
@@ -233,7 +302,7 @@
             MaximumSize = new Size(775, 604);
             MinimumSize = new Size(775, 604);
             Name = "newCust";
-            Text = "newCust";
+            Text = "New Customer";
             Load += newCust_Load;
             panel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -245,9 +314,9 @@
         private Panel panel1;
         private Label label8;
         private Label label9;
-        private TextBox passConfirm;
+        private TextBox addCity;
         private Label label7;
-        private TextBox passInput;
+        private TextBox phone;
         private Label label6;
         private TextBox emailInput;
         private Label label5;
@@ -258,5 +327,11 @@
         private Label label2;
         private Label label1;
         private Button btn_submitNewUser;
+        private Label label10;
+        private ComboBox stateSelect;
+        private Label label11;
+        private TextBox countryTxtDisplay;
+        private Label label12;
+        private TextBox zipInput;
     }
 }

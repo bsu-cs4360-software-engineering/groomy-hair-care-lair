@@ -69,6 +69,7 @@
             label2.TabIndex = 20;
             label2.Text = "Welcome";
             label2.TextAlign = ContentAlignment.MiddleCenter;
+            label2.Click += label2_Click;
             // 
             // label9
             // 
@@ -90,6 +91,7 @@
             button1.TabIndex = 20;
             button1.Text = "Create New Customer";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Cust
             // 

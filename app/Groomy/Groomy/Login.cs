@@ -1,6 +1,7 @@
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Diagnostics;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Groomy
 {
@@ -27,16 +28,11 @@ namespace Groomy
         }
         private void switchToNewUserForm(object sender, EventArgs e)
         {
-            var frm = new NewUser();
-            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
-            frm.ShowDialog();
+            windowFx.OpenForm("Groomy.NewUser", true);  
         }
         private void switchToWelcomeForm(object sender, EventArgs e)
         {
-            var frm = new Welcome();
-            frm.StartPosition = FormStartPosition.CenterParent; // Optional: Center the dialog
-            frm.Show();
-            this.Hide();
+            windowFx.OpenForm("Groomy.Welcome", false);
         }
         private bool checkIfKnownEmail(string emailHash)
         {
