@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Groomy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using Moq;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Diagnostics;
 using System.Reflection;
+using Groomy.User;
 
 namespace Groomy.Tests
 {

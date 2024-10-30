@@ -1,3 +1,4 @@
+using Groomy.User;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Diagnostics;
 using System.Text.Json;
@@ -49,16 +50,13 @@ namespace Groomy
             {
                 var userData = UserDatabase.Instance(fileService).GetUser(hashedEmail);
                 var passwordData = UserDatabase.Instance(fileService).GetPassword(hashedEmail);
-                if (passwordData["Password"].ToString() == hashedPassword.ToString())
+                if (passwordData.ContainsKey("Password") && passwordData["Password"].ToString() == hashedPassword.ToString())
                 {
                     Helpers.messageBoxSuccess("Logged in Successfully.");
                     switchToWelcomeForm(sender, e);
                 }
                 else
                 {
-                    Debug.WriteLine($"Inputted Password Hash: {hashedPassword}");
-                    Debug.WriteLine($"Actual Password Hash: {userData["Password"]}");
-
                     Helpers.messageBoxError("Incorrect Email or Password.\nPlease try again.\nbad password");
                 }
             } 
@@ -69,3 +67,4 @@ namespace Groomy
         }
     }
 }
+

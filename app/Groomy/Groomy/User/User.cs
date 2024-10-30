@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
-namespace Groomy
+namespace Groomy.User
 {
     public class User
     {
@@ -34,7 +34,7 @@ namespace Groomy
 
         private void AddUser()
         {
-            this.Database.AddUser(this);
+            Database.AddUser(this);
         }
     }
 }

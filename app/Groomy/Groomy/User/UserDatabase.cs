@@ -1,5 +1,4 @@
-﻿using Groomy;
-using Microsoft.VisualBasic.ApplicationServices;
+﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Groomy
+namespace Groomy.User
 {
     public interface IFileService
     {
@@ -123,7 +122,7 @@ namespace Groomy
                     return new Dictionary<string, Dictionary<string, object>>();
                 }
 
-                string json = this._fileService.ReadAllText(filePath);
+                string json = _fileService.ReadAllText(filePath);
                 var serializedJson = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(json);
                 return serializedJson;
             }
