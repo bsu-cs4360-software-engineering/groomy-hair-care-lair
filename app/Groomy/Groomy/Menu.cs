@@ -80,10 +80,6 @@ namespace Groomy
                 loadCustomerData();
                 activatePanel(panelCustomers);
             }
-            else
-            {
-                Debug.WriteLine("fuck");
-            }
         }
         private void loadCustomerData()
         {
