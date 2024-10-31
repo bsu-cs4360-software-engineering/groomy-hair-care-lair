@@ -47,6 +47,7 @@ namespace Groomy
 
         private void btnNew_Click(object sender, EventArgs e)
         {
+            clearCustomerForms();
             activatePanel(panelNewCustomer);
         }
 
@@ -112,6 +113,16 @@ namespace Groomy
         private void loadCustomerData()
         {
             dataGridView1.DataSource = dbManager.GetDataTable(Customer.CustomersFilePath, 4);
+        }
+
+        private void clearCustomerForms()
+        {
+            txtFirst.Text = "";
+            txtLast.Text = "";
+            txtEmail.Text = "";
+            txtPN.Text = "";
+            txtAddress.Text = "";
+            txtNotes.Text = "";
         }
 
         private bool validateCustomerForms()
