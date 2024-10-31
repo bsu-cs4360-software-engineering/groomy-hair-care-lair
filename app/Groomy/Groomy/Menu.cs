@@ -162,8 +162,10 @@ namespace Groomy
 
             if (!string.IsNullOrEmpty(email))
             {
-                dbManager.RemoveObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.CustomersFilePath);
-                loadCustomerData();
+                if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?")){
+                    dbManager.RemoveObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.CustomersFilePath);
+                    loadCustomerData();
+                }
             }
             else
             {

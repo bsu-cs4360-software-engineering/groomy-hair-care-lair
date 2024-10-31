@@ -47,4 +47,8 @@ public class Helpers
     {
         MessageBox.Show(message, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
+    public static bool messageBoxConfirm(string message)
+    {
+        return MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+    }
 }
