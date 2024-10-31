@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Groomy.User
+namespace Groomy
 {
     public interface IFileService
     {
@@ -145,7 +145,7 @@ namespace Groomy.User
             try
             {
                 string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(filePath, json);
+                _fileService.WriteAllText(filePath, json);
                 Debug.WriteLine($"Data saved to {filePath} successfully.");
             }
             catch (Exception ex)

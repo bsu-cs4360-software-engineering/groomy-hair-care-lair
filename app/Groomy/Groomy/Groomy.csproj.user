@@ -13,7 +13,7 @@
     <Compile Update="NewUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Welcome.cs">
+    <Compile Update="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

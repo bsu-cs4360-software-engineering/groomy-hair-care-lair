@@ -1,4 +1,3 @@
-using Groomy.User;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Diagnostics;
 using System.Text.Json;
@@ -32,13 +31,13 @@ namespace Groomy
         {
             windowFx.OpenForm("Groomy.NewUser", true);  
         }
-        private void switchToWelcomeForm(object sender, EventArgs e)
+        private void switchToMainMenu(object sender, EventArgs e)
         {
-            windowFx.OpenForm("Groomy.Welcome", false);
+            windowFx.OpenForm("Groomy.Menu", false);
         }
         private bool checkIfKnownEmail(string emailHash)
         {
-            return UserDatabase.Instance(fileService).IsUser(emailHash);
+            return UserDatabase.Instance(new FileService()).IsUser(emailHash);
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
@@ -53,7 +52,7 @@ namespace Groomy
                 if (passwordData.ContainsKey("Password") && passwordData["Password"].ToString() == hashedPassword.ToString())
                 {
                     Helpers.messageBoxSuccess("Logged in Successfully.");
-                    switchToWelcomeForm(sender, e);
+                    switchToMainMenu(sender, e);
                 }
                 else
                 {

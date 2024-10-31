@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
-namespace Groomy.User
+namespace Groomy
 {
+
     public class User
     {
         private string f;

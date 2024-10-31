@@ -1,6 +1,6 @@
 ﻿namespace Groomy
 {
-    partial class Welcome
+    partial class Menu
     {
         /// <summary>
         /// Required designer variable.
@@ -34,9 +34,9 @@
             label9 = new Label();
             panelWelcome = new Panel();
             panelCustomers = new Panel();
+            dataGridView1 = new DataGridView();
             btnDelete = new Button();
             btnEdit = new Button();
-            listCustomers = new ListBox();
             btnNew = new Button();
             lblGroomyCustomers = new Label();
             panelNewCustomer = new Panel();
@@ -58,6 +58,7 @@
             panel1.SuspendLayout();
             panelWelcome.SuspendLayout();
             panelCustomers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panelNewCustomer.SuspendLayout();
             SuspendLayout();
             // 
@@ -119,15 +120,23 @@
             // 
             // panelCustomers
             // 
+            panelCustomers.Controls.Add(dataGridView1);
             panelCustomers.Controls.Add(btnDelete);
             panelCustomers.Controls.Add(btnEdit);
-            panelCustomers.Controls.Add(listCustomers);
             panelCustomers.Controls.Add(btnNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
-            panelCustomers.Location = new Point(227, 12);
+            panelCustomers.Location = new Point(227, 9);
             panelCustomers.Name = "panelCustomers";
             panelCustomers.Size = new Size(520, 553);
             panelCustomers.TabIndex = 19;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(33, 128);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(449, 377);
+            dataGridView1.TabIndex = 37;
             // 
             // btnDelete
             // 
@@ -147,16 +156,6 @@
             btnEdit.Text = "Edit Customer";
             btnEdit.UseVisualStyleBackColor = true;
             btnEdit.Click += btnEdit_Click;
-            // 
-            // listCustomers
-            // 
-            listCustomers.FormattingEnabled = true;
-            listCustomers.ItemHeight = 15;
-            listCustomers.Location = new Point(21, 116);
-            listCustomers.MultiColumn = true;
-            listCustomers.Name = "listCustomers";
-            listCustomers.Size = new Size(482, 394);
-            listCustomers.TabIndex = 23;
             // 
             // btnNew
             // 
@@ -198,7 +197,7 @@
             panelNewCustomer.Controls.Add(lblLast);
             panelNewCustomer.Controls.Add(txtFirst);
             panelNewCustomer.Controls.Add(lblFirst);
-            panelNewCustomer.Location = new Point(227, 9);
+            panelNewCustomer.Location = new Point(230, 12);
             panelNewCustomer.Name = "panelNewCustomer";
             panelNewCustomer.Size = new Size(520, 550);
             panelNewCustomer.TabIndex = 36;
@@ -211,6 +210,7 @@
             btnSave.TabIndex = 53;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // btnBack
             // 
@@ -337,8 +337,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(759, 565);
-            Controls.Add(panelNewCustomer);
             Controls.Add(panelCustomers);
+            Controls.Add(panelNewCustomer);
             Controls.Add(panelWelcome);
             Controls.Add(panel1);
             MaximizeBox = false;
@@ -351,11 +351,10 @@
             panelWelcome.PerformLayout();
             panelCustomers.ResumeLayout(false);
             panelCustomers.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panelNewCustomer.ResumeLayout(false);
             panelNewCustomer.PerformLayout();
             ResumeLayout(false);
-
-            activatePanel(panelWelcome);
         }
 
         #endregion
@@ -368,7 +367,6 @@
         private Panel panelCustomers;
         private Button btnNew;
         private Label lblGroomyCustomers;
-        private ListBox listCustomers;
         private Button btnDelete;
         private Button btnEdit;
         private Panel panelNewCustomer;
@@ -387,5 +385,6 @@
         private Label lblNewCustomer;
         private Button btnSave;
         private Button btnBack;
+        private DataGridView dataGridView1;
     }
 }
