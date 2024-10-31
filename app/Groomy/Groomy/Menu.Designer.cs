@@ -140,32 +140,38 @@
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnDelete.ForeColor = Color.White;
             btnDelete.Location = new Point(320, 87);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(103, 23);
             btnDelete.TabIndex = 35;
             btnDelete.Text = "Delete Customer";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
+            btnEdit.BackColor = Color.FromArgb(21, 96, 130);
+            btnEdit.ForeColor = Color.White;
             btnEdit.Location = new Point(211, 87);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(103, 23);
             btnEdit.TabIndex = 34;
             btnEdit.Text = "Edit Customer";
-            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.UseVisualStyleBackColor = false;
             btnEdit.Click += btnEdit_Click;
             // 
             // btnNew
             // 
+            btnNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnNew.ForeColor = Color.White;
             btnNew.Location = new Point(102, 87);
             btnNew.Name = "btnNew";
             btnNew.Size = new Size(103, 23);
             btnNew.TabIndex = 22;
             btnNew.Text = "New Customer";
-            btnNew.UseVisualStyleBackColor = true;
+            btnNew.UseVisualStyleBackColor = false;
             btnNew.Click += btnNew_Click;
             // 
             // lblGroomyCustomers
@@ -210,7 +216,9 @@
             btnSave.Size = new Size(103, 23);
             btnSave.TabIndex = 53;
             btnSave.Text = "Save";
-            btnSave.UseVisualStyleBackColor = true;
+            btnSave.BackColor = Color.FromArgb(21, 96, 130);
+            btnSave.ForeColor = Color.White;
+            btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
             // btnBack
@@ -220,7 +228,9 @@
             btnBack.Size = new Size(103, 23);
             btnBack.TabIndex = 52;
             btnBack.Text = "Back";
-            btnBack.UseVisualStyleBackColor = true;
+            btnBack.BackColor = Color.FromArgb(21, 96, 130);
+            btnBack.ForeColor = Color.White;
+            btnBack.UseVisualStyleBackColor = false;
             btnBack.Click += btnBack_Click;
             // 
             // lblNewCustomer
