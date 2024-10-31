@@ -8,7 +8,6 @@ using Moq;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Diagnostics;
 using System.Reflection;
-using Groomy.User;
 
 namespace Groomy.Tests
 {

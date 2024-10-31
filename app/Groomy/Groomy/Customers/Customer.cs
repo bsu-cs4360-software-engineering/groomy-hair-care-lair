@@ -29,6 +29,17 @@ namespace Groomy.Customers
             phoneNumber = pNumber;
             address = addr;
         }
+        public Customer(string customerID)
+        {
+            var dbManager = databaseManager.GetInstance(new FileService());
+            var customerData = dbManager.LoadObjectFromDB(GetKey(), GetDBFilePath());
+
+            firstName = customerData["FirstName"].ToString();
+            lastName = customerData["LastName"].ToString();
+            email = customerData["Email"].ToString();
+            phoneNumber = customerData["PhoneNumber"].ToString();
+            address = customerData["Address"].ToString();
+        }
         public Dictionary<string, object> GetFields()
         {
             return new Dictionary<string, object>

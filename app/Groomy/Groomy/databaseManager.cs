@@ -76,6 +76,15 @@ namespace Groomy
             database[genericObject.GetKey()] = objectData;
             SaveDatabase(database, filePath);
         }
+        public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            if (database.ContainsKey(key))
+            {
+                return database[key];
+            }
+            return null;
+        }
         public void RemoveObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);

@@ -57,6 +57,17 @@ namespace Groomy
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            var selectedRow = dataGridView1.SelectedRows[0];
+            var email = selectedRow.Cells["Email"].Value.ToString();
+
+            var editedCustomer = dbManager.LoadObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.CustomersFilePath);
+            
+            txtFirst.Text = editedCustomer["FirstName"].ToString();
+            txtLast.Text = editedCustomer["LastName"].ToString();
+            txtEmail.Text = editedCustomer["Email"].ToString();
+            txtPN.Text = editedCustomer["PhoneNumber"].ToString();
+            txtAddress.Text = editedCustomer["Address"].ToString();
+
             activatePanel(panelNewCustomer);
         }
 
@@ -118,6 +129,22 @@ namespace Groomy
 
             // If all checks pass, return true
             return true;
+        }
+
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                var selectedRow = dataGridView1.SelectedRows[0];
+                var email = selectedRow.Cells["Email"].Value.ToString();
+                dbManager.RemoveObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.CustomersFilePath);
+                loadCustomerData();
+            }
+            else
+            {
+                Helpers.messageBoxError("No customer selected. Please select a customer to delete.");
+            }
         }
     }
 }

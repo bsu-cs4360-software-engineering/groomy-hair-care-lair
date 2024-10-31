@@ -146,6 +146,7 @@
             btnDelete.TabIndex = 35;
             btnDelete.Text = "Delete Customer";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
@@ -332,7 +333,7 @@
             lblFirst.TabIndex = 38;
             lblFirst.Text = "First Name:";
             // 
-            // Welcome
+            // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -344,7 +345,7 @@
             MaximizeBox = false;
             MaximumSize = new Size(775, 604);
             MinimumSize = new Size(775, 604);
-            Name = "Welcome";
+            Name = "Menu";
             Text = "Groomy";
             panel1.ResumeLayout(false);
             panelWelcome.ResumeLayout(false);

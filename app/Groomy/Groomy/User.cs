@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Groomy.Customers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Groomy
 {
 
-    public class User
+    public class User: IGenericObject
     {
         private string f;
         private string l;
@@ -32,10 +35,29 @@ namespace Groomy
 
             AddUser();
         }
-
+        public string GetKey()
+        {
+            return userID;
+        }
         private void AddUser()
         {
             Database.AddUser(this);
+        }
+
+        public Dictionary<string, object> GetFields()
+        {
+            return new Dictionary<string, object>
+            {
+                { "FirstName", f },
+                { "LastName", l },
+                { "Email", e },
+                { "Password", p }
+            };
+        }
+
+        public string GetDBFilePath()
+        {
+            return "users.json";
         }
     }
 }
