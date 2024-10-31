@@ -69,12 +69,12 @@ namespace Groomy
                 Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
             }
         }
-        public void AddObjectToDB(IGenericObject genericObject, string filePath)
+        public void AddObjectToDB(IGenericObject genericObject)
         {
             var objectData = genericObject.GetFields();
-            var database = LoadDatabase(filePath);
+            var database = LoadDatabase(genericObject.GetDBFilePath());
             database[genericObject.GetKey()] = objectData;
-            SaveDatabase(database, filePath);
+            SaveDatabase(database, genericObject.GetDBFilePath());
         }
         public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
         {
