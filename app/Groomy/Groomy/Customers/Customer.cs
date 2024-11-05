@@ -29,8 +29,7 @@
         public Dictionary<string, Dictionary<string, object>> GetFields()
         {
             var temp = new Dictionary<string, Dictionary<string, object>>();
-            var CustomerData = new Dictionary<string, object>();
-            CustomerData[this.GetKey()] = new Dictionary<string, object>
+            temp["CustomerData"] = new Dictionary<string, object>
             {
                 { "FirstName", firstName },
                 { "LastName", lastName },
@@ -38,7 +37,6 @@
                 { "PhoneNumber", phoneNumber },
                 { "Address", address }
             };
-            temp["CustomerData"] = CustomerData;
             return temp;
         }
         public string GetKey()
