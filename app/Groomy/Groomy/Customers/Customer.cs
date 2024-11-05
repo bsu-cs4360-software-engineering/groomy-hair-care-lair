@@ -2,9 +2,9 @@
 {
     public interface IGenericObject
     {
-        public Dictionary<string, object> GetFields();
+        public Dictionary< string, Dictionary<string, object>> GetFields();
         public string GetKey();
-        public string GetDBFilePath();
+        public Dictionary<string, string> GetDBFilePaths();
     }
     public class Customer : IGenericObject
     {
@@ -14,7 +14,10 @@
         private string phoneNumber;
         private string address;
 
-        public const string CustomersFilePath = "customers.json";
+        public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
+        { 
+            { "CustomerData", "customers.json" } 
+        };
         public Customer(string fName, string lName, string eMail, string pNumber, string addr)
         {
             firstName = fName;
@@ -23,9 +26,11 @@
             phoneNumber = pNumber;
             address = addr;
         }
-        public Dictionary<string, object> GetFields()
+        public Dictionary<string, Dictionary<string, object>> GetFields()
         {
-            return new Dictionary<string, object>
+            var temp = new Dictionary<string, Dictionary<string, object>>();
+            var CustomerData = new Dictionary<string, object>();
+            CustomerData[this.GetKey()] = new Dictionary<string, object>
             {
                 { "FirstName", firstName },
                 { "LastName", lastName },
@@ -33,14 +38,16 @@
                 { "PhoneNumber", phoneNumber },
                 { "Address", address }
             };
+            temp["CustomerData"] = CustomerData;
+            return temp;
         }
         public string GetKey()
         {
             return Helpers.GenerateSHA256Hash(email);
         }
-        public string GetDBFilePath()
+        public Dictionary<string, string> GetDBFilePaths()
         {
-            return CustomersFilePath;
+            return FilePaths;
         }
     }
 }

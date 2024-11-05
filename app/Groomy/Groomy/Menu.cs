@@ -62,7 +62,7 @@ namespace Groomy
 
             if (!string.IsNullOrEmpty(email))
             {
-                var editedCustomer = dbManager.LoadObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.CustomersFilePath);
+                var editedCustomer = dbManager.LoadObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.FilePaths["CustomerData"]);
 
                 txtFirst.Text = editedCustomer["FirstName"].ToString();
                 txtLast.Text = editedCustomer["LastName"].ToString();
@@ -105,14 +105,15 @@ namespace Groomy
             if (validateCustomerForms())
             {
                 var newCustomer = new Customer(txtFirst.Text, txtLast.Text, txtEmail.Text, txtPN.Text, txtAddress.Text);
-                dbManager.AddObjectToDB(newCustomer);
+                //dbManager.AddObjectToDB(newCustomer);
+                dbManager.AddObjectsToDB(newCustomer);
                 loadCustomerData();
                 activatePanel(panelCustomers);
             }
         }
         private void loadCustomerData()
         {
-            dataGridView1.DataSource = dbManager.GetDataTable(Customer.CustomersFilePath, 4);
+            dataGridView1.DataSource = dbManager.GetDataTable(Customer.FilePaths["CustomerData"], 4);
         }
 
         private void clearCustomerForms()
@@ -174,7 +175,7 @@ namespace Groomy
             if (!string.IsNullOrEmpty(email))
             {
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?")){
-                    dbManager.RemoveObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.CustomersFilePath);
+                    dbManager.RemoveObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.FilePaths["CustomerData"]);
                     loadCustomerData();
                 }
             }

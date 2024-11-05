@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Groomy
 {
- 
+
     internal class databaseManager
     {
         private static readonly object _lock = new object(); // Lock for thread safety
@@ -56,7 +56,7 @@ namespace Groomy
                 return new Dictionary<string, Dictionary<string, object>>();
             }
         }
-        private void SaveDatabase(Dictionary<string, Dictionary<string, object>> data,string filePath)
+        private void SaveDatabase(Dictionary<string, Dictionary<string, object>> data, string filePath)
         {
             try
             {
@@ -69,12 +69,28 @@ namespace Groomy
                 Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
             }
         }
+        /*
         public void AddObjectToDB(IGenericObject genericObject)
         {
             var objectData = genericObject.GetFields();
-            var database = LoadDatabase(genericObject.GetDBFilePath());
+            var database = LoadDatabase(genericObject.GetDBFilePaths()[]);
             database[genericObject.GetKey()] = objectData;
-            SaveDatabase(database, genericObject.GetDBFilePath());
+            SaveDatabase(database, genericObject.GetDBFilePaths());
+        }
+        */
+
+        public void AddObjectsToDB(IGenericObject genericObject)
+        {
+            var objectFields = genericObject.GetFields();
+            var objectFilePaths = genericObject.GetDBFilePaths();
+            foreach (var item in objectFilePaths)
+            {
+                var dataType = item.Key;
+                var filePath = item.Value;
+                var database = LoadDatabase(filePath);
+                database[genericObject.GetKey()] = objectFields[dataType];
+                SaveDatabase(database, filePath);
+            }
         }
         public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
         {
@@ -91,10 +107,7 @@ namespace Groomy
             database.Remove(key);
             SaveDatabase(database, filePath);
         }
-        public Dictionary<string, Dictionary<string, object>> Load(IGenericObject genericObject)
-        {
-            return LoadDatabase(genericObject.GetDBFilePath());
-        }
+        
         public DataTable GetDataTable(string filePath, int numberOfFields)
         {
             DataTable dataTable = new DataTable();
