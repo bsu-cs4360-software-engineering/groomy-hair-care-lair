@@ -92,6 +92,11 @@ namespace Groomy
                 SaveDatabase(database, filePath);
             }
         }
+        public bool CheckKeyExists(string key, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            return database.ContainsKey(key);
+        }
         public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);

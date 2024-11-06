@@ -8,6 +8,7 @@ namespace Groomy
     public partial class Login : Form
     {
         IFileService fileService = new FileService();
+        databaseManager dbManager = databaseManager.GetInstance(new FileService());
         public Login()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace Groomy
         }
         private bool checkIfKnownEmail(string emailHash)
         {
-            return UserDatabase.Instance(new FileService()).IsUser(emailHash);
+            return dbManager.CheckKeyExists(emailHash, "passwords.json");
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
@@ -47,8 +48,8 @@ namespace Groomy
 
             if (checkIfKnownEmail(hashedEmail))
             {
-                var userData = UserDatabase.Instance(fileService).GetUser(hashedEmail);
-                var passwordData = UserDatabase.Instance(fileService).GetPassword(hashedEmail);
+                var userData = dbManager.LoadObjectFromDB(hashedEmail, User.FilePaths["UserData"]);
+                var passwordData = dbManager.LoadObjectFromDB(hashedEmail, User.FilePaths["PasswordData"]);
                 if (passwordData.ContainsKey("Password") && passwordData["Password"].ToString() == hashedPassword.ToString())
                 {
                     Helpers.messageBoxSuccess("Logged in Successfully.");
