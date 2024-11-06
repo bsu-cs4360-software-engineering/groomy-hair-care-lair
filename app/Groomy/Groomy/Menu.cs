@@ -115,7 +115,7 @@ namespace Groomy
             }
         }
         private void loadCustomerData()
-        { 
+        {
             dataGridView1.DataSource = customerDBService.GetCustomerDataTable();
         }
 
@@ -187,6 +187,31 @@ namespace Groomy
             {
                 Helpers.messageBoxError("No customer selected. Please select a customer to delete.");
             }
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            activatePanel(apptCreEdit);
+        }
+
+        private void apptSave_Click(object sender, EventArgs e)
+        {
+            //To-Do Implement an appointment object
+        }
+
+        private void apptEdit_Click(object sender, EventArgs e)
+        {
+            activatePanel(apptCreEdit);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            activatePanel(apptPanel);
         }
     }
 }

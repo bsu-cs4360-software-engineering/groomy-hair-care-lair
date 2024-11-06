@@ -29,8 +29,23 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnAppointment = new Label();
             btnCustomers = new Label();
             btnWelcome = new Label();
+            apptCreEdit = new Panel();
+            apptPanel = new Panel();
+            apptView = new DataGridView();
+            apptDel = new Button();
+            apptEdit = new Button();
+            apptNew = new Button();
+            label2 = new Label();
+            apptTime = new DateTimePicker();
+            label4 = new Label();
+            apptDate = new DateTimePicker();
+            apptSave = new Button();
+            apptBack = new Button();
+            label3 = new Label();
+            label5 = new Label();
             label9 = new Label();
             panelWelcome = new Panel();
             panelCustomers = new Panel();
@@ -55,22 +70,41 @@
             lblLast = new Label();
             txtFirst = new TextBox();
             lblFirst = new Label();
+            apptCusSel = new DataGridView();
             panel1.SuspendLayout();
+            apptCreEdit.SuspendLayout();
+            apptPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)apptView).BeginInit();
             panelWelcome.SuspendLayout();
             panelCustomers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panelNewCustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)apptCusSel).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(21, 96, 130);
+            panel1.Controls.Add(btnAppointment);
             panel1.Controls.Add(btnCustomers);
             panel1.Controls.Add(btnWelcome);
             panel1.Location = new Point(0, -1);
             panel1.Name = "panel1";
             panel1.Size = new Size(221, 566);
             panel1.TabIndex = 17;
+            // 
+            // btnAppointment
+            // 
+            btnAppointment.BackColor = Color.FromArgb(29, 129, 175);
+            btnAppointment.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAppointment.ForeColor = Color.White;
+            btnAppointment.Location = new Point(0, 320);
+            btnAppointment.Name = "btnAppointment";
+            btnAppointment.Size = new Size(216, 44);
+            btnAppointment.TabIndex = 22;
+            btnAppointment.Text = "Appointments";
+            btnAppointment.TextAlign = ContentAlignment.MiddleCenter;
+            btnAppointment.Click += label1_Click;
             // 
             // btnCustomers
             // 
@@ -97,6 +131,159 @@
             btnWelcome.Text = "Welcome";
             btnWelcome.TextAlign = ContentAlignment.MiddleCenter;
             btnWelcome.Click += btnWelcome_Click;
+            // 
+            // apptCreEdit
+            // 
+            apptCreEdit.Controls.Add(apptCusSel);
+            apptCreEdit.Controls.Add(apptPanel);
+            apptCreEdit.Controls.Add(apptTime);
+            apptCreEdit.Controls.Add(label4);
+            apptCreEdit.Controls.Add(apptDate);
+            apptCreEdit.Controls.Add(apptSave);
+            apptCreEdit.Controls.Add(apptBack);
+            apptCreEdit.Controls.Add(label3);
+            apptCreEdit.Controls.Add(label5);
+            apptCreEdit.Location = new Point(222, 0);
+            apptCreEdit.Name = "apptCreEdit";
+            apptCreEdit.Size = new Size(528, 550);
+            apptCreEdit.TabIndex = 43;
+            // 
+            // apptPanel
+            // 
+            apptPanel.Controls.Add(apptView);
+            apptPanel.Controls.Add(apptDel);
+            apptPanel.Controls.Add(apptEdit);
+            apptPanel.Controls.Add(apptNew);
+            apptPanel.Controls.Add(label2);
+            apptPanel.Location = new Point(4, 12);
+            apptPanel.Name = "apptPanel";
+            apptPanel.Size = new Size(521, 553);
+            apptPanel.TabIndex = 38;
+            // 
+            // apptView
+            // 
+            apptView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            apptView.Location = new Point(36, 140);
+            apptView.Name = "apptView";
+            apptView.Size = new Size(449, 377);
+            apptView.TabIndex = 42;
+            // 
+            // apptDel
+            // 
+            apptDel.BackColor = Color.FromArgb(21, 96, 130);
+            apptDel.ForeColor = Color.White;
+            apptDel.Location = new Point(345, 99);
+            apptDel.Name = "apptDel";
+            apptDel.Size = new Size(140, 23);
+            apptDel.TabIndex = 41;
+            apptDel.Text = "Delete Appointment";
+            apptDel.UseVisualStyleBackColor = false;
+            // 
+            // apptEdit
+            // 
+            apptEdit.BackColor = Color.FromArgb(21, 96, 130);
+            apptEdit.ForeColor = Color.White;
+            apptEdit.Location = new Point(192, 99);
+            apptEdit.Name = "apptEdit";
+            apptEdit.Size = new Size(140, 23);
+            apptEdit.TabIndex = 40;
+            apptEdit.Text = "Edit Appointment";
+            apptEdit.UseVisualStyleBackColor = false;
+            apptEdit.Click += apptEdit_Click;
+            // 
+            // apptNew
+            // 
+            apptNew.BackColor = Color.FromArgb(21, 96, 130);
+            apptNew.ForeColor = Color.White;
+            apptNew.Location = new Point(36, 99);
+            apptNew.Name = "apptNew";
+            apptNew.Size = new Size(140, 23);
+            apptNew.TabIndex = 39;
+            apptNew.Text = "New Appointment";
+            apptNew.UseVisualStyleBackColor = false;
+            apptNew.Click += button3_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            label2.ForeColor = Color.FromArgb(21, 96, 130);
+            label2.Location = new Point(56, 24);
+            label2.Name = "label2";
+            label2.Size = new Size(410, 45);
+            label2.TabIndex = 38;
+            label2.Text = "Groomy Appointments";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // apptTime
+            // 
+            apptTime.Format = DateTimePickerFormat.Time;
+            apptTime.Location = new Point(88, 354);
+            apptTime.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
+            apptTime.Name = "apptTime";
+            apptTime.Size = new Size(321, 23);
+            apptTime.TabIndex = 70;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(88, 336);
+            label4.Name = "label4";
+            label4.Size = new Size(34, 15);
+            label4.TabIndex = 69;
+            label4.Text = "Time";
+            // 
+            // apptDate
+            // 
+            apptDate.Location = new Point(88, 304);
+            apptDate.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
+            apptDate.Name = "apptDate";
+            apptDate.Size = new Size(321, 23);
+            apptDate.TabIndex = 68;
+            // 
+            // apptSave
+            // 
+            apptSave.BackColor = Color.FromArgb(21, 96, 130);
+            apptSave.ForeColor = Color.White;
+            apptSave.Location = new Point(259, 71);
+            apptSave.Name = "apptSave";
+            apptSave.Size = new Size(103, 23);
+            apptSave.TabIndex = 67;
+            apptSave.Text = "Save";
+            apptSave.UseVisualStyleBackColor = false;
+            apptSave.Click += apptSave_Click;
+            // 
+            // apptBack
+            // 
+            apptBack.BackColor = Color.FromArgb(21, 96, 130);
+            apptBack.ForeColor = Color.White;
+            apptBack.Location = new Point(137, 71);
+            apptBack.Name = "apptBack";
+            apptBack.Size = new Size(103, 23);
+            apptBack.TabIndex = 66;
+            apptBack.Text = "Back";
+            apptBack.UseVisualStyleBackColor = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(21, 96, 130);
+            label3.Location = new Point(44, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(448, 45);
+            label3.TabIndex = 65;
+            label3.Text = "Create/Edit Appointment";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(88, 286);
+            label5.Name = "label5";
+            label5.Size = new Size(31, 15);
+            label5.TabIndex = 61;
+            label5.Text = "Date";
             // 
             // label9
             // 
@@ -211,25 +398,25 @@
             // 
             // btnSave
             // 
+            btnSave.BackColor = Color.FromArgb(21, 96, 130);
+            btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(266, 72);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(103, 23);
             btnSave.TabIndex = 53;
             btnSave.Text = "Save";
-            btnSave.BackColor = Color.FromArgb(21, 96, 130);
-            btnSave.ForeColor = Color.White;
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
             // btnBack
             // 
+            btnBack.BackColor = Color.FromArgb(21, 96, 130);
+            btnBack.ForeColor = Color.White;
             btnBack.Location = new Point(157, 74);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(103, 23);
             btnBack.TabIndex = 52;
             btnBack.Text = "Back";
-            btnBack.BackColor = Color.FromArgb(21, 96, 130);
-            btnBack.ForeColor = Color.White;
             btnBack.UseVisualStyleBackColor = false;
             btnBack.Click += btnBack_Click;
             // 
@@ -343,11 +530,20 @@
             lblFirst.TabIndex = 38;
             lblFirst.Text = "First Name:";
             // 
+            // apptCusSel
+            // 
+            apptCusSel.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            apptCusSel.Location = new Point(88, 104);
+            apptCusSel.Name = "apptCusSel";
+            apptCusSel.Size = new Size(321, 150);
+            apptCusSel.TabIndex = 71;
+            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(759, 565);
+            Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);
             Controls.Add(panelNewCustomer);
             Controls.Add(panelWelcome);
@@ -357,7 +553,13 @@
             MinimumSize = new Size(775, 604);
             Name = "Menu";
             Text = "Groomy";
+            Load += Menu_Load;
             panel1.ResumeLayout(false);
+            apptCreEdit.ResumeLayout(false);
+            apptCreEdit.PerformLayout();
+            apptPanel.ResumeLayout(false);
+            apptPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)apptView).EndInit();
             panelWelcome.ResumeLayout(false);
             panelWelcome.PerformLayout();
             panelCustomers.ResumeLayout(false);
@@ -365,6 +567,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panelNewCustomer.ResumeLayout(false);
             panelNewCustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)apptCusSel).EndInit();
             ResumeLayout(false);
         }
 
@@ -397,5 +600,21 @@
         private Button btnSave;
         private Button btnBack;
         private DataGridView dataGridView1;
+        private Label btnAppointment;
+        private Panel apptPanel;
+        private DataGridView apptView;
+        private Button apptDel;
+        private Button apptEdit;
+        private Button apptNew;
+        private Label label2;
+        private Panel apptCreEdit;
+        private Button apptBack;
+        private Label label3;
+        private Label label5;
+        private Button apptSave;
+        private DateTimePicker apptDate;
+        private Label label4;
+        private DateTimePicker apptTime;
+        private DataGridView apptCusSel;
     }
 }
