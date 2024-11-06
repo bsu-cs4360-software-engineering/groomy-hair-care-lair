@@ -179,7 +179,7 @@ namespace Groomy
             {
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?"))
                 {
-                    customerDBService.DeleteCustomer(Helpers.GenerateSHA256Hash(email));
+                    customerDBService.SoftDeleteCustomer(Helpers.GenerateSHA256Hash(email));
                     loadCustomerData();
                 }
             }

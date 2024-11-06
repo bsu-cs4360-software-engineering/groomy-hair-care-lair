@@ -23,7 +23,10 @@ namespace Groomy.Customers
         {
             dbManager.RemoveObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
         }
-
+        public void SoftDeleteCustomer(string customerID)
+        {
+            dbManager.SoftDeleteObjectInDB(customerID, Customer.FilePaths["CustomerData"]);
+        }
         public DataTable GetCustomerDataTable()
         {
            return dbManager.GetDataTable(Customer.FilePaths["CustomerData"], 4);

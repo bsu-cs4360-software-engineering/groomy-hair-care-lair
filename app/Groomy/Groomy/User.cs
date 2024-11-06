@@ -16,7 +16,6 @@ namespace Groomy
         private string l;
         private string e;
         private string p;
-        //private IDatabase db;
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
         {
@@ -30,9 +29,6 @@ namespace Groomy
         public string Email => e;
         public string userID => Helpers.GenerateSHA256Hash(e);
         public string HashedPassword => p;
-        //public IDatabase Database => db;
-
-
         public User(string fName, string lName, string eMail, string password)
         {
             f = fName;
@@ -44,13 +40,6 @@ namespace Groomy
         {
             return userID;
         }
-        /*
-        private void AddUser()
-        {
-            Database.AddUser(this);
-        }
-        */
-
         public Dictionary<string, Dictionary<string, object>> GetFields()
         {
             var temp = new Dictionary<string, Dictionary<string, object>>();

@@ -10,7 +10,23 @@ using System.Threading.Tasks;
 
 namespace Groomy
 {
+    public interface IFileService
+    {
+        string ReadAllText(string path);
+        void WriteAllText(string path, string contents);
+    }
+    public class FileService : IFileService
+    {
+        public string ReadAllText(string path)
+        {
+            return File.ReadAllText(path);
+        }
 
+        public void WriteAllText(string path, string contents)
+        {
+            File.WriteAllText(path, contents);
+        }
+    }
     public class databaseManager
     {
         private static readonly object _lock = new object(); // Lock for thread safety
@@ -69,16 +85,6 @@ namespace Groomy
                 Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
             }
         }
-        /*
-        public void AddObjectToDB(IGenericObject genericObject)
-        {
-            var objectData = genericObject.GetFields();
-            var database = LoadDatabase(genericObject.GetDBFilePaths()[]);
-            database[genericObject.GetKey()] = objectData;
-            SaveDatabase(database, genericObject.GetDBFilePaths());
-        }
-        */
-
         public void AddObjectsToDB(IGenericObject genericObject)
         {
             var objectFields = genericObject.GetFields();
@@ -111,12 +117,25 @@ namespace Groomy
         public void RemoveObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
-            database.Remove(key);
-            SaveDatabase(database, filePath);
+            if (database.ContainsKey(key))
+            {
+                database.Remove(key);
+                SaveDatabase(database, filePath);
+            }
         }
-        
+        public void SoftDeleteObjectInDB(string key, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            if (database.ContainsKey(key))
+            {
+                database[key]["IsDeleted"] = true;
+                SaveDatabase(database, filePath);
+            }
+        }
+
         public DataTable GetDataTable(string filePath, int numberOfFields)
         {
+            Debug.WriteLine($"Reading {filePath}");
             DataTable dataTable = new DataTable();
 
             var data = LoadDatabase(filePath);
@@ -135,6 +154,10 @@ namespace Groomy
             // Add rows
             foreach (var item in data)
             {
+                if (item.Value.ContainsKey("IsDeleted"))
+                {
+                    continue;
+                }
                 DataRow row = dataTable.NewRow();
                 foreach (var key in keys)
                 {
