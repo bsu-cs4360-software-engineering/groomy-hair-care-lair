@@ -111,12 +111,25 @@ namespace Groomy
         public void RemoveObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
-            database.Remove(key);
-            SaveDatabase(database, filePath);
+            if (database.ContainsKey(key))
+            {
+                database.Remove(key);
+                SaveDatabase(database, filePath);
+            }
         }
-        
+        public void SoftDeleteObjectInDB(string key, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            if (database.ContainsKey(key))
+            {
+                database[key]["IsDeleted"] = true;
+                SaveDatabase(database, filePath);
+            }
+        }
+
         public DataTable GetDataTable(string filePath, int numberOfFields)
         {
+            Debug.WriteLine($"Reading {filePath}");
             DataTable dataTable = new DataTable();
 
             var data = LoadDatabase(filePath);
@@ -135,6 +148,10 @@ namespace Groomy
             // Add rows
             foreach (var item in data)
             {
+                if (item.Value.ContainsKey("IsDeleted"))
+                {
+                    continue;
+                }
                 DataRow row = dataTable.NewRow();
                 foreach (var key in keys)
                 {
