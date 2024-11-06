@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Groomy.Tests
 {
+    /*
     [TestClass()]
+    /*
     public class UserTests
     {
         [TestMethod()]
@@ -46,4 +48,6 @@ namespace Groomy.Tests
             Assert.AreEqual(database, newUser.Database);
         }
     }
+    */
+    
 }

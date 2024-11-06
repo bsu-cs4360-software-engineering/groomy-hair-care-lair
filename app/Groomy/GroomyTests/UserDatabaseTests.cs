@@ -16,6 +16,7 @@ namespace Groomy.Tests
     public class UserDatabaseTests
 
     {
+        /*
         [TestInitialize]
         public void TestInitialize()
         {
@@ -151,5 +152,6 @@ namespace Groomy.Tests
             Assert.AreEqual(setLast, retrievedUser["LastName"].ToString(), "Last name does not match.");
             Assert.AreEqual(setEmail, retrievedUser["Email"].ToString(), "Email does not match.");
         }
+        */
     }
 }

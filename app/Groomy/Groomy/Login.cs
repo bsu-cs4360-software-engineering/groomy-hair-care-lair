@@ -7,7 +7,7 @@ namespace Groomy
 {
     public partial class Login : Form
     {
-        UserDBService userDBService = new UserDBService(databaseManager.GetInstance(new FileService()));
+        UserDBService userDBService = new UserDBService(DatabaseManager.GetInstance(new FileService()));
         public Login()
         {
             InitializeComponent();

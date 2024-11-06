@@ -32,7 +32,7 @@ namespace Groomy
         private void onLoad(object sender, EventArgs e)
         {
 
-            customerDBService = new CustomerDBService(databaseManager.GetInstance(new FileService()));
+            customerDBService = new CustomerDBService(DatabaseManager.GetInstance(new FileService()));
             activatePanel(panelWelcome);
             loadCustomerData();
         }

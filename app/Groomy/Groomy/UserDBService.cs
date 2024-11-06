@@ -6,8 +6,8 @@ namespace Groomy
 {
     internal class UserDBService
     {
-        private databaseManager dbManager;
-        public UserDBService(databaseManager dbm)
+        private DatabaseManager dbManager;
+        public UserDBService(DatabaseManager dbm)
         {
             dbManager = dbm;
         }

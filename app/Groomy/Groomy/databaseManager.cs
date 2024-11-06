@@ -14,6 +14,7 @@ namespace Groomy
     {
         string ReadAllText(string path);
         void WriteAllText(string path, string contents);
+        bool Exists(string path);
     }
     public class FileService : IFileService
     {
@@ -26,19 +27,27 @@ namespace Groomy
         {
             File.WriteAllText(path, contents);
         }
+        public bool Exists(string path)
+        {
+            return File.Exists(path);
+        }
     }
-    public class databaseManager
+    public class DatabaseManager
     {
         private static readonly object _lock = new object(); // Lock for thread safety
         private readonly IFileService _fileService;
-        private static databaseManager _instance;
+        private static DatabaseManager _instance;
+        public static void ResetInstance()
+        {
+            _instance = null;
+        }
 
-        private databaseManager(IFileService fileService)
+        public DatabaseManager(IFileService fileService)
         {
             _fileService = fileService;
         }
 
-        public static databaseManager GetInstance(IFileService fileService)
+        public static DatabaseManager GetInstance(IFileService fileService)
         {
             if (_instance == null)
             {
@@ -46,18 +55,29 @@ namespace Groomy
                 {
                     if (_instance == null)
                     {
-                        _instance = new databaseManager(fileService);
+                        _instance = new DatabaseManager(fileService);
                     }
                 }
             }
             return _instance;
         }
-
+        public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            if (database.ContainsKey(key))
+            {
+                return database[key];
+            }
+            else
+            {
+                return null;
+            }
+        }
         private Dictionary<string, Dictionary<string, object>> LoadDatabase(string filePath)
         {
             try
             {
-                if (!File.Exists(filePath))
+                if (!_fileService.Exists(filePath))
                 {
                     return new Dictionary<string, Dictionary<string, object>>();
                 }
@@ -77,7 +97,7 @@ namespace Groomy
             try
             {
                 string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(filePath, json);
+                _fileService.WriteAllText(filePath, json);
                 Debug.WriteLine($"Data saved to {filePath} successfully.");
             }
             catch (Exception ex)
@@ -103,17 +123,7 @@ namespace Groomy
             var database = LoadDatabase(filePath);
             return database.ContainsKey(key);
         }
-        public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
-        {
-            var database = LoadDatabase(filePath);
-            if (database.ContainsKey(key))
-            {
-                return database[key];
-            } else
-            {
-                return null;
-            }
-        }
+        
         public void RemoveObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
@@ -128,7 +138,7 @@ namespace Groomy
             var database = LoadDatabase(filePath);
             if (database.ContainsKey(key))
             {
-                database[key]["IsDeleted"] = true;
+                database[key]["isDeleted"] = true;
                 SaveDatabase(database, filePath);
             }
         }
