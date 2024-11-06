@@ -10,7 +10,23 @@ using System.Threading.Tasks;
 
 namespace Groomy
 {
+    public interface IFileService
+    {
+        string ReadAllText(string path);
+        void WriteAllText(string path, string contents);
+    }
+    public class FileService : IFileService
+    {
+        public string ReadAllText(string path)
+        {
+            return File.ReadAllText(path);
+        }
 
+        public void WriteAllText(string path, string contents)
+        {
+            File.WriteAllText(path, contents);
+        }
+    }
     public class databaseManager
     {
         private static readonly object _lock = new object(); // Lock for thread safety
@@ -69,16 +85,6 @@ namespace Groomy
                 Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
             }
         }
-        /*
-        public void AddObjectToDB(IGenericObject genericObject)
-        {
-            var objectData = genericObject.GetFields();
-            var database = LoadDatabase(genericObject.GetDBFilePaths()[]);
-            database[genericObject.GetKey()] = objectData;
-            SaveDatabase(database, genericObject.GetDBFilePaths());
-        }
-        */
-
         public void AddObjectsToDB(IGenericObject genericObject)
         {
             var objectFields = genericObject.GetFields();
