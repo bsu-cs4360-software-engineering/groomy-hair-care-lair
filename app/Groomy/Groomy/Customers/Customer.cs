@@ -13,6 +13,7 @@
         private string email;
         private string phoneNumber;
         private string address;
+        public string customerID => Helpers.GenerateSHA256Hash(email);
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
         { 
@@ -41,7 +42,7 @@
         }
         public string GetKey()
         {
-            return Helpers.GenerateSHA256Hash(email);
+            return customerID;
         }
         public Dictionary<string, string> GetDBFilePaths()
         {

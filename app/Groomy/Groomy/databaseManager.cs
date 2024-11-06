@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Groomy
 {
 
-    internal class databaseManager
+    public class databaseManager
     {
         private static readonly object _lock = new object(); // Lock for thread safety
         private readonly IFileService _fileService;
@@ -92,7 +92,7 @@ namespace Groomy
                 SaveDatabase(database, filePath);
             }
         }
-        public bool CheckKeyExists(string key, string filePath)
+        public bool KeyExists(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
             return database.ContainsKey(key);
@@ -103,8 +103,10 @@ namespace Groomy
             if (database.ContainsKey(key))
             {
                 return database[key];
+            } else
+            {
+                return null;
             }
-            return null;
         }
         public void RemoveObjectFromDB(string key, string filePath)
         {

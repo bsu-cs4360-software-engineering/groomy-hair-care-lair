@@ -14,7 +14,8 @@ namespace Groomy
 {
     public partial class Menu : Form
     {
-        databaseManager dbManager = databaseManager.GetInstance(new FileService());
+        CustomerDBService customerDBService;
+
         private void activatePanel(Panel panel)
         {
             var panelWH = new Size(520, 550);
@@ -30,6 +31,8 @@ namespace Groomy
         }
         private void onLoad(object sender, EventArgs e)
         {
+
+            customerDBService = new CustomerDBService(databaseManager.GetInstance(new FileService()));
             activatePanel(panelWelcome);
             loadCustomerData();
         }
@@ -62,7 +65,7 @@ namespace Groomy
 
             if (!string.IsNullOrEmpty(email))
             {
-                var editedCustomer = dbManager.LoadObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.FilePaths["CustomerData"]);
+                var editedCustomer = customerDBService.ReadCustomer(Helpers.GenerateSHA256Hash(email));
 
                 txtFirst.Text = editedCustomer["FirstName"].ToString();
                 txtLast.Text = editedCustomer["LastName"].ToString();
@@ -106,14 +109,14 @@ namespace Groomy
             {
                 var newCustomer = new Customer(txtFirst.Text, txtLast.Text, txtEmail.Text, txtPN.Text, txtAddress.Text);
                 //dbManager.AddObjectToDB(newCustomer);
-                dbManager.AddObjectsToDB(newCustomer);
+                customerDBService.CreateCustomer(newCustomer);
                 loadCustomerData();
                 activatePanel(panelCustomers);
             }
         }
         private void loadCustomerData()
-        {
-            dataGridView1.DataSource = dbManager.GetDataTable(Customer.FilePaths["CustomerData"], 4);
+        { 
+            dataGridView1.DataSource = customerDBService.GetCustomerDataTable();
         }
 
         private void clearCustomerForms()
@@ -174,8 +177,9 @@ namespace Groomy
 
             if (!string.IsNullOrEmpty(email))
             {
-                if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?")){
-                    dbManager.RemoveObjectFromDB(Helpers.GenerateSHA256Hash(email), Customer.FilePaths["CustomerData"]);
+                if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?"))
+                {
+                    customerDBService.DeleteCustomer(Helpers.GenerateSHA256Hash(email));
                     loadCustomerData();
                 }
             }
