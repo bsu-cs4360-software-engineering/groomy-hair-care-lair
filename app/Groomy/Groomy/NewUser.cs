@@ -14,7 +14,7 @@ namespace Groomy
 {
     public partial class NewUser : Form
     {
-        databaseManager dbManager = databaseManager.GetInstance(new FileService());
+        UserDBService userDBService = new UserDBService(databaseManager.GetInstance(new FileService()));
         public NewUser()
         {
             InitializeComponent();
@@ -62,7 +62,7 @@ namespace Groomy
                 //create new user object + save new user object to database
                 var (fName, lName, eMail, password) = getNewUserFields();
                 User newUser = new User(fName, lName, eMail, password);
-                dbManager.AddObjectsToDB(newUser);
+                userDBService.CreateUser(newUser);
                 Helpers.messageBoxSuccess("User Successfully Created");
                 this.Close();
             }

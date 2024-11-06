@@ -7,8 +7,7 @@ namespace Groomy
 {
     public partial class Login : Form
     {
-        IFileService fileService = new FileService();
-        databaseManager dbManager = databaseManager.GetInstance(new FileService());
+        UserDBService userDBService = new UserDBService(databaseManager.GetInstance(new FileService()));
         public Login()
         {
             InitializeComponent();
@@ -36,21 +35,23 @@ namespace Groomy
         {
             windowFx.OpenForm("Groomy.Menu", false);
         }
-        private bool checkIfKnownEmail(string emailHash)
+        private bool IsUser(string userID)
         {
-            return dbManager.CheckKeyExists(emailHash, "passwords.json");
+            return userDBService.IsUser(userID);
+        }
+        private bool IsCorrectPassword(string userID, string hashedPassword)
+        {
+            return userDBService.IsCorrectPassword(userID, hashedPassword);
         }
         private void btn_login_Click(object sender, EventArgs e)
         {
-            string hashedEmail = Helpers.GenerateSHA256Hash(txt_email.Text);
+            string userID = Helpers.GenerateSHA256Hash(txt_email.Text);
             string hashedPassword = Helpers.GenerateSHA256Hash(txt_password.Text);
 
 
-            if (checkIfKnownEmail(hashedEmail))
+            if (IsUser(userID))
             {
-                var userData = dbManager.LoadObjectFromDB(hashedEmail, User.FilePaths["UserData"]);
-                var passwordData = dbManager.LoadObjectFromDB(hashedEmail, User.FilePaths["PasswordData"]);
-                if (passwordData.ContainsKey("Password") && passwordData["Password"].ToString() == hashedPassword.ToString())
+                if (IsCorrectPassword(userID, hashedPassword))
                 {
                     Helpers.messageBoxSuccess("Logged in Successfully.");
                     switchToMainMenu(sender, e);
