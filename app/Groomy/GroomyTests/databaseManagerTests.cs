@@ -107,7 +107,7 @@ namespace Groomy.Tests
             mockFileService.Setup(fs => fs.Exists(testFilePath)).Returns(true);
 
             //Act
-            var returnedJson = DBM.LoadObjectFromDB(testID, testFilePath);
+            var returnedJson = DBM.LoadJsonFromDB(testID, testFilePath);
             var actualValue = returnedJson[testKey].ToString();
 
             //Assert
@@ -165,11 +165,11 @@ public void SoftDeleteObjectInDBTest()
             .Callback<string, string>((path, content) => updatedJson = content);
 
         //Act - Before SoftDelete: Load the current database
-        var itemBeforeDelete = DBM.LoadObjectFromDB(testID, testFilePath); //Returns Dictionary<string, object>
+        var itemBeforeDelete = DBM.LoadJsonFromDB(testID, testFilePath); //Returns Dictionary<string, object>
 
         //Assert - Confirm "isDeleted" doesn't exist before SoftDelete
         Assert.IsNotNull(itemBeforeDelete, "The item should be a dictionary.");
-        Assert.IsFalse(itemBeforeDelete.ContainsKey("isDeleted"), "isDeleted should not exist before soft deletion.");
+        Assert.IsFalse(itemBeforeDelete.ContainsKey(DBM.isDeletedKey), "isDeleted should not exist before soft deletion.");
 
         //Act - Perform SoftDelete
         DBM.SoftDeleteObjectInDB(testID, testFilePath);
@@ -183,8 +183,8 @@ public void SoftDeleteObjectInDBTest()
         //Assert - Confirm "isDeleted" exists after SoftDelete
         Assert.IsTrue(dbAfterDelete.ContainsKey(testID), "The testID should still exist in the database after deletion.");
         var itemAfterDelete = dbAfterDelete[testID];
-        Assert.IsTrue(itemAfterDelete.ContainsKey("isDeleted"), "isDeleted should exist after soft deletion.");
-        Assert.AreEqual(true, itemAfterDelete["isDeleted"], "isDeleted should be true after soft deletion.");
+        Assert.IsTrue(itemAfterDelete.ContainsKey(DBM.isDeletedKey), "isDeleted should exist after soft deletion.");
+        Assert.AreEqual(true, itemAfterDelete[DBM.isDeletedKey], "isDeleted should be true after soft deletion.");
 
         //Optional: Verify that WriteAllText was called once
         mockFileService.Verify(fs => fs.WriteAllText(testFilePath, It.IsAny<string>()), Times.Once);

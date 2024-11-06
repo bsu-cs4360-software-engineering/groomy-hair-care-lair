@@ -17,7 +17,7 @@ namespace Groomy.Customers
         }
         public Dictionary<string, object> ReadCustomer(string customerID)
         {
-            return dbManager.LoadObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
+            return dbManager.LoadJsonFromDB(customerID, Customer.FilePaths["CustomerData"]);
         }
         public void DeleteCustomer(string customerID)
         {

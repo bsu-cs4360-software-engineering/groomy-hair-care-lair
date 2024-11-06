@@ -17,7 +17,16 @@ namespace Groomy
         {
             { "AppointmentData", "appointments.json" }
         };
-
+        public IGenericObject FromDictionary(Dictionary<string, object> dict)
+        {
+            customerID = dict["CustomerID"].ToString();
+            title = dict["Title"].ToString();
+            description = dict["Description"].ToString();
+            startTime = (DateTime)dict["StartTime"];
+            endTime = (DateTime)dict["EndTime"];
+            location = dict["Location"].ToString();
+            return this;
+        }
         public Appointment(string cID, string t, string d, DateTime sT, DateTime eT, string l)
         {
             customerID = cID;

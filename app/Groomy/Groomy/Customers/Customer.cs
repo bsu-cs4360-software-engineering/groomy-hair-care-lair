@@ -5,8 +5,9 @@
         public Dictionary< string, Dictionary<string, object>> GetFields();
         public string GetKey();
         public Dictionary<string, string> GetDBFilePaths();
+        public IGenericObject FromDictionary(Dictionary<string, object> dict);
     }
-    public class Customer : IGenericObject
+    internal class Customer : IGenericObject
     {
         private string firstName;
         private string lastName;
@@ -19,6 +20,15 @@
         { 
             { "CustomerData", "customers.json" } 
         };
+        public IGenericObject FromDictionary(Dictionary<string, object> dict)
+        {
+            firstName = dict["FirstName"].ToString();
+            lastName = dict["LastName"].ToString();
+            email = dict["Email"].ToString();
+            phoneNumber = dict["PhoneNumber"].ToString();
+            address = dict["Address"].ToString();
+            return this;
+        }
         public Customer(string fName, string lName, string eMail, string pNumber, string addr)
         {
             firstName = fName;

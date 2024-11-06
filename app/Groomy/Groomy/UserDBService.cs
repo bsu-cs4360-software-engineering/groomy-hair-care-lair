@@ -33,11 +33,11 @@ namespace Groomy
         }
         public Dictionary<string, object> ReadUserData(string userID)
         {
-            return dbManager.LoadObjectFromDB(userID, User.FilePaths["UserData"]);
+            return dbManager.LoadJsonFromDB(userID, User.FilePaths["UserData"]);
         }
         public Dictionary<string, object> ReadPasswordData(string userID)
         {
-            return dbManager.LoadObjectFromDB(userID, User.FilePaths["PasswordData"]);
+            return dbManager.LoadJsonFromDB(userID, User.FilePaths["PasswordData"]);
         }
         public void DeleteUser(string userID)
         {

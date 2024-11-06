@@ -37,6 +37,7 @@ namespace Groomy
         private static readonly object _lock = new object(); // Lock for thread safety
         private readonly IFileService _fileService;
         private static DatabaseManager _instance;
+        public string isDeletedKey = "IsDeleted";
         public static void ResetInstance()
         {
             _instance = null;
@@ -61,7 +62,7 @@ namespace Groomy
             }
             return _instance;
         }
-        public Dictionary<string, object> LoadObjectFromDB(string key, string filePath)
+        public Dictionary<string, object> LoadJsonFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
             if (database.ContainsKey(key))
@@ -72,6 +73,21 @@ namespace Groomy
             {
                 return null;
             }
+        }
+        public IGenericObject LoadObjectFromDB(string key, IGenericObject objectType)
+        {
+            var filePaths = objectType.GetDBFilePaths();
+            var firstKey = filePaths.Keys.First();
+            var database = objectType.GetFields()[filePaths[firstKey]];
+            if (database.ContainsKey(key))
+            {
+                return objectType.FromDictionary(database);
+            }
+            else
+            {
+                return null;
+            }
+
         }
         private Dictionary<string, Dictionary<string, object>> LoadDatabase(string filePath)
         {
@@ -138,7 +154,7 @@ namespace Groomy
             var database = LoadDatabase(filePath);
             if (database.ContainsKey(key))
             {
-                database[key]["isDeleted"] = true;
+                database[key][isDeletedKey] = true;
                 SaveDatabase(database, filePath);
             }
         }
@@ -164,7 +180,7 @@ namespace Groomy
             // Add rows
             foreach (var item in data)
             {
-                if (item.Value.ContainsKey("IsDeleted"))
+                if (item.Value.ContainsKey(isDeletedKey))
                 {
                     continue;
                 }

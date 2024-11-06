@@ -19,7 +19,7 @@ namespace Groomy
         }
         public Dictionary<string, object> ReadAppointmentData(string appointmentID)
         {
-            return _DatabaseManager.LoadObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            return _DatabaseManager.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
         }
         public void DeleteAppointment(string appointmentID)
         {

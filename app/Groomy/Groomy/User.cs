@@ -29,6 +29,14 @@ namespace Groomy
         public string Email => e;
         public string userID => Helpers.GenerateSHA256Hash(e);
         public string HashedPassword => p;
+        public IGenericObject FromDictionary(Dictionary<string, object> dict)
+        {
+            f = dict["FirstName"].ToString();
+            l = dict["LastName"].ToString();
+            e = dict["Email"].ToString();
+            p = dict["Password"].ToString();
+            return this;
+        }
         public User(string fName, string lName, string eMail, string password)
         {
             f = fName;
