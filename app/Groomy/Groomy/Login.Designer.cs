@@ -30,6 +30,7 @@ namespace Groomy
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             btn_login = new Button();
             btn_newUsr = new Button();
             txt_email = new TextBox();
@@ -168,6 +169,7 @@ namespace Groomy
             Controls.Add(txt_email);
             Controls.Add(btn_newUsr);
             Controls.Add(btn_login);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new Size(775, 604);
             MinimumSize = new Size(775, 604);

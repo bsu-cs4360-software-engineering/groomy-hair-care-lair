@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tabs));
             tabControl1 = new TabControl();
             welcomeTab = new TabPage();
+            label3 = new Label();
+            label2 = new Label();
             customersTab = new TabPage();
             button1 = new Button();
             bttnNewCus = new Button();
@@ -46,6 +49,7 @@
             btnEditAppt = new Button();
             refreshTimer = new System.Windows.Forms.Timer(components);
             tabControl1.SuspendLayout();
+            welcomeTab.SuspendLayout();
             customersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cusDataView).BeginInit();
             appointmentsTab.SuspendLayout();
@@ -71,16 +75,41 @@
             // 
             // welcomeTab
             // 
-            welcomeTab.Location = new Point(224, 4);
+            welcomeTab.BackColor = Color.White;
+            welcomeTab.Controls.Add(label3);
+            welcomeTab.Controls.Add(label2);
+            welcomeTab.Location = new Point(254, 4);
             welcomeTab.Name = "welcomeTab";
             welcomeTab.Padding = new Padding(3);
-            welcomeTab.Size = new Size(976, 692);
+            welcomeTab.Size = new Size(946, 692);
             welcomeTab.TabIndex = 0;
             welcomeTab.Text = "Welcome";
-            welcomeTab.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            label3.Font = new Font("Arial Black", 16F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(21, 96, 130);
+            label3.Location = new Point(3, 48);
+            label3.Name = "label3";
+            label3.Size = new Size(937, 45);
+            label3.TabIndex = 41;
+            label3.Text = "To get started, select a tab on the left-hand side";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            label2.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            label2.ForeColor = Color.FromArgb(21, 96, 130);
+            label2.Location = new Point(3, 3);
+            label2.Name = "label2";
+            label2.Size = new Size(937, 45);
+            label2.TabIndex = 40;
+            label2.Text = "Welcome to Groomy!";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // customersTab
             // 
+            customersTab.BackColor = Color.White;
             customersTab.Controls.Add(button1);
             customersTab.Controls.Add(bttnNewCus);
             customersTab.Controls.Add(cusDataView);
@@ -93,7 +122,6 @@
             customersTab.Size = new Size(946, 692);
             customersTab.TabIndex = 1;
             customersTab.Text = "Customers";
-            customersTab.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -165,6 +193,7 @@
             // 
             // appointmentsTab
             // 
+            appointmentsTab.BackColor = Color.White;
             appointmentsTab.Controls.Add(btnNewAppt);
             appointmentsTab.Controls.Add(dataGridView1);
             appointmentsTab.Controls.Add(label1);
@@ -175,7 +204,6 @@
             appointmentsTab.Size = new Size(946, 692);
             appointmentsTab.TabIndex = 2;
             appointmentsTab.Text = "Appointments";
-            appointmentsTab.UseVisualStyleBackColor = true;
             // 
             // btnNewAppt
             // 
@@ -245,10 +273,12 @@
             BackColor = Color.FromArgb(21, 96, 130);
             ClientSize = new Size(1204, 700);
             Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Tabs";
             Text = "Groomy";
             Load += Tabs_Load;
             tabControl1.ResumeLayout(false);
+            welcomeTab.ResumeLayout(false);
             customersTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)cusDataView).EndInit();
             appointmentsTab.ResumeLayout(false);
@@ -274,5 +304,7 @@
         private Label label1;
         private Button btnApptDel;
         private Button btnEditAppt;
+        private Label label3;
+        private Label label2;
     }
 }

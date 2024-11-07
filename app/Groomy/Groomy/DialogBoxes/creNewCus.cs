@@ -118,5 +118,10 @@ namespace Groomy.DialogBoxes
                 lblNewCustomer.Text = "Edit Customer";
             }
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }

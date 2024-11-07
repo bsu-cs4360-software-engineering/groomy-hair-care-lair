@@ -237,6 +237,7 @@
             MinimizeBox = false;
             MinimumSize = new Size(775, 604);
             Name = "NewUser";
+            ShowIcon = false;
             Text = "Creat a New User";
             panel1.ResumeLayout(false);
             ResumeLayout(false);

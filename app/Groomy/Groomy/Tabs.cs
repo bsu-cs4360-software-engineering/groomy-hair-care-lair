@@ -1,4 +1,5 @@
-﻿using Groomy.Customers;
+﻿using Groomy.Appointments;
+using Groomy.Customers;
 using Groomy.DialogBoxes;
 using System;
 using System.Collections.Generic;
