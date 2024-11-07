@@ -1,5 +1,4 @@
-﻿using Castle.Core.Resource;
-using Groomy.Customers;
+﻿using Groomy.Customers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
