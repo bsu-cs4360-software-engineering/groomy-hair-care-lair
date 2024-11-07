@@ -1,4 +1,5 @@
-﻿using Groomy.Customers;
+﻿using Castle.Core.Resource;
+using Groomy.Customers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,8 @@ namespace Groomy
     public partial class Menu : Form
     {
         CustomerDBService customerDBService;
+        AppointmentDBService appointmentDBService;
+        FileService fs;
 
         private void activatePanel(Panel panel)
         {
@@ -31,9 +34,12 @@ namespace Groomy
         }
         private void onLoad(object sender, EventArgs e)
         {
+            fs = new FileService();
+            customerDBService = new CustomerDBService(DatabaseManager.GetInstance(fs));
+            appointmentDBService = new AppointmentDBService(DatabaseManager.GetInstance(fs));
 
-            customerDBService = new CustomerDBService(DatabaseManager.GetInstance(new FileService()));
             activatePanel(panelWelcome);
+            loadAppointmentData();
             loadCustomerData();
         }
 
@@ -48,18 +54,18 @@ namespace Groomy
             activatePanel(panelWelcome);
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        private void btnNewCustomer_Click(object sender, EventArgs e)
         {
             clearCustomerForms();
             activatePanel(panelNewCustomer);
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
             activatePanel(panelCustomers);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEditCustomer_Click(object sender, EventArgs e)
         {
             string email = GetFieldFromSelection("Email", dataGridView1);
 
@@ -78,6 +84,32 @@ namespace Groomy
             else
             {
                 Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
+            }
+        }
+        private void apptEdit_Click(object sender, EventArgs e)
+        {
+            var customerID = GetFieldFromSelection("CustomerID", apptView);
+            var userID = UserAuth.GetInstance().getID();
+            Debug.WriteLine(userID);
+            if (string.IsNullOrEmpty(userID) || string.IsNullOrEmpty(customerID))
+            {
+                Helpers.messageBoxError("Error");
+            }
+            else
+            {
+                var tempAppointment = new Appointment(userID, customerID, "", "", DateTime.Now, DateTime.Now, "");
+                var appointmentID = tempAppointment.GetKey();
+
+                var editedAppointment = appointmentDBService.ReadAppointmentData(appointmentID);
+                var appointmentCustomerData = customerDBService.ReadCustomer(customerID);
+                var customerName = (appointmentCustomerData["FirstName"].ToString(), appointmentCustomerData["LastName"].ToString());
+                selectCustomerByName(customerName);
+                txtTitle.Text = editedAppointment["Title"].ToString();
+                txtDescription.Text = editedAppointment["Description"].ToString();
+                timeStart.Value = DateTime.Parse(editedAppointment["StartTime"].ToString());
+                timeEnd.Value = DateTime.Parse(editedAppointment["EndTime"].ToString());
+                txtLocation.Text = editedAppointment["Location"].ToString();
+                activatePanel(apptCreEdit);
             }
         }
         private string GetFieldFromSelection(string field, DataGridView dgv)
@@ -103,11 +135,11 @@ namespace Groomy
             }
             return val;
         }
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnSaveCustomer_Click(object sender, EventArgs e)
         {
             if (validateCustomerForms())
             {
-                var newCustomer = new Customer(txtFirst.Text, txtLast.Text, txtEmail.Text, txtPN.Text, txtAddress.Text);
+                var newCustomer = new Customer(UserAuth.GetInstance().getID(), txtFirst.Text, txtLast.Text, txtEmail.Text, txtPN.Text, txtAddress.Text);
                 //dbManager.AddObjectToDB(newCustomer);
                 customerDBService.CreateCustomer(newCustomer);
                 loadCustomerData();
@@ -118,6 +150,25 @@ namespace Groomy
         {
             dataGridView1.DataSource = customerDBService.GetCustomerDataTable();
         }
+        private void loadCustomers()
+        {
+            var userID = UserAuth.GetInstance().getID();
+            var customers = customerDBService.GetCustomersByUserID(userID);
+            comboCustomer.DataSource = customers.Select(c => (c.Item1, c.Item2)).ToList();
+        }
+        private void selectCustomerByName((string, string) name)
+        {
+            loadCustomers();
+            for (int i = 0; i < comboCustomer.Items.Count; i++)
+            {
+                var item = ((string, string))comboCustomer.Items[i];
+                if (item.Item1 == name.Item1 && item.Item2 == name.Item2)
+                {
+                    comboCustomer.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
 
         private void clearCustomerForms()
         {
@@ -127,6 +178,15 @@ namespace Groomy
             txtPN.Text = "";
             txtAddress.Text = "";
             txtNotes.Text = "";
+        }
+        private void clearAppointmentForms()
+        {
+            loadCustomers();
+            txtTitle.Text = "";
+            txtDescription.Text = "";
+            timeStart.Value = DateTime.Now;
+            timeEnd.Value = DateTime.Now;
+            txtLocation.Text = "";
         }
 
         private bool validateCustomerForms()
@@ -171,7 +231,7 @@ namespace Groomy
         }
 
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
             var email = GetFieldFromSelection("Email", dataGridView1);
 
@@ -194,24 +254,87 @@ namespace Groomy
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnNewAppointment_Click(object sender, EventArgs e)
         {
+            clearAppointmentForms();
             activatePanel(apptCreEdit);
         }
 
-        private void apptSave_Click(object sender, EventArgs e)
+        private bool validateAppointmentForms()
         {
-            //To-Do Implement an appointment object
+            if (txtTitle.Text == "")
+            {
+                Helpers.messageBoxError("Please enter a title for the appointment.");
+                return false;
+            }
+            if (txtDescription.Text == "")
+            {
+                Helpers.messageBoxError("Please enter a description for the appointment.");
+                return false;
+            }
+            if (timeStart.Value >= timeEnd.Value)
+            {
+                Helpers.messageBoxError("The start time must be before the end time.");
+                return false;
+            }
+            if (txtLocation.Text == "")
+            {
+                Helpers.messageBoxError("Please enter a location for the appointment.");
+                return false;
+            }
+            return true;
         }
-
-        private void apptEdit_Click(object sender, EventArgs e)
+        private void loadAppointmentData()
         {
-            activatePanel(apptCreEdit);
+            apptView.DataSource = appointmentDBService.GetAppointmentDataTable();
+        }
+        private void btnSaveAppointment_Click(object sender, EventArgs e)
+        {
+            if (validateAppointmentForms())
+            {
+                var selectedCustomer = ( (string, string) )comboCustomer.SelectedItem;
+                var customerID = customerDBService.GetCustomerIDByFirstLast(selectedCustomer);
+                var newAppointmnet = new Appointment(UserAuth.GetInstance().getID(), customerID, txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
+                appointmentDBService.CreateAppointment(newAppointmnet);
+                loadAppointmentData();
+                activatePanel(apptPanel);
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
             activatePanel(apptPanel);
+        }
+
+        private void apptBack_Click(object sender, EventArgs e)
+        {
+            activatePanel(apptPanel);
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void apptDel_Click(object sender, EventArgs e)
+        {
+            var customerID = GetFieldFromSelection("CustomerID", apptView);
+            if (string.IsNullOrEmpty(customerID))
+            {
+                Helpers.messageBoxError("No appointment selected. Please select an appointment to delete.");
+            } 
+            else
+            {
+                // Create a temporary Appointment object to generate the appointmentID
+                var tempAppointment = new Appointment(UserAuth.GetInstance().getID(), customerID, "", "", DateTime.Now, DateTime.Now, "");
+                var appointmentID = tempAppointment.GetKey();
+
+                if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
+                {
+                    appointmentDBService.SoftDeleteAppointment(appointmentID);
+                    loadAppointmentData();
+                }
+            }
         }
     }
 }

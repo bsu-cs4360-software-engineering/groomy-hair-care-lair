@@ -33,19 +33,29 @@
             btnCustomers = new Label();
             btnWelcome = new Label();
             apptCreEdit = new Panel();
+            comboCustomer = new ComboBox();
+            lblCustomer = new Label();
+            txtApptNotes = new TextBox();
+            lblApptNotes = new Label();
+            label1 = new Label();
+            txtTitle = new TextBox();
+            lblDescription = new Label();
+            lblLocation = new Label();
+            txtLocation = new TextBox();
+            timeEnd = new DateTimePicker();
+            lblEndTime = new Label();
+            txtDescription = new TextBox();
+            timeStart = new DateTimePicker();
+            lblStartTime = new Label();
+            apptSave = new Button();
+            apptBack = new Button();
+            label3 = new Label();
             apptPanel = new Panel();
             apptView = new DataGridView();
             apptDel = new Button();
             apptEdit = new Button();
             apptNew = new Button();
             label2 = new Label();
-            apptTime = new DateTimePicker();
-            label4 = new Label();
-            apptDate = new DateTimePicker();
-            apptSave = new Button();
-            apptBack = new Button();
-            label3 = new Label();
-            label5 = new Label();
             label9 = new Label();
             panelWelcome = new Panel();
             panelCustomers = new Panel();
@@ -70,7 +80,6 @@
             lblLast = new Label();
             txtFirst = new TextBox();
             lblFirst = new Label();
-            apptCusSel = new DataGridView();
             panel1.SuspendLayout();
             apptCreEdit.SuspendLayout();
             apptPanel.SuspendLayout();
@@ -79,7 +88,6 @@
             panelCustomers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panelNewCustomer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)apptCusSel).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -134,19 +142,183 @@
             // 
             // apptCreEdit
             // 
-            apptCreEdit.Controls.Add(apptCusSel);
-            apptCreEdit.Controls.Add(apptPanel);
-            apptCreEdit.Controls.Add(apptTime);
-            apptCreEdit.Controls.Add(label4);
-            apptCreEdit.Controls.Add(apptDate);
+            apptCreEdit.Controls.Add(comboCustomer);
+            apptCreEdit.Controls.Add(lblCustomer);
+            apptCreEdit.Controls.Add(txtApptNotes);
+            apptCreEdit.Controls.Add(lblApptNotes);
+            apptCreEdit.Controls.Add(label1);
+            apptCreEdit.Controls.Add(txtTitle);
+            apptCreEdit.Controls.Add(lblDescription);
+            apptCreEdit.Controls.Add(lblLocation);
+            apptCreEdit.Controls.Add(txtLocation);
+            apptCreEdit.Controls.Add(timeEnd);
+            apptCreEdit.Controls.Add(lblEndTime);
+            apptCreEdit.Controls.Add(txtDescription);
+            apptCreEdit.Controls.Add(timeStart);
+            apptCreEdit.Controls.Add(lblStartTime);
             apptCreEdit.Controls.Add(apptSave);
             apptCreEdit.Controls.Add(apptBack);
             apptCreEdit.Controls.Add(label3);
-            apptCreEdit.Controls.Add(label5);
-            apptCreEdit.Location = new Point(222, 0);
+            apptCreEdit.Location = new Point(227, 12);
             apptCreEdit.Name = "apptCreEdit";
             apptCreEdit.Size = new Size(528, 550);
             apptCreEdit.TabIndex = 43;
+            // 
+            // comboCustomer
+            // 
+            comboCustomer.FormattingEnabled = true;
+            comboCustomer.Location = new Point(89, 124);
+            comboCustomer.Name = "comboCustomer";
+            comboCustomer.Size = new Size(321, 23);
+            comboCustomer.TabIndex = 83;
+            // 
+            // lblCustomer
+            // 
+            lblCustomer.AutoSize = true;
+            lblCustomer.Location = new Point(90, 106);
+            lblCustomer.Name = "lblCustomer";
+            lblCustomer.Size = new Size(62, 15);
+            lblCustomer.TabIndex = 82;
+            lblCustomer.Text = "Customer:";
+            // 
+            // txtApptNotes
+            // 
+            txtApptNotes.Location = new Point(89, 436);
+            txtApptNotes.Multiline = true;
+            txtApptNotes.Name = "txtApptNotes";
+            txtApptNotes.Size = new Size(321, 71);
+            txtApptNotes.TabIndex = 80;
+            // 
+            // lblApptNotes
+            // 
+            lblApptNotes.AutoSize = true;
+            lblApptNotes.Location = new Point(89, 418);
+            lblApptNotes.Name = "lblApptNotes";
+            lblApptNotes.Size = new Size(41, 15);
+            lblApptNotes.TabIndex = 79;
+            lblApptNotes.Text = "Notes:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(91, 150);
+            label1.Name = "label1";
+            label1.Size = new Size(32, 15);
+            label1.TabIndex = 78;
+            label1.Text = "Title:";
+            label1.Click += label1_Click_1;
+            // 
+            // txtTitle
+            // 
+            txtTitle.Location = new Point(89, 168);
+            txtTitle.Name = "txtTitle";
+            txtTitle.Size = new Size(321, 23);
+            txtTitle.TabIndex = 77;
+            // 
+            // lblDescription
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Location = new Point(89, 194);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(70, 15);
+            lblDescription.TabIndex = 76;
+            lblDescription.Text = "Description:";
+            // 
+            // lblLocation
+            // 
+            lblLocation.AutoSize = true;
+            lblLocation.Location = new Point(89, 326);
+            lblLocation.Name = "lblLocation";
+            lblLocation.Size = new Size(56, 15);
+            lblLocation.TabIndex = 75;
+            lblLocation.Text = "Location:";
+            // 
+            // txtLocation
+            // 
+            txtLocation.Location = new Point(89, 344);
+            txtLocation.Multiline = true;
+            txtLocation.Name = "txtLocation";
+            txtLocation.Size = new Size(321, 71);
+            txtLocation.TabIndex = 74;
+            // 
+            // timeEnd
+            // 
+            timeEnd.Format = DateTimePickerFormat.Time;
+            timeEnd.Location = new Point(89, 300);
+            timeEnd.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
+            timeEnd.Name = "timeEnd";
+            timeEnd.Size = new Size(321, 23);
+            timeEnd.TabIndex = 73;
+            // 
+            // lblEndTime
+            // 
+            lblEndTime.AutoSize = true;
+            lblEndTime.Location = new Point(89, 282);
+            lblEndTime.Name = "lblEndTime";
+            lblEndTime.Size = new Size(59, 15);
+            lblEndTime.TabIndex = 72;
+            lblEndTime.Text = "End Time:";
+            // 
+            // txtDescription
+            // 
+            txtDescription.Location = new Point(89, 212);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(321, 23);
+            txtDescription.TabIndex = 71;
+            // 
+            // timeStart
+            // 
+            timeStart.Format = DateTimePickerFormat.Time;
+            timeStart.Location = new Point(89, 256);
+            timeStart.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
+            timeStart.Name = "timeStart";
+            timeStart.Size = new Size(321, 23);
+            timeStart.TabIndex = 70;
+            // 
+            // lblStartTime
+            // 
+            lblStartTime.AutoSize = true;
+            lblStartTime.Location = new Point(89, 238);
+            lblStartTime.Name = "lblStartTime";
+            lblStartTime.Size = new Size(63, 15);
+            lblStartTime.TabIndex = 69;
+            lblStartTime.Text = "Start Time:";
+            // 
+            // apptSave
+            // 
+            apptSave.BackColor = Color.FromArgb(21, 96, 130);
+            apptSave.ForeColor = Color.White;
+            apptSave.Location = new Point(259, 71);
+            apptSave.Name = "apptSave";
+            apptSave.Size = new Size(103, 23);
+            apptSave.TabIndex = 67;
+            apptSave.Text = "Save";
+            apptSave.UseVisualStyleBackColor = false;
+            apptSave.Click += btnSaveAppointment_Click;
+            // 
+            // apptBack
+            // 
+            apptBack.BackColor = Color.FromArgb(21, 96, 130);
+            apptBack.ForeColor = Color.White;
+            apptBack.Location = new Point(137, 71);
+            apptBack.Name = "apptBack";
+            apptBack.Size = new Size(103, 23);
+            apptBack.TabIndex = 66;
+            apptBack.Text = "Back";
+            apptBack.UseVisualStyleBackColor = false;
+            apptBack.Click += apptBack_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(21, 96, 130);
+            label3.Location = new Point(44, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(448, 45);
+            label3.TabIndex = 65;
+            label3.Text = "Create/Edit Appointment";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // apptPanel
             // 
@@ -155,7 +327,7 @@
             apptPanel.Controls.Add(apptEdit);
             apptPanel.Controls.Add(apptNew);
             apptPanel.Controls.Add(label2);
-            apptPanel.Location = new Point(4, 12);
+            apptPanel.Location = new Point(823, 21);
             apptPanel.Name = "apptPanel";
             apptPanel.Size = new Size(521, 553);
             apptPanel.TabIndex = 38;
@@ -178,6 +350,7 @@
             apptDel.TabIndex = 41;
             apptDel.Text = "Delete Appointment";
             apptDel.UseVisualStyleBackColor = false;
+            apptDel.Click += apptDel_Click;
             // 
             // apptEdit
             // 
@@ -201,7 +374,7 @@
             apptNew.TabIndex = 39;
             apptNew.Text = "New Appointment";
             apptNew.UseVisualStyleBackColor = false;
-            apptNew.Click += button3_Click;
+            apptNew.Click += btnNewAppointment_Click;
             // 
             // label2
             // 
@@ -214,76 +387,6 @@
             label2.TabIndex = 38;
             label2.Text = "Groomy Appointments";
             label2.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // apptTime
-            // 
-            apptTime.Format = DateTimePickerFormat.Time;
-            apptTime.Location = new Point(88, 354);
-            apptTime.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
-            apptTime.Name = "apptTime";
-            apptTime.Size = new Size(321, 23);
-            apptTime.TabIndex = 70;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(88, 336);
-            label4.Name = "label4";
-            label4.Size = new Size(34, 15);
-            label4.TabIndex = 69;
-            label4.Text = "Time";
-            // 
-            // apptDate
-            // 
-            apptDate.Location = new Point(88, 304);
-            apptDate.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
-            apptDate.Name = "apptDate";
-            apptDate.Size = new Size(321, 23);
-            apptDate.TabIndex = 68;
-            // 
-            // apptSave
-            // 
-            apptSave.BackColor = Color.FromArgb(21, 96, 130);
-            apptSave.ForeColor = Color.White;
-            apptSave.Location = new Point(259, 71);
-            apptSave.Name = "apptSave";
-            apptSave.Size = new Size(103, 23);
-            apptSave.TabIndex = 67;
-            apptSave.Text = "Save";
-            apptSave.UseVisualStyleBackColor = false;
-            apptSave.Click += apptSave_Click;
-            // 
-            // apptBack
-            // 
-            apptBack.BackColor = Color.FromArgb(21, 96, 130);
-            apptBack.ForeColor = Color.White;
-            apptBack.Location = new Point(137, 71);
-            apptBack.Name = "apptBack";
-            apptBack.Size = new Size(103, 23);
-            apptBack.TabIndex = 66;
-            apptBack.Text = "Back";
-            apptBack.UseVisualStyleBackColor = false;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial Black", 24F, FontStyle.Bold);
-            label3.ForeColor = Color.FromArgb(21, 96, 130);
-            label3.Location = new Point(44, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(448, 45);
-            label3.TabIndex = 65;
-            label3.Text = "Create/Edit Appointment";
-            label3.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(88, 286);
-            label5.Name = "label5";
-            label5.Size = new Size(31, 15);
-            label5.TabIndex = 61;
-            label5.Text = "Date";
             // 
             // label9
             // 
@@ -312,7 +415,7 @@
             panelCustomers.Controls.Add(btnEdit);
             panelCustomers.Controls.Add(btnNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
-            panelCustomers.Location = new Point(227, 9);
+            panelCustomers.Location = new Point(227, 12);
             panelCustomers.Name = "panelCustomers";
             panelCustomers.Size = new Size(520, 553);
             panelCustomers.TabIndex = 19;
@@ -335,7 +438,7 @@
             btnDelete.TabIndex = 35;
             btnDelete.Text = "Delete Customer";
             btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnDelete_Click;
+            btnDelete.Click += btnDeleteCustomer_Click;
             // 
             // btnEdit
             // 
@@ -347,7 +450,7 @@
             btnEdit.TabIndex = 34;
             btnEdit.Text = "Edit Customer";
             btnEdit.UseVisualStyleBackColor = false;
-            btnEdit.Click += btnEdit_Click;
+            btnEdit.Click += btnEditCustomer_Click;
             // 
             // btnNew
             // 
@@ -359,7 +462,7 @@
             btnNew.TabIndex = 22;
             btnNew.Text = "New Customer";
             btnNew.UseVisualStyleBackColor = false;
-            btnNew.Click += btnNew_Click;
+            btnNew.Click += btnNewCustomer_Click;
             // 
             // lblGroomyCustomers
             // 
@@ -391,7 +494,7 @@
             panelNewCustomer.Controls.Add(lblLast);
             panelNewCustomer.Controls.Add(txtFirst);
             panelNewCustomer.Controls.Add(lblFirst);
-            panelNewCustomer.Location = new Point(230, 12);
+            panelNewCustomer.Location = new Point(227, 12);
             panelNewCustomer.Name = "panelNewCustomer";
             panelNewCustomer.Size = new Size(520, 550);
             panelNewCustomer.TabIndex = 36;
@@ -406,7 +509,7 @@
             btnSave.TabIndex = 53;
             btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSave_Click;
+            btnSave.Click += btnSaveCustomer_Click;
             // 
             // btnBack
             // 
@@ -418,7 +521,7 @@
             btnBack.TabIndex = 52;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = false;
-            btnBack.Click += btnBack_Click;
+            btnBack.Click += btnBackToCustomers_Click;
             // 
             // lblNewCustomer
             // 
@@ -530,27 +633,20 @@
             lblFirst.TabIndex = 38;
             lblFirst.Text = "First Name:";
             // 
-            // apptCusSel
-            // 
-            apptCusSel.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            apptCusSel.Location = new Point(88, 104);
-            apptCusSel.Name = "apptCusSel";
-            apptCusSel.Size = new Size(321, 150);
-            apptCusSel.TabIndex = 71;
-            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(759, 565);
+            ClientSize = new Size(762, 565);
+            Controls.Add(apptPanel);
             Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);
             Controls.Add(panelNewCustomer);
             Controls.Add(panelWelcome);
             Controls.Add(panel1);
             MaximizeBox = false;
-            MaximumSize = new Size(775, 604);
-            MinimumSize = new Size(775, 604);
+            MaximumSize = new Size(2000, 604);
+            MinimumSize = new Size(100, 604);
             Name = "Menu";
             Text = "Groomy";
             Load += Menu_Load;
@@ -567,7 +663,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panelNewCustomer.ResumeLayout(false);
             panelNewCustomer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)apptCusSel).EndInit();
             ResumeLayout(false);
         }
 
@@ -613,8 +708,19 @@
         private Label label5;
         private Button apptSave;
         private DateTimePicker apptDate;
-        private Label label4;
-        private DateTimePicker apptTime;
-        private DataGridView apptCusSel;
+        private Label lblStartTime;
+        private DateTimePicker timeStart;
+        private TextBox txtDescription;
+        private DateTimePicker timeEnd;
+        private Label lblEndTime;
+        private Label lblDescription;
+        private Label lblLocation;
+        private TextBox txtLocation;
+        private Label label1;
+        private TextBox txtTitle;
+        private TextBox txtApptNotes;
+        private Label lblApptNotes;
+        private Label lblCustomer;
+        private ComboBox comboCustomer;
     }
 }

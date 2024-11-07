@@ -37,12 +37,24 @@ namespace Groomy
             p = dict["Password"].ToString();
             return this;
         }
+        public User()
+        {
+
+        }
         public User(string fName, string lName, string eMail, string password)
         {
             f = fName;
             l = lName;
             e = eMail;
             p = Helpers.GenerateSHA256Hash(password);
+        }
+        public User createWithHashedPassword(string fName, string lName, string eMail, string hashedPassword)
+        {
+            f = fName;
+            l = lName;
+            e = eMail;
+            p = hashedPassword;
+            return this;
         }
         public string GetKey()
         {

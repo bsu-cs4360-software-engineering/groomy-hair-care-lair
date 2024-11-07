@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Groomy.Customers;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +30,10 @@ namespace Groomy
         public void SoftDeleteAppointment(string appointmentID)
         {
             _DatabaseManager.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+        }
+        public DataTable GetAppointmentDataTable()
+        {
+            return _DatabaseManager.GetDataTableSpecificKeys(Appointment.FilePaths["AppointmentData"], ["Title", "StartTime", "EndTime", "Location", "CustomerID"]);
         }
     }
 }

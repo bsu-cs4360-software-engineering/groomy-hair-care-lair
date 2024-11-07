@@ -8,6 +8,7 @@ namespace Groomy
     public partial class Login : Form
     {
         UserDBService userDBService = new UserDBService(DatabaseManager.GetInstance(new FileService()));
+        DatabaseManager dbM = DatabaseManager.GetInstance(new FileService());
         public Login()
         {
             InitializeComponent();
@@ -53,6 +54,11 @@ namespace Groomy
             {
                 if (IsCorrectPassword(userID, hashedPassword))
                 {
+                    var userData = dbM.LoadJsonFromDB(userID, User.FilePaths["UserData"]);
+                    var passwordData = dbM.LoadJsonFromDB(userID, User.FilePaths["PasswordData"]);
+                    User user = new User().createWithHashedPassword(userData["FirstName"].ToString(), userData["LastName"].ToString(), userData["Email"].ToString(), hashedPassword);
+                    UserAuth.GetInstance().setUser(user);
+
                     Helpers.messageBoxSuccess("Logged in Successfully.");
                     switchToMainMenu(sender, e);
                 }

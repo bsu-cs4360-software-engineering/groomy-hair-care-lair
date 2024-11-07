@@ -4,6 +4,7 @@ namespace Groomy
 {
     internal class Appointment : IGenericObject
     {
+        private string userID;
         private string customerID;
         private string title;
         private string description;
@@ -11,7 +12,7 @@ namespace Groomy
         private DateTime endTime;
         private string location;
 
-        public string appointmentID => Helpers.GenerateSHA256Hash(customerID + title + startTime.ToString());
+        public string appointmentID => Helpers.GenerateSHA256Hash(userID + customerID);
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
         {
@@ -19,6 +20,7 @@ namespace Groomy
         };
         public IGenericObject FromDictionary(Dictionary<string, object> dict)
         {
+            userID = dict["UserID"].ToString();
             customerID = dict["CustomerID"].ToString();
             title = dict["Title"].ToString();
             description = dict["Description"].ToString();
@@ -27,8 +29,9 @@ namespace Groomy
             location = dict["Location"].ToString();
             return this;
         }
-        public Appointment(string cID, string t, string d, DateTime sT, DateTime eT, string l)
+        public Appointment(string uID, string cID, string t, string d, DateTime sT, DateTime eT, string l)
         {
+            userID = uID;
             customerID = cID;
             title = t;
             description = d;
@@ -41,12 +44,13 @@ namespace Groomy
             var temp = new Dictionary<string, Dictionary<string, object>>();
             temp["AppointmentData"] = new Dictionary<string, object>
             {
-                { "CustomerID", customerID },
                 { "Title", title },
                 { "Description", description },
                 { "StartTime", startTime },
                 { "EndTime", endTime },
-                { "Location", location }
+                { "Location", location },
+                { "UserID", userID },
+                { "CustomerID", customerID },
             };
             return temp;
         }

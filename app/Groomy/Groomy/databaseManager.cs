@@ -74,7 +74,26 @@ namespace Groomy
                 return null;
             }
         }
-        public IGenericObject LoadObjectFromDB(string key, IGenericObject objectType)
+        public List<string> GetIDsByKeyValue(string key, string value, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            var matchingIDs = new List<string>();
+
+            foreach (var genericObject in database)
+            {
+                foreach (var genericItem in genericObject.Value)
+                {
+                    if (genericItem.Key == key && genericItem.Value.ToString() == value)
+                    {
+                        matchingIDs.Add(genericObject.Key);
+                        break; // Break inner loop once a match is found for the current object
+                    }
+                }
+            }
+
+            return matchingIDs;
+        }
+            public IGenericObject LoadObjectFromDB(string key, IGenericObject objectType)
         {
             var filePaths = objectType.GetDBFilePaths();
             var firstKey = filePaths.Keys.First();
@@ -157,11 +176,14 @@ namespace Groomy
                 database[key][isDeletedKey] = true;
                 SaveDatabase(database, filePath);
             }
+            else
+            {
+                Helpers.messageBoxError("No Key");
+            }
         }
 
         public DataTable GetDataTable(string filePath, int numberOfFields)
         {
-            Debug.WriteLine($"Reading {filePath}");
             DataTable dataTable = new DataTable();
 
             var data = LoadDatabase(filePath);
@@ -172,6 +194,39 @@ namespace Groomy
             // Add columns
             var firstItem = data.First().Value;
             var keys = firstItem.Keys.Take(numberOfFields);
+            foreach (var key in keys)
+            {
+                dataTable.Columns.Add(key);
+            }
+
+            // Add rows
+            foreach (var item in data)
+            {
+                if (item.Value.ContainsKey(isDeletedKey))
+                {
+                    continue;
+                }
+                DataRow row = dataTable.NewRow();
+                foreach (var key in keys)
+                {
+                    row[key] = item.Value[key];
+                }
+                dataTable.Rows.Add(row);
+            }
+
+            return dataTable;
+        }
+        public DataTable GetDataTableSpecificKeys(string filePath, List<string> keys)
+        {
+            DataTable dataTable = new DataTable();
+
+            var data = LoadDatabase(filePath);
+
+            if (data.Count == 0)
+                return dataTable;
+
+            // Add columns
+            var firstItem = data.First().Value;
             foreach (var key in keys)
             {
                 dataTable.Columns.Add(key);
