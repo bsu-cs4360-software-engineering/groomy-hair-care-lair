@@ -30,7 +30,7 @@ namespace Groomy.Customers
         }
         public DataTable GetCustomerDataTable()
         {
-           return dbManager.GetDataTable(Customer.FilePaths["CustomerData"], 4);
+            return dbManager.GetDataTableSpecificKeys(Customer.FilePaths["CustomerData"], ["FirstName", "LastName", "Email", "PhoneNumber", "Address"]);
         }
         public List<(string, string)> GetCustomersByUserID(string userID)
         {

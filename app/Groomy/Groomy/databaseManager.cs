@@ -182,40 +182,6 @@ namespace Groomy
             }
         }
 
-        public DataTable GetDataTable(string filePath, int numberOfFields)
-        {
-            DataTable dataTable = new DataTable();
-
-            var data = LoadDatabase(filePath);
-
-            if (data.Count == 0)
-                return dataTable;
-
-            // Add columns
-            var firstItem = data.First().Value;
-            var keys = firstItem.Keys.Take(numberOfFields);
-            foreach (var key in keys)
-            {
-                dataTable.Columns.Add(key);
-            }
-
-            // Add rows
-            foreach (var item in data)
-            {
-                if (item.Value.ContainsKey(isDeletedKey))
-                {
-                    continue;
-                }
-                DataRow row = dataTable.NewRow();
-                foreach (var key in keys)
-                {
-                    row[key] = item.Value[key];
-                }
-                dataTable.Rows.Add(row);
-            }
-
-            return dataTable;
-        }
         public DataTable GetDataTableSpecificKeys(string filePath, List<string> keys)
         {
             DataTable dataTable = new DataTable();

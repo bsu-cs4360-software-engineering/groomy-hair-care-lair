@@ -190,34 +190,6 @@ namespace Groomy.Tests
             mockFileService.Verify(fs => fs.WriteAllText(testFilePath, It.IsAny<string>()), Times.Once);
         }
 
-
-
-        [TestMethod()]
-        public void GetDataTableTest()
-        {
-            //Arrange
-            var mockFileService = new Mock<IFileService>();
-            var DBM = DatabaseManager.GetInstance(mockFileService.Object);
-
-            var testFilePath = "test.json";
-            var testID = "testID";
-            var testKey = "testKey";
-            var testValue = "testValue";
-
-            var testJson = $@"{{""{testID}"": {{""{testKey}"": ""{testValue}""}} }}";
-
-            mockFileService.Setup(fs => fs.ReadAllText(testFilePath)).Returns(testJson);
-            mockFileService.Setup(fs => fs.Exists(testFilePath)).Returns(true);
-
-            //Act
-            var dataTable = DBM.GetDataTable(testFilePath, 4);
-
-            //Assert
-            Assert.IsNotNull(dataTable);
-            Assert.IsTrue(dataTable.Rows.Count > 0);
-            Assert.AreEqual(testValue, dataTable.Rows[0][testKey].ToString());
-        }
-
         [TestMethod()]
         public void GetDataTableSpecificKeys()
         {
