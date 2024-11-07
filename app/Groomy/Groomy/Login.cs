@@ -33,7 +33,7 @@ namespace Groomy
         }
         private void switchToMainMenu(object sender, EventArgs e)
         {
-            windowFx.OpenForm("Groomy.Menu", false);
+            windowFx.OpenForm("Groomy.Tabs", false);
         }
         private bool IsUser(string userID)
         {
