@@ -14,12 +14,17 @@ namespace Groomy
 {
     public partial class Tabs : Form
     {
-        private CustomerDBService customerDBService;
+        FileService fs;
+        CustomerDBService customerDBService;
+        DatabaseManager dbManager;
         public Tabs()
         {
+            fs = new FileService();
+            dbManager = DatabaseManager.GetInstance(fs);
+            customerDBService = new CustomerDBService(dbManager);
             InitializeComponent();
-            CustomerDBService customerDBService;
         }
+        public string pubEmail = "No Email";
         private string GetFieldFromSelection(string field, DataGridView dgv)
         {
             string val = null;
@@ -43,14 +48,14 @@ namespace Groomy
             }
             return val;
         }
-        private void loadCustomerData()
+        public void loadCustomerData()
         {
-            dataGridView1.DataSource = customerDBService.GetCustomerDataTable();
+            cusDataView.DataSource = customerDBService.GetCustomerDataTable();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var email = GetFieldFromSelection("Email", dataGridView1);
+            var email = GetFieldFromSelection("Email", cusDataView);
 
             if (!string.IsNullOrEmpty(email))
             {
@@ -66,35 +71,36 @@ namespace Groomy
             }
         }
 
-        private void customersTab_Click(object sender, EventArgs e)
-        {
-            loadCustomerData();
-        }
-
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            string email = GetFieldFromSelection("Email", cusDataView);
+
+            if (!string.IsNullOrEmpty(email))
             {
-                string email = GetFieldFromSelection("Email", dataGridView1);
-
-                if (!string.IsNullOrEmpty(email))
-                {
-                    // Retrieve the customer data
-                    var editedCustomer = customerDBService.ReadCustomer(Helpers.GenerateSHA256Hash(email));
-
-                    windowFx.OpenForm("Groomy.DialogBoxes.creNewCus", true);
-                    creNewCus customerFields = new creNewCus();
-                    customerFields.UpdateCustomerFields(editedCustomer);
-                }
-                else
-                {
-                    Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
-                }
+                creNewCus editCustomerForm = new creNewCus(email); // Pass email here
+                editCustomerForm.ShowDialog();
+            }
+            else
+            {
+                Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            windowFx.OpenForm("Groomy.DialogBoxes.creNewCus", true);
+            string email = "No Email";  // Define the email as "No Email"
+            creNewCus newCustomerForm = new creNewCus(email);  // Pass the email to the form
+            newCustomerForm.ShowDialog();  // Show the form
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            loadCustomerData();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            loadCustomerData();
         }
     }
 }

@@ -28,18 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tabControl1 = new TabControl();
             welcomeTab = new TabPage();
             customersTab = new TabPage();
-            button1 = new Button();
-            dataGridView1 = new DataGridView();
+            bttnNewCus = new Button();
+            cusDataView = new DataGridView();
             lblGroomyCustomers = new Label();
             btnDelete = new Button();
             btnEdit = new Button();
             appointmentsTab = new TabPage();
+            refreshTimer = new System.Windows.Forms.Timer(components);
+            button1 = new Button();
             tabControl1.SuspendLayout();
             customersTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cusDataView).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -67,7 +70,8 @@
             // customersTab
             // 
             customersTab.Controls.Add(button1);
-            customersTab.Controls.Add(dataGridView1);
+            customersTab.Controls.Add(bttnNewCus);
+            customersTab.Controls.Add(cusDataView);
             customersTab.Controls.Add(lblGroomyCustomers);
             customersTab.Controls.Add(btnDelete);
             customersTab.Controls.Add(btnEdit);
@@ -78,27 +82,26 @@
             customersTab.TabIndex = 1;
             customersTab.Text = "Customers";
             customersTab.UseVisualStyleBackColor = true;
-            customersTab.Click += customersTab_Click;
             // 
-            // button1
+            // bttnNewCus
             // 
-            button1.BackColor = Color.FromArgb(21, 96, 130);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(399, 71);
-            button1.Name = "button1";
-            button1.Size = new Size(103, 23);
-            button1.TabIndex = 43;
-            button1.Text = "New Customer";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            bttnNewCus.BackColor = Color.FromArgb(21, 96, 130);
+            bttnNewCus.ForeColor = Color.White;
+            bttnNewCus.Location = new Point(399, 71);
+            bttnNewCus.Name = "bttnNewCus";
+            bttnNewCus.Size = new Size(103, 23);
+            bttnNewCus.TabIndex = 43;
+            bttnNewCus.Text = "New Customer";
+            bttnNewCus.UseVisualStyleBackColor = false;
+            bttnNewCus.Click += button1_Click;
             // 
-            // dataGridView1
+            // cusDataView
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(8, 100);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(1180, 377);
-            dataGridView1.TabIndex = 42;
+            cusDataView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            cusDataView.Location = new Point(8, 100);
+            cusDataView.Name = "cusDataView";
+            cusDataView.Size = new Size(1180, 377);
+            cusDataView.TabIndex = 42;
             // 
             // lblGroomyCustomers
             // 
@@ -145,6 +148,25 @@
             appointmentsTab.Text = "Appointments";
             appointmentsTab.UseVisualStyleBackColor = true;
             // 
+            // refreshTimer
+            // 
+            refreshTimer.Enabled = true;
+            refreshTimer.Interval = 2000;
+            refreshTimer.Tick += refreshTimer_Tick;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(21, 96, 130);
+            button1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(1145, 55);
+            button1.Name = "button1";
+            button1.Size = new Size(43, 39);
+            button1.TabIndex = 44;
+            button1.Text = "🔄";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click_1;
+            // 
             // Tabs
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -156,7 +178,7 @@
             tabControl1.ResumeLayout(false);
             customersTab.ResumeLayout(false);
             customersTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cusDataView).EndInit();
             ResumeLayout(false);
         }
 
@@ -166,10 +188,12 @@
         private TabPage welcomeTab;
         private TabPage customersTab;
         private TabPage appointmentsTab;
-        private Button button1;
-        private DataGridView dataGridView1;
+        private Button bttnNewCus;
+        private DataGridView cusDataView;
         private Label lblGroomyCustomers;
         private Button btnDelete;
         private Button btnEdit;
+        private System.Windows.Forms.Timer refreshTimer;
+        private Button button1;
     }
 }

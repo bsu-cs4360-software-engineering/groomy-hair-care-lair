@@ -49,7 +49,7 @@
             // 
             btnSave.BackColor = Color.FromArgb(21, 96, 130);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(195, 57);
+            btnSave.Location = new Point(302, 57);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(103, 23);
             btnSave.TabIndex = 68;
@@ -61,7 +61,7 @@
             // 
             btnBack.BackColor = Color.FromArgb(21, 96, 130);
             btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(86, 59);
+            btnBack.Location = new Point(12, 57);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(103, 23);
             btnBack.TabIndex = 67;
@@ -82,16 +82,16 @@
             // 
             // txtNotes
             // 
-            txtNotes.Location = new Point(37, 383);
+            txtNotes.Location = new Point(21, 380);
             txtNotes.Multiline = true;
             txtNotes.Name = "txtNotes";
-            txtNotes.Size = new Size(321, 70);
+            txtNotes.Size = new Size(384, 70);
             txtNotes.TabIndex = 65;
             // 
             // lblNotes
             // 
             lblNotes.AutoSize = true;
-            lblNotes.Location = new Point(37, 365);
+            lblNotes.Location = new Point(21, 362);
             lblNotes.Name = "lblNotes";
             lblNotes.Size = new Size(41, 15);
             lblNotes.TabIndex = 64;
@@ -99,16 +99,16 @@
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(37, 292);
+            txtAddress.Location = new Point(21, 289);
             txtAddress.Multiline = true;
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(321, 70);
+            txtAddress.Size = new Size(384, 70);
             txtAddress.TabIndex = 63;
             // 
             // lblAddress
             // 
             lblAddress.AutoSize = true;
-            lblAddress.Location = new Point(37, 274);
+            lblAddress.Location = new Point(21, 271);
             lblAddress.Name = "lblAddress";
             lblAddress.Size = new Size(52, 15);
             lblAddress.TabIndex = 62;
@@ -116,15 +116,15 @@
             // 
             // txtPN
             // 
-            txtPN.Location = new Point(37, 248);
+            txtPN.Location = new Point(21, 245);
             txtPN.Name = "txtPN";
-            txtPN.Size = new Size(321, 23);
+            txtPN.Size = new Size(384, 23);
             txtPN.TabIndex = 61;
             // 
             // lblPN
             // 
             lblPN.AutoSize = true;
-            lblPN.Location = new Point(37, 230);
+            lblPN.Location = new Point(21, 227);
             lblPN.Name = "lblPN";
             lblPN.Size = new Size(91, 15);
             lblPN.TabIndex = 60;
@@ -132,15 +132,15 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(37, 204);
+            txtEmail.Location = new Point(21, 201);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(321, 23);
+            txtEmail.Size = new Size(384, 23);
             txtEmail.TabIndex = 59;
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(37, 186);
+            lblEmail.Location = new Point(21, 183);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(39, 15);
             lblEmail.TabIndex = 58;
@@ -148,15 +148,15 @@
             // 
             // txtLast
             // 
-            txtLast.Location = new Point(37, 160);
+            txtLast.Location = new Point(21, 157);
             txtLast.Name = "txtLast";
-            txtLast.Size = new Size(321, 23);
+            txtLast.Size = new Size(384, 23);
             txtLast.TabIndex = 57;
             // 
             // lblLast
             // 
             lblLast.AutoSize = true;
-            lblLast.Location = new Point(37, 142);
+            lblLast.Location = new Point(21, 139);
             lblLast.Name = "lblLast";
             lblLast.Size = new Size(66, 15);
             lblLast.TabIndex = 56;
@@ -164,15 +164,15 @@
             // 
             // txtFirst
             // 
-            txtFirst.Location = new Point(37, 116);
+            txtFirst.Location = new Point(21, 113);
             txtFirst.Name = "txtFirst";
-            txtFirst.Size = new Size(321, 23);
+            txtFirst.Size = new Size(384, 23);
             txtFirst.TabIndex = 55;
             // 
             // lblFirst
             // 
             lblFirst.AutoSize = true;
-            lblFirst.Location = new Point(37, 98);
+            lblFirst.Location = new Point(21, 95);
             lblFirst.Name = "lblFirst";
             lblFirst.Size = new Size(67, 15);
             lblFirst.TabIndex = 54;
@@ -182,7 +182,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(426, 473);
+            ClientSize = new Size(424, 471);
             Controls.Add(btnSave);
             Controls.Add(btnBack);
             Controls.Add(lblNewCustomer);
@@ -198,8 +198,13 @@
             Controls.Add(lblLast);
             Controls.Add(txtFirst);
             Controls.Add(lblFirst);
+            MaximizeBox = false;
+            MaximumSize = new Size(440, 510);
+            MinimizeBox = false;
+            MinimumSize = new Size(440, 510);
             Name = "creNewCus";
             Text = "Creating a New Customer";
+            Load += creNewCus_Load;
             ResumeLayout(false);
             PerformLayout();
         }

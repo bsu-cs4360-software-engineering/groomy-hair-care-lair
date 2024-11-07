@@ -13,28 +13,19 @@ namespace Groomy.DialogBoxes
 {
     public partial class creNewCus : Form
     {
-        public creNewCus()
+        FileService fs;
+        CustomerDBService customerDBService;
+        DatabaseManager dbManager;
+        private string email;  // Store the passed email here
+
+        // Modify constructor to accept the email as a parameter
+        public creNewCus(string email)
         {
+            fs = new FileService();
+            dbManager = DatabaseManager.GetInstance(fs);
+            customerDBService = new CustomerDBService(dbManager);
             InitializeComponent();
-        }
-
-        public void UpdateCustomerFields(Dictionary<string, object> editedCustomer)
-        {
-            // Check if the editedCustomer dictionary contains the required keys before accessing them
-            if (editedCustomer.ContainsKey("FirstName"))
-                txtFirst.Text = editedCustomer["FirstName"].ToString();
-
-            if (editedCustomer.ContainsKey("LastName"))
-                txtLast.Text = editedCustomer["LastName"].ToString();
-
-            if (editedCustomer.ContainsKey("Email"))
-                txtEmail.Text = editedCustomer["Email"].ToString();
-
-            if (editedCustomer.ContainsKey("PhoneNumber"))
-                txtPN.Text = editedCustomer["PhoneNumber"].ToString();
-
-            if (editedCustomer.ContainsKey("Address"))
-                txtAddress.Text = editedCustomer["Address"].ToString();
+            this.email = email; // Set the email to use for fetching customer data
         }
 
         private void clearCustomerForms()
@@ -70,29 +61,58 @@ namespace Groomy.DialogBoxes
                 return false;
             }
 
-            // City input check
+            // Phone number input check
             if (string.IsNullOrWhiteSpace(txtPN.Text))
             {
                 Helpers.messageBoxError("You did not enter a phone number. Please try again.");
                 return false;
             }
 
+            // Address input check
             if (string.IsNullOrWhiteSpace(txtAddress.Text))
             {
                 Helpers.messageBoxError("You did not enter an Address. Please try again.");
                 return false;
             }
 
-
             // If all checks pass, return true
             return true;
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (validateCustomerForms())
             {
+                // Check if customerDBService is initialized
+                if (customerDBService == null)
+                {
+                    Helpers.messageBoxError("Customer database service is not initialized.");
+                    return;
+                }
+
                 var newCustomer = new Customer(txtFirst.Text, txtLast.Text, txtEmail.Text, txtPN.Text, txtAddress.Text);
-                // dbManager.AddObjectToDB(newCustomer);
+                customerDBService.CreateCustomer(newCustomer); // Create the customer in the database
+
+                // Refresh the Tabs form after saving
+                Tabs tabsForm = new Tabs();
+                tabsForm.loadCustomerData(); // Reload the customer data in the parent form
+                this.Hide(); // Hide the current form after saving
+            }
+        }
+
+        private void creNewCus_Load(object sender, EventArgs e)
+        {
+            // Only populate the fields if email is not empty and not set to "No Email"
+            if (!string.IsNullOrEmpty(email) && email != "No Email")
+            {
+                var editedCustomer = customerDBService.ReadCustomer(Helpers.GenerateSHA256Hash(email));
+
+                // Populate the form fields with the customer data
+                txtFirst.Text = editedCustomer["FirstName"].ToString();
+                txtLast.Text = editedCustomer["LastName"].ToString();
+                txtEmail.Text = editedCustomer["Email"].ToString();
+                txtPN.Text = editedCustomer["PhoneNumber"].ToString();
+                txtAddress.Text = editedCustomer["Address"].ToString();
             }
         }
     }
