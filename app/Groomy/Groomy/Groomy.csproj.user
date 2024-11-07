@@ -7,6 +7,9 @@
     <Compile Update="Customers\newCust.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="DialogBoxes\creNewAppt.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DialogBoxes\creNewCus.cs">
       <SubType>Form</SubType>
     </Compile>

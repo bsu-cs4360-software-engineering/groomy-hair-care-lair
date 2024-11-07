@@ -16,12 +16,14 @@ namespace Groomy
     {
         FileService fs;
         CustomerDBService customerDBService;
+        AppointmentDBService appointmentDBService;
         DatabaseManager dbManager;
         public Tabs()
         {
             fs = new FileService();
             dbManager = DatabaseManager.GetInstance(fs);
             customerDBService = new CustomerDBService(dbManager);
+            appointmentDBService = new AppointmentDBService(dbManager);
             InitializeComponent();
         }
         public string pubEmail = "No Email";
@@ -102,5 +104,19 @@ namespace Groomy
         {
             loadCustomerData();
         }
+
+        private void btnNewAppt_Click(object sender, EventArgs e)
+        {
+            string id = "No ID";  // Define the id as "No ID". Ignored for now
+            creNewAppt newApptForm = new creNewAppt();  // Pass nothing for now
+            newApptForm.ShowDialog();  // Show the form
+        }
+
+        private void btnEditAppt_Click(object sender, EventArgs e)
+        {
+            //To-Do
+        }
+
+        
     }
 }

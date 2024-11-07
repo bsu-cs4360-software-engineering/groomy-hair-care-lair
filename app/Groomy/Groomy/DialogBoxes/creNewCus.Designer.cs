@@ -203,6 +203,7 @@
             MinimizeBox = false;
             MinimumSize = new Size(440, 510);
             Name = "creNewCus";
+            ShowIcon = false;
             Text = "Creating a New Customer";
             Load += creNewCus_Load;
             ResumeLayout(false);

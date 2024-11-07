@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "S:\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {}
+    "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {}
   },
   "projects": {
-    "S:\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {
+    "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "S:\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
+        "projectUniqueName": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
         "projectName": "Groomy",
-        "projectPath": "S:\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
+        "projectPath": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
         "packagesPath": "C:\\Users\\jon\\.nuget\\packages\\",
-        "outputPath": "S:\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\obj\\",
+        "outputPath": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jon\\AppData\\Roaming\\NuGet\\NuGet.Config",
