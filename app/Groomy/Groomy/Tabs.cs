@@ -81,7 +81,7 @@ namespace Groomy
                     // Retrieve the customer data
                     var editedCustomer = customerDBService.ReadCustomer(Helpers.GenerateSHA256Hash(email));
 
-                    windowFx.OpenForm("Groomy.creNewCus", true);
+                    windowFx.OpenForm("Groomy.DialogBoxes.creNewCus", true);
                     creNewCus customerFields = new creNewCus();
                     customerFields.UpdateCustomerFields(editedCustomer);
                 }
@@ -94,7 +94,7 @@ namespace Groomy
 
         private void button1_Click(object sender, EventArgs e)
         {
-            windowFx.OpenForm("Groomy.creNewCus", true);
+            windowFx.OpenForm("Groomy.DialogBoxes.creNewCus", true);
         }
     }
 }
