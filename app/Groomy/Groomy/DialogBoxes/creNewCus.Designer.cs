@@ -75,9 +75,9 @@
             lblNewCustomer.ForeColor = Color.FromArgb(21, 96, 130);
             lblNewCustomer.Location = new Point(12, 9);
             lblNewCustomer.Name = "lblNewCustomer";
-            lblNewCustomer.Size = new Size(393, 45);
+            lblNewCustomer.Size = new Size(315, 45);
             lblNewCustomer.TabIndex = 66;
-            lblNewCustomer.Text = "Create/Edit Customer";
+            lblNewCustomer.Text = "Create Customer";
             lblNewCustomer.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // txtNotes

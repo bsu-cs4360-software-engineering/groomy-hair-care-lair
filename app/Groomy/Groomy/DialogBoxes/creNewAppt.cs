@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Groomy.DialogBoxes
 {
@@ -17,13 +18,15 @@ namespace Groomy.DialogBoxes
         CustomerDBService customerDBService;
         AppointmentDBService appointmentDBService;
         DatabaseManager dbManager;
-        public creNewAppt()
+        private string ApptID;
+        public creNewAppt(string ApptID)
         {
             fs = new FileService();
             dbManager = DatabaseManager.GetInstance(fs);
             customerDBService = new CustomerDBService(dbManager);
             appointmentDBService = new AppointmentDBService(dbManager);
             InitializeComponent();
+            this.ApptID = ApptID;
         }
 
         private string GetFieldFromSelection(string field, DataGridView dgv)
@@ -61,7 +64,6 @@ namespace Groomy.DialogBoxes
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // Collecting the data from form controls
             string appointmentID = txtAppointmentID.Text;
             DateTime startTime = dtpStartTime.Value;
             DateTime endTime = dtpEndTime.Value;
@@ -70,8 +72,6 @@ namespace Groomy.DialogBoxes
             string title = txtTitle.Text;
             string description = txtDescription.Text;
             string location = txtLocation.Text;
-
-            // Validating the input
             if (string.IsNullOrWhiteSpace(customerID) || string.IsNullOrWhiteSpace(title) || startTime == null || endTime == null || string.IsNullOrWhiteSpace(location))
             {
                 Helpers.messageBoxError("Please fill in all fields.");
@@ -95,7 +95,21 @@ namespace Groomy.DialogBoxes
 
         private void creNewAppt_Load(object sender, EventArgs e)
         {
-            loadCustomerData();
+            // Only populate the fields if appointment ID is not empty and not set to "No ID"
+            if (!string.IsNullOrEmpty(ApptID) && ApptID != "No ID")
+            {
+                // To do: When a ApptID is piped into the program fill the fields in appropriately so that the user can eidt the appointment
+                this.Text = "Editing an Appointment";
+                lblNewAppt.Text = "Edit Appointment";
+            }
+            else
+            {
+                loadCustomerData();
+                Random random = new Random();
+                int randomNumber = random.Next(10000, 100000);
+                txtAppointmentID.Text = randomNumber.ToString();
+            }
+            
         }
     }
 }

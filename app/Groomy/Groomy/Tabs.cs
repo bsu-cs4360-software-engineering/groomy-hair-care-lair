@@ -53,6 +53,7 @@ namespace Groomy
         public void loadCustomerData()
         {
             cusDataView.DataSource = customerDBService.GetCustomerDataTable();
+            // To Do: Implement a way of acsessing the appointment data and put it in the dataview
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -108,15 +109,67 @@ namespace Groomy
         private void btnNewAppt_Click(object sender, EventArgs e)
         {
             string id = "No ID";  // Define the id as "No ID". Ignored for now
-            creNewAppt newApptForm = new creNewAppt();  // Pass nothing for now
+            creNewAppt newApptForm = new creNewAppt(id);  // Pass nothing for now
             newApptForm.ShowDialog();  // Show the form
         }
 
         private void btnEditAppt_Click(object sender, EventArgs e)
         {
-            //To-Do
+            //To-Do: Grab the appointment ID from the DataView and push it to the newApptForm. See above example
         }
 
-        
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // To-Do: Delete the selected appointment from the database
+        }
+
+        private void Tabs_Load(object sender, EventArgs e)
+        {
+            tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
+            this.tabControl1.BackColor = Color.FromArgb(21, 96, 130);  // Set the background color of the tab area
+
+        }
+
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Font fntTab;
+            Brush bshBack;
+            Brush bshFore;
+
+            // Set the background color of the tab area
+            if (e.Index == this.tabControl1.SelectedIndex)
+            {
+                // Active (selected) tab
+                fntTab = new Font(e.Font, FontStyle.Bold);
+                bshBack = new SolidBrush(Color.FromArgb(29, 129, 175)); // Active tab background color
+                bshFore = Brushes.White; // Active tab font color (White)
+            }
+            else
+            {
+                // Inactive (unselected) tab
+                fntTab = e.Font;
+                bshBack = new SolidBrush(Color.White); // Inactive tab background color (White)
+                bshFore = Brushes.Black; // Inactive tab font color (Black)
+            }
+
+            // Get the name of the current tab
+            string tabName = this.tabControl1.TabPages[e.Index].Text;
+
+            // Create a StringFormat to center the text in the tab
+            StringFormat sftTab = new StringFormat(StringFormatFlags.NoClip);
+            sftTab.Alignment = StringAlignment.Center;
+            sftTab.LineAlignment = StringAlignment.Center;
+
+            // Fill the tab's background
+            e.Graphics.FillRectangle(bshBack, e.Bounds);
+
+            // Adjust the rectangle for the text position (optional: tweak margins if necessary)
+            Rectangle recTab = e.Bounds;
+            recTab = new Rectangle(recTab.X, recTab.Y + 4, recTab.Width, recTab.Height - 4); // Optional tweak for vertical alignment
+
+            // Draw the tab's text
+            e.Graphics.DrawString(tabName, fntTab, bshFore, recTab, sftTab);
+        }
+
     }
 }

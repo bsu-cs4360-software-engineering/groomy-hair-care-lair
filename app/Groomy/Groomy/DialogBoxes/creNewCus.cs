@@ -113,6 +113,9 @@ namespace Groomy.DialogBoxes
                 txtEmail.Text = editedCustomer["Email"].ToString();
                 txtPN.Text = editedCustomer["PhoneNumber"].ToString();
                 txtAddress.Text = editedCustomer["Address"].ToString();
+
+                this.Text = "Editing a Customer";
+                lblNewCustomer.Text = "Edit Customer";
             }
         }
     }

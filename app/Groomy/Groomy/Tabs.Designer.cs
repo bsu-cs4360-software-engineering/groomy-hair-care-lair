@@ -42,7 +42,7 @@
             btnNewAppt = new Button();
             dataGridView1 = new DataGridView();
             label1 = new Label();
-            button3 = new Button();
+            btnApptDel = new Button();
             btnEditAppt = new Button();
             refreshTimer = new System.Windows.Forms.Timer(components);
             tabControl1.SuspendLayout();
@@ -59,20 +59,22 @@
             tabControl1.Controls.Add(customersTab);
             tabControl1.Controls.Add(appointmentsTab);
             tabControl1.Dock = DockStyle.Fill;
-            tabControl1.ItemSize = new Size(40, 61);
+            tabControl1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tabControl1.ItemSize = new Size(40, 250);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Multiline = true;
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1204, 700);
             tabControl1.TabIndex = 0;
+            tabControl1.DrawItem += tabControl1_DrawItem;
             // 
             // welcomeTab
             // 
-            welcomeTab.Location = new Point(65, 4);
+            welcomeTab.Location = new Point(224, 4);
             welcomeTab.Name = "welcomeTab";
             welcomeTab.Padding = new Padding(3);
-            welcomeTab.Size = new Size(1135, 692);
+            welcomeTab.Size = new Size(976, 692);
             welcomeTab.TabIndex = 0;
             welcomeTab.Text = "Welcome";
             welcomeTab.UseVisualStyleBackColor = true;
@@ -85,10 +87,10 @@
             customersTab.Controls.Add(lblGroomyCustomers);
             customersTab.Controls.Add(btnDelete);
             customersTab.Controls.Add(btnEdit);
-            customersTab.Location = new Point(65, 4);
+            customersTab.Location = new Point(254, 4);
             customersTab.Name = "customersTab";
             customersTab.Padding = new Padding(3);
-            customersTab.Size = new Size(1135, 692);
+            customersTab.Size = new Size(946, 692);
             customersTab.TabIndex = 1;
             customersTab.Text = "Customers";
             customersTab.UseVisualStyleBackColor = true;
@@ -110,9 +112,9 @@
             // 
             bttnNewCus.BackColor = Color.FromArgb(21, 96, 130);
             bttnNewCus.ForeColor = Color.White;
-            bttnNewCus.Location = new Point(399, 71);
+            bttnNewCus.Location = new Point(270, 51);
             bttnNewCus.Name = "bttnNewCus";
-            bttnNewCus.Size = new Size(103, 23);
+            bttnNewCus.Size = new Size(136, 40);
             bttnNewCus.TabIndex = 43;
             bttnNewCus.Text = "New Customer";
             bttnNewCus.UseVisualStyleBackColor = false;
@@ -121,19 +123,18 @@
             // cusDataView
             // 
             cusDataView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            cusDataView.Location = new Point(6, 100);
+            cusDataView.Location = new Point(16, 97);
             cusDataView.Name = "cusDataView";
-            cusDataView.Size = new Size(1121, 377);
+            cusDataView.Size = new Size(922, 376);
             cusDataView.TabIndex = 42;
             // 
             // lblGroomyCustomers
             // 
-            lblGroomyCustomers.AutoSize = true;
             lblGroomyCustomers.Font = new Font("Arial Black", 24F, FontStyle.Bold);
             lblGroomyCustomers.ForeColor = Color.FromArgb(21, 96, 130);
-            lblGroomyCustomers.Location = new Point(399, 3);
+            lblGroomyCustomers.Location = new Point(6, 3);
             lblGroomyCustomers.Name = "lblGroomyCustomers";
-            lblGroomyCustomers.Size = new Size(356, 45);
+            lblGroomyCustomers.Size = new Size(937, 45);
             lblGroomyCustomers.TabIndex = 39;
             lblGroomyCustomers.Text = "Groomy Customers";
             lblGroomyCustomers.TextAlign = ContentAlignment.MiddleCenter;
@@ -142,9 +143,9 @@
             // 
             btnDelete.BackColor = Color.FromArgb(21, 96, 130);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(652, 71);
+            btnDelete.Location = new Point(554, 51);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(103, 23);
+            btnDelete.Size = new Size(136, 40);
             btnDelete.TabIndex = 41;
             btnDelete.Text = "Delete Customer";
             btnDelete.UseVisualStyleBackColor = false;
@@ -154,9 +155,9 @@
             // 
             btnEdit.BackColor = Color.FromArgb(21, 96, 130);
             btnEdit.ForeColor = Color.White;
-            btnEdit.Location = new Point(526, 71);
+            btnEdit.Location = new Point(412, 51);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(103, 23);
+            btnEdit.Size = new Size(136, 40);
             btnEdit.TabIndex = 40;
             btnEdit.Text = "Edit Customer";
             btnEdit.UseVisualStyleBackColor = false;
@@ -167,11 +168,11 @@
             appointmentsTab.Controls.Add(btnNewAppt);
             appointmentsTab.Controls.Add(dataGridView1);
             appointmentsTab.Controls.Add(label1);
-            appointmentsTab.Controls.Add(button3);
+            appointmentsTab.Controls.Add(btnApptDel);
             appointmentsTab.Controls.Add(btnEditAppt);
-            appointmentsTab.Location = new Point(65, 4);
+            appointmentsTab.Location = new Point(254, 4);
             appointmentsTab.Name = "appointmentsTab";
-            appointmentsTab.Size = new Size(1135, 692);
+            appointmentsTab.Size = new Size(946, 692);
             appointmentsTab.TabIndex = 2;
             appointmentsTab.Text = "Appointments";
             appointmentsTab.UseVisualStyleBackColor = true;
@@ -180,9 +181,9 @@
             // 
             btnNewAppt.BackColor = Color.FromArgb(21, 96, 130);
             btnNewAppt.ForeColor = Color.White;
-            btnNewAppt.Location = new Point(387, 73);
+            btnNewAppt.Location = new Point(272, 53);
             btnNewAppt.Name = "btnNewAppt";
-            btnNewAppt.Size = new Size(116, 23);
+            btnNewAppt.Size = new Size(136, 40);
             btnNewAppt.TabIndex = 48;
             btnNewAppt.Text = "New Appointment";
             btnNewAppt.UseVisualStyleBackColor = false;
@@ -191,41 +192,41 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(7, 102);
+            dataGridView1.Location = new Point(14, 102);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(1121, 377);
+            dataGridView1.Size = new Size(924, 377);
             dataGridView1.TabIndex = 47;
             // 
             // label1
             // 
-            label1.AutoSize = true;
             label1.Font = new Font("Arial Black", 24F, FontStyle.Bold);
             label1.ForeColor = Color.FromArgb(21, 96, 130);
-            label1.Location = new Point(387, 5);
+            label1.Location = new Point(3, 5);
             label1.Name = "label1";
-            label1.Size = new Size(410, 45);
+            label1.Size = new Size(943, 45);
             label1.TabIndex = 44;
             label1.Text = "Groomy Appointments";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // button3
+            // btnApptDel
             // 
-            button3.BackColor = Color.FromArgb(21, 96, 130);
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(694, 73);
-            button3.Name = "button3";
-            button3.Size = new Size(103, 23);
-            button3.TabIndex = 46;
-            button3.Text = "Delete Appointment";
-            button3.UseVisualStyleBackColor = false;
+            btnApptDel.BackColor = Color.FromArgb(21, 96, 130);
+            btnApptDel.ForeColor = Color.White;
+            btnApptDel.Location = new Point(556, 53);
+            btnApptDel.Name = "btnApptDel";
+            btnApptDel.Size = new Size(136, 40);
+            btnApptDel.TabIndex = 46;
+            btnApptDel.Text = "Delete Appointment";
+            btnApptDel.UseVisualStyleBackColor = false;
+            btnApptDel.Click += button3_Click;
             // 
             // btnEditAppt
             // 
             btnEditAppt.BackColor = Color.FromArgb(21, 96, 130);
             btnEditAppt.ForeColor = Color.White;
-            btnEditAppt.Location = new Point(537, 73);
+            btnEditAppt.Location = new Point(414, 53);
             btnEditAppt.Name = "btnEditAppt";
-            btnEditAppt.Size = new Size(121, 23);
+            btnEditAppt.Size = new Size(136, 40);
             btnEditAppt.TabIndex = 45;
             btnEditAppt.Text = "Edit Appointment";
             btnEditAppt.UseVisualStyleBackColor = false;
@@ -241,16 +242,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(21, 96, 130);
             ClientSize = new Size(1204, 700);
             Controls.Add(tabControl1);
             Name = "Tabs";
             Text = "Groomy";
+            Load += Tabs_Load;
             tabControl1.ResumeLayout(false);
             customersTab.ResumeLayout(false);
-            customersTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)cusDataView).EndInit();
             appointmentsTab.ResumeLayout(false);
-            appointmentsTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
@@ -271,7 +272,7 @@
         private Button btnNewAppt;
         private DataGridView dataGridView1;
         private Label label1;
-        private Button button3;
+        private Button btnApptDel;
         private Button btnEditAppt;
     }
 }

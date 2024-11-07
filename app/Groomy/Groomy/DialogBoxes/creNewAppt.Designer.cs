@@ -52,7 +52,7 @@
             // 
             btnSave.BackColor = Color.FromArgb(21, 96, 130);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(309, 57);
+            btnSave.Location = new Point(369, 57);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(103, 23);
             btnSave.TabIndex = 71;
@@ -97,7 +97,7 @@
             // 
             txtAppointmentID.Location = new Point(12, 110);
             txtAppointmentID.Name = "txtAppointmentID";
-            txtAppointmentID.Size = new Size(400, 23);
+            txtAppointmentID.Size = new Size(460, 23);
             txtAppointmentID.TabIndex = 73;
             // 
             // label2
@@ -113,7 +113,7 @@
             // 
             txtTitle.Location = new Point(12, 154);
             txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(400, 23);
+            txtTitle.Size = new Size(460, 23);
             txtTitle.TabIndex = 75;
             // 
             // label3
@@ -130,7 +130,7 @@
             txtDescription.Location = new Point(12, 342);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(400, 69);
+            txtDescription.Size = new Size(460, 69);
             txtDescription.TabIndex = 77;
             // 
             // label4
@@ -147,7 +147,7 @@
             txtLocation.Location = new Point(12, 432);
             txtLocation.Multiline = true;
             txtLocation.Name = "txtLocation";
-            txtLocation.Size = new Size(400, 69);
+            txtLocation.Size = new Size(460, 69);
             txtLocation.TabIndex = 79;
             // 
             // cusDataView
@@ -155,7 +155,7 @@
             cusDataView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             cusDataView.Location = new Point(12, 198);
             cusDataView.Name = "cusDataView";
-            cusDataView.Size = new Size(400, 123);
+            cusDataView.Size = new Size(460, 123);
             cusDataView.TabIndex = 80;
             // 
             // label5
@@ -184,7 +184,7 @@
             dtpStartTime.MinDate = new DateTime(2024, 11, 1, 0, 0, 0, 0);
             dtpStartTime.Name = "dtpStartTime";
             dtpStartTime.ShowUpDown = true;
-            dtpStartTime.Size = new Size(400, 23);
+            dtpStartTime.Size = new Size(460, 23);
             dtpStartTime.TabIndex = 83;
             // 
             // label7
@@ -204,14 +204,14 @@
             dtpEndTime.MinDate = new DateTime(2024, 11, 1, 0, 0, 0, 0);
             dtpEndTime.Name = "dtpEndTime";
             dtpEndTime.ShowUpDown = true;
-            dtpEndTime.Size = new Size(400, 23);
+            dtpEndTime.Size = new Size(460, 23);
             dtpEndTime.TabIndex = 85;
             // 
             // creNewAppt
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(424, 612);
+            ClientSize = new Size(484, 611);
             Controls.Add(dtpEndTime);
             Controls.Add(label7);
             Controls.Add(dtpStartTime);
@@ -230,9 +230,9 @@
             Controls.Add(btnBack);
             Controls.Add(lblNewAppt);
             MaximizeBox = false;
-            MaximumSize = new Size(440, 651);
+            MaximumSize = new Size(500, 650);
             MinimizeBox = false;
-            MinimumSize = new Size(440, 651);
+            MinimumSize = new Size(500, 650);
             Name = "creNewAppt";
             ShowIcon = false;
             Text = "Creating a New Appointment";
