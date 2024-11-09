@@ -1,20 +1,22 @@
 ﻿
 
 using System.Data;
-using System.Diagnostics;
 
 namespace Groomy.Customers
 {
     internal class CustomerDBService
     {
         private DatabaseManager dbManager;
-        public CustomerDBService(DatabaseManager dbm)
+        private UserAuth userAuth;
+        public CustomerDBService(DatabaseManager dbm, UserAuth ua)
         {
             dbManager = dbm;
+            userAuth = ua;
         }
         public void CreateCustomer(Customer customer)
         {
             dbManager.AddObjectsToDB(customer);
+            dbManager.AddRelationshipToDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customer.GetKey()));
         }
         public Dictionary<string, object> ReadCustomer(string customerID)
         {
@@ -23,30 +25,35 @@ namespace Groomy.Customers
         public void DeleteCustomer(string customerID)
         {
             dbManager.RemoveObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
+            dbManager.DeleteRelationshipFromDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customerID));
         }
         public void SoftDeleteCustomer(string customerID)
         {
             dbManager.SoftDeleteObjectInDB(customerID, Customer.FilePaths["CustomerData"]);
+            var relationship = new Relationships.User_Customer_Relationship(userAuth.getID(), customerID);
+            dbManager.SoftDeleteRelationshipFromDB(relationship);
         }
         public DataTable GetCustomerDataTable()
         {
             return dbManager.GetDataTableSpecificKeys(Customer.FilePaths["CustomerData"], ["FirstName", "LastName", "Email", "PhoneNumber", "Address"]);
         }
-        public List<(string, string)> GetCustomersByUserID(string userID)
+        public List<Dictionary<string, string>> GetCustomers()
         {
-            var customers = new List<(string, string)>();
-            var customerIDs = dbManager.GetIDsByKeyValue("UserID", userID, Customer.FilePaths["CustomerData"]);
-            Debug.WriteLine(customerIDs.Count);
-            foreach (var customerID in customerIDs)
+            var customers = new List<Dictionary<string, string>>();
+            var relationships = dbManager.GetRelationshipsByID(userAuth.getID(), Relationships.User_Customer_Relationship.relationshipFilePath);
+            foreach (var relationship in relationships)
             {
+                var customerID = relationship["customerID"];
                 var customerData = ReadCustomer(customerID);
-                var firstName = customerData["FirstName"]?.ToString() ?? string.Empty;
-                var lastName = customerData["LastName"]?.ToString() ?? string.Empty;
-                customers.Add((firstName, lastName));
+                Dictionary<string, string> customer = new Dictionary<string, string>();
+                customer.Add("FirstName", customerData["FirstName"].ToString());
+                customer.Add("LastName", customerData["LastName"].ToString());
+                customer.Add("customerID", customerID);
+                customers.Add(customer);
             }
             return customers;
         }
-        public string GetCustomerIDByFirstLast( (string, string) name)
+        public string GetCustomerIDByFirstLast((string, string) name)
         {
             var customerIDs = dbManager.GetIDsByKeyValue("FirstName", name.Item1, Customer.FilePaths["CustomerData"]);
             foreach (var customerID in customerIDs)

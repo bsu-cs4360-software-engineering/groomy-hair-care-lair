@@ -1,8 +1,4 @@
-﻿
-
-using System.Data;
-
-namespace Groomy
+﻿namespace Groomy
 {
     internal class UserDBService
     {
@@ -22,7 +18,8 @@ namespace Groomy
             if (passwordData.ContainsKey("Password") && passwordData["Password"].ToString() == hashedPassword.ToString())
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }

@@ -1,16 +1,9 @@
 ﻿using Groomy.Customers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Text.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Groomy
 {
 
-    public class User: IGenericObject
+    public class User : IGenericObject
     {
         private string f;
         private string l;
@@ -24,7 +17,7 @@ namespace Groomy
         };
 
 
-    public string FirstName => f;
+        public string FirstName => f;
         public string LastName => l;
         public string Email => e;
         public string userID => Helpers.GenerateSHA256Hash(e);

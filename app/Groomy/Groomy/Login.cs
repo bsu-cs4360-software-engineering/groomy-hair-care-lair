@@ -1,8 +1,3 @@
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Diagnostics;
-using System.Text.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
 namespace Groomy
 {
     public partial class Login : Form
@@ -30,7 +25,7 @@ namespace Groomy
         }
         private void switchToNewUserForm(object sender, EventArgs e)
         {
-            windowFx.OpenForm("Groomy.NewUser", true);  
+            windowFx.OpenForm("Groomy.NewUser", true);
         }
         private void switchToMainMenu(object sender, EventArgs e)
         {
@@ -66,7 +61,7 @@ namespace Groomy
                 {
                     Helpers.messageBoxError("Incorrect Email or Password.\nPlease try again.\nbad password");
                 }
-            } 
+            }
             else
             {
                 Helpers.messageBoxError("Incorrect Email or Password.\nPlease try again.\nbad email");

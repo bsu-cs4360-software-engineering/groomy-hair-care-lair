@@ -12,7 +12,7 @@ namespace Groomy
         private DateTime endTime;
         private string location;
 
-        public string appointmentID => Helpers.GenerateSHA256Hash(userID + customerID);
+        public string appointmentID;
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
         {
@@ -38,12 +38,14 @@ namespace Groomy
             startTime = sT;
             endTime = eT;
             location = l;
+            appointmentID = Helpers.RandomSHA256Hash();
         }
         public Dictionary<string, Dictionary<string, object>> GetFields()
         {
             var temp = new Dictionary<string, Dictionary<string, object>>();
             temp["AppointmentData"] = new Dictionary<string, object>
             {
+                { "AppointmentID", appointmentID },
                 { "Title", title },
                 { "Description", description },
                 { "StartTime", startTime },

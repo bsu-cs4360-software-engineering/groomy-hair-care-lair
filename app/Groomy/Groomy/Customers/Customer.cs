@@ -2,7 +2,7 @@
 {
     public interface IGenericObject
     {
-        public Dictionary< string, Dictionary<string, object>> GetFields();
+        public Dictionary<string, Dictionary<string, object>> GetFields();
         public string GetKey();
         public Dictionary<string, string> GetDBFilePaths();
         public IGenericObject FromDictionary(Dictionary<string, object> dict);
@@ -14,17 +14,14 @@
         private string email;
         private string phoneNumber;
         private string address;
-        
-        private string userID;
         public string customerID => Helpers.GenerateSHA256Hash(email);
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
-        { 
-            { "CustomerData", "customers.json" } 
+        {
+            { "CustomerData", "customers.json" }
         };
         public IGenericObject FromDictionary(Dictionary<string, object> dict)
         {
-            userID = dict["UserID"].ToString();
             firstName = dict["FirstName"].ToString();
             lastName = dict["LastName"].ToString();
             email = dict["Email"].ToString();
@@ -32,9 +29,8 @@
             address = dict["Address"].ToString();
             return this;
         }
-        public Customer(string uID, string fName, string lName, string eMail, string pNumber, string addr)
+        public Customer(string fName, string lName, string eMail, string pNumber, string addr)
         {
-            userID = uID;
             firstName = fName;
             lastName = lName;
             email = eMail;
@@ -50,8 +46,7 @@
                 { "LastName", lastName },
                 { "Email", email },
                 { "PhoneNumber", phoneNumber },
-                { "Address", address },
-                { "UserID", userID }
+                { "Address", address }
             };
             return temp;
         }

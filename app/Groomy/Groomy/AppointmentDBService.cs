@@ -1,39 +1,79 @@
-﻿using Groomy.Customers;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+using System.Diagnostics;
 
 namespace Groomy
 {
     internal class AppointmentDBService
     {
-        DatabaseManager _DatabaseManager;
-        public AppointmentDBService(DatabaseManager dbm)
+        DatabaseManager databaseManager;
+        DBRelationshipService dbRS;
+
+        public AppointmentDBService(DatabaseManager dbm, DBRelationshipService dbrs)
         {
-            _DatabaseManager = dbm;
+            databaseManager = dbm;
+            dbRS = dbrs;
         }
-        public void CreateAppointment(Appointment appointment)
+        public void CreateAppointment(Appointment appointment, string customerID)
         {
-            _DatabaseManager.AddObjectsToDB(appointment);
+            databaseManager.AddObjectsToDB(appointment);
+            databaseManager.AddRelationshipToDB(new Relationships.Customer_Appointment_Relationship(customerID, appointment.GetKey()));
         }
-        public Dictionary<string, object> ReadAppointmentData(string appointmentID)
+        public Dictionary<string, string> ReadAppointmentData(string appointmentID)
         {
-            return _DatabaseManager.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            return databaseManager.LoadJsonFromDBString(appointmentID, Appointment.FilePaths["AppointmentData"]);
         }
         public void DeleteAppointment(string appointmentID)
         {
-            _DatabaseManager.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            databaseManager.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
         }
         public void SoftDeleteAppointment(string appointmentID)
         {
-            _DatabaseManager.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            databaseManager.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
         }
-        public DataTable GetAppointmentDataTable()
+
+        public List<Dictionary<string, string>> GetAppointments()
         {
-            return _DatabaseManager.GetDataTableSpecificKeys(Appointment.FilePaths["AppointmentData"], ["Title", "StartTime", "EndTime", "Location", "CustomerID"]);
+            Debug.WriteLine("Getting appointments");
+            var appointments = new List<Dictionary<string, string>>();
+            var customerIDs = dbRS.GetCustomerIDs();
+            foreach (var customerID in customerIDs)
+            {
+                Debug.WriteLine(customerID);
+                var customerAppointmentIDs = dbRS.GetAppointmentsFromCustomerID(customerID);
+                foreach (var appointmentID in customerAppointmentIDs)
+                {
+                    Debug.WriteLine(appointmentID);
+                    appointments.Add(ReadAppointmentData(appointmentID));
+                }
+            }
+            return appointments;
+        }
+        public DataTable GetAppointmentTable()
+        {
+            var appointments = GetAppointments();
+            var dataTable = new DataTable();
+
+            if (appointments.Count > 0)
+            {
+                // Add columns based on the keys of the first appointment
+                foreach (var key in appointments[0].Keys)
+                {
+                    dataTable.Columns.Add(key);
+                }
+
+                // Add rows
+                foreach (var appointment in appointments)
+                {
+                    var row = dataTable.NewRow();
+                    foreach (var key in appointment.Keys)
+                    {
+                        row[key] = appointment[key];
+                    }
+                    dataTable.Rows.Add(row);
+                }
+            }
+
+            return dataTable;
         }
     }
 }
