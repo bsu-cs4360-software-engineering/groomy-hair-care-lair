@@ -89,7 +89,7 @@ namespace Groomy
             }
             else
             {
-                var tempAppointment = new Appointment(userID, customerID, "", "", DateTime.Now, DateTime.Now, "");
+                var tempAppointment = new Appointment("", "", DateTime.Now, DateTime.Now, "");
                 var appointmentID = tempAppointment.GetKey();
 
                 var editedAppointment = appointmentDBService.ReadAppointmentData(appointmentID);
@@ -278,7 +278,7 @@ namespace Groomy
             {
                 var selectedCustomer = ((string, string))comboCustomer.SelectedItem;
                 var customerID = customerDBService.GetCustomerIDByFirstLast(selectedCustomer);
-                var newAppointmnet = new Appointment(UserAuth.GetInstance().getID(), customerID, txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
+                var newAppointmnet = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
                 appointmentDBService.CreateAppointment(newAppointmnet, customerID);
                 loadAppointmentData();
                 activatePanel(apptPanel);
@@ -298,22 +298,11 @@ namespace Groomy
         }
         private void apptDel_Click(object sender, EventArgs e)
         {
-            var customerID = GetFieldFromSelection("CustomerID", apptView);
-            if (string.IsNullOrEmpty(customerID))
+            var appointmentID = GetFieldFromSelection("AppointmentID", apptView);
+            if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
-                Helpers.messageBoxError("No appointment selected. Please select an appointment to delete.");
-            }
-            else
-            {
-                // Create a temporary Appointment object to generate the appointmentID
-                var tempAppointment = new Appointment(UserAuth.GetInstance().getID(), customerID, "", "", DateTime.Now, DateTime.Now, "");
-                var appointmentID = tempAppointment.GetKey();
-
-                if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
-                {
-                    appointmentDBService.SoftDeleteAppointment(appointmentID);
-                    loadAppointmentData();
-                }
+                appointmentDBService.SoftDeleteAppointment(appointmentID);
+                loadAppointmentData();
             }
         }
     }

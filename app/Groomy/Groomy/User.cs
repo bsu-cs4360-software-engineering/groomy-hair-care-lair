@@ -53,18 +53,20 @@ namespace Groomy
         {
             return userID;
         }
-        public Dictionary<string, Dictionary<string, object>> GetFields()
+        public Dictionary<string, Dictionary<string, string>> GetFields()
         {
-            var temp = new Dictionary<string, Dictionary<string, object>>();
-            temp["UserData"] = new Dictionary<string, object>
+            var temp = new Dictionary<string, Dictionary<string, string>>();
+            temp["UserData"] = new Dictionary<string, string>
             {
-                { "FirstName", f },
-                { "LastName", l },
-                { "Email", e }
+                { "UserID", GetKey()},
+                { "FirstName", f.ToString() },
+                { "LastName", l.ToString() },
+                { "Email", e.ToString() }
             };
-            temp["PasswordData"] = new Dictionary<string, object>
+            temp["PasswordData"] = new Dictionary<string, string>
             {
-                { "Password", p }
+                { "UserID", GetKey()},
+                { "Password", p.ToString()  }
             };
             return temp;
         }

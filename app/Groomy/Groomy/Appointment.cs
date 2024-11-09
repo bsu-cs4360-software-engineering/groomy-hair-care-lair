@@ -4,8 +4,6 @@ namespace Groomy
 {
     internal class Appointment : IGenericObject
     {
-        private string userID;
-        private string customerID;
         private string title;
         private string description;
         private DateTime startTime;
@@ -18,21 +16,8 @@ namespace Groomy
         {
             { "AppointmentData", "appointments.json" }
         };
-        public IGenericObject FromDictionary(Dictionary<string, object> dict)
+        public Appointment(string t, string d, DateTime sT, DateTime eT, string l)
         {
-            userID = dict["UserID"].ToString();
-            customerID = dict["CustomerID"].ToString();
-            title = dict["Title"].ToString();
-            description = dict["Description"].ToString();
-            startTime = (DateTime)dict["StartTime"];
-            endTime = (DateTime)dict["EndTime"];
-            location = dict["Location"].ToString();
-            return this;
-        }
-        public Appointment(string uID, string cID, string t, string d, DateTime sT, DateTime eT, string l)
-        {
-            userID = uID;
-            customerID = cID;
             title = t;
             description = d;
             startTime = sT;
@@ -40,19 +25,17 @@ namespace Groomy
             location = l;
             appointmentID = Helpers.RandomSHA256Hash();
         }
-        public Dictionary<string, Dictionary<string, object>> GetFields()
+        public Dictionary<string, Dictionary<string, string>> GetFields()
         {
-            var temp = new Dictionary<string, Dictionary<string, object>>();
-            temp["AppointmentData"] = new Dictionary<string, object>
+            var temp = new Dictionary<string, Dictionary<string, string>>();
+            temp["AppointmentData"] = new Dictionary<string, string>
             {
-                { "AppointmentID", appointmentID },
-                { "Title", title },
-                { "Description", description },
-                { "StartTime", startTime },
-                { "EndTime", endTime },
-                { "Location", location },
-                { "UserID", userID },
-                { "CustomerID", customerID },
+                { "AppointmentID", appointmentID.ToString() },
+                { "Title", title.ToString() },
+                { "Description", description.ToString() },
+                { "StartTime", startTime.ToString() },
+                { "EndTime", endTime.ToString() },
+                { "Location", location.ToString() }
             };
             return temp;
         }

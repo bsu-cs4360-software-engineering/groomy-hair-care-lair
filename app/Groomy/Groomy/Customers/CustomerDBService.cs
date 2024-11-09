@@ -1,6 +1,7 @@
 ﻿
 
 using System.Data;
+using System.Diagnostics;
 
 namespace Groomy.Customers
 {
@@ -18,7 +19,7 @@ namespace Groomy.Customers
             dbManager.AddObjectsToDB(customer);
             dbManager.AddRelationshipToDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customer.GetKey()));
         }
-        public Dictionary<string, object> ReadCustomer(string customerID)
+        public Dictionary<string, string> ReadCustomer(string customerID)
         {
             return dbManager.LoadJsonFromDB(customerID, Customer.FilePaths["CustomerData"]);
         }
@@ -55,12 +56,16 @@ namespace Groomy.Customers
         }
         public string GetCustomerIDByFirstLast((string, string) name)
         {
-            var customerIDs = dbManager.GetIDsByKeyValue("FirstName", name.Item1, Customer.FilePaths["CustomerData"]);
+            var customers = dbManager.GetJsonsByKeyValue("FirstName", name.Item1, Customer.FilePaths["CustomerData"]);
+            var customerIDs = dbManager.GetValuesFromJsons("CustomerID", customers);
+
             foreach (var customerID in customerIDs)
             {
                 var customerData = ReadCustomer(customerID);
+                Debug.WriteLine($"Customer Data: {string.Join(", ", customerData.Select(kv => kv.Key + "=" + kv.Value))}");
                 if (customerData["LastName"].ToString() == name.Item2)
                 {
+                    Debug.WriteLine($"Matched Customer ID: {customerID}");
                     return customerID;
                 }
             }

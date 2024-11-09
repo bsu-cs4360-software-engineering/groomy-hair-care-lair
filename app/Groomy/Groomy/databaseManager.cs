@@ -98,59 +98,57 @@ namespace Groomy
                 SaveRelationship(previousRelationshipData, relationshipFilePath);
             }
         }
-        public Dictionary<string, string> LoadJsonFromDBString(string key, string filePath)
-        {
-
-            var database = LoadDatabase(filePath);
-            if (database.ContainsKey(key))
-            {
-                return database[key].ToDictionary(x => x.Key, x => x.Value.ToString());
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public Dictionary<string, object> LoadJsonFromDB(string key, string filePath)
+        public Dictionary<string, string> LoadJsonFromDB(string ID, string filePath)
         {
             var database = LoadDatabase(filePath);
-            if (database.ContainsKey(key))
+            foreach(var item in database)
             {
-                return database[key];
+                if (item.ContainsValue(ID) && !item.ContainsKey(isDeletedKey))
+                {
+                    return item;
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         //returns non-deleted items
-        public List<string> GetIDsByKeyValue(string key, string value, string filePath)
+        public List<Dictionary<string, string>> GetJsonsByKeyValue(string key, string value, string filePath)
         {
+            var Jsons = new List<Dictionary<string, string>>();
             var database = LoadDatabase(filePath);
-            var matchingIDs = new List<string>();
-            foreach (var genericObject in database)
+            foreach (var item in database)
             {
                 bool deleted = false;
-                bool foundKey = false;
-                foreach (var genericItem in genericObject.Value)
+                bool found = false;
+                if (item.ContainsKey(key) && item[key] != null) {
+                    found = true;
+                }
+                if (item.ContainsKey(isDeletedKey))
                 {
-                    if (genericItem.Key == key && genericItem.Value?.ToString() == value)
+                    if (item[isDeletedKey] == "true")
                     {
-                        foundKey = true;
-                    }
-                    if (genericItem.Key == isDeletedKey)
-                    {
-                        deleted = genericItem.Value is JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.True;
-                        if (deleted) break;
+                        deleted = true;
                     }
                 }
-                if (foundKey && !deleted)
+                if(found && !deleted)
                 {
-                    matchingIDs.Add(genericObject.Key);
+                    Jsons.Add(item);
                 }
             }
-            return matchingIDs;
+
+            return Jsons;
+        }
+        public List<string> GetValuesFromJsons(string key, List<Dictionary<string, string>> jsons)
+        {
+            var items = new List<string>();
+            foreach (var item in jsons)
+            {
+                if (item.ContainsKey(key))
+                {
+                    items.Add(item[key]);
+                }
+            }
+            return items;
         }
         public List<Dictionary<string, string>> GetRelationshipsByID(string id, string filePath)
         {
@@ -164,21 +162,6 @@ namespace Groomy
                 }
             }
             return matchingRelationships;
-        }
-        public IGenericObject LoadObjectFromDB(string key, IGenericObject objectType)
-        {
-            var filePaths = objectType.GetDBFilePaths();
-            var firstKey = filePaths.Keys.First();
-            var database = objectType.GetFields()[filePaths[firstKey]];
-            if (database.ContainsKey(key))
-            {
-                return objectType.FromDictionary(database);
-            }
-            else
-            {
-                return null;
-            }
-
         }
         private List<Dictionary<string, string>> LoadRelationship(string filePath)
         {
@@ -212,27 +195,26 @@ namespace Groomy
                 Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
             }
         }
-        private Dictionary<string, Dictionary<string, object>> LoadDatabase(string filePath)
+        private List<Dictionary<string, string>> LoadDatabase(string filePath)
         {
             try
             {
                 if (!_fileService.Exists(filePath))
                 {
-                    return new Dictionary<string, Dictionary<string, object>>();
+                    return new List<Dictionary<string, string>>();
                 }
 
                 string json = _fileService.ReadAllText(filePath);
-                
-                var serializedJson = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(json);
+                var serializedJson = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(json);
                 return serializedJson;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error occurred while loading database: {ex.Message}");
-                return new Dictionary<string, Dictionary<string, object>>();
+                return new List<Dictionary<string, string>>();
             }
         }
-        private void SaveDatabase(Dictionary<string, Dictionary<string, object>> data, string filePath)
+        private void SaveDatabase(List<Dictionary<string, string>> data, string filePath)
         {
             try
             {
@@ -254,41 +236,56 @@ namespace Groomy
                 var dataType = item.Key;
                 var filePath = item.Value;
                 var database = LoadDatabase(filePath);
-                database[genericObject.GetKey()] = objectFields[dataType];
+                database.Add(objectFields[dataType]);
                 SaveDatabase(database, filePath);
             }
         }
         public bool KeyExists(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
-            return database.ContainsKey(key);
+            foreach (var item in database)
+            {
+                if (item.ContainsValue(key) && !item.ContainsKey(isDeletedKey))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public void RemoveObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
-            if (database.ContainsKey(key))
+            foreach (var item in database)
             {
-                database.Remove(key);
-                SaveDatabase(database, filePath);
+                if (item.ContainsValue(key))
+                {
+                    database.Remove(item);
+                    SaveDatabase(database, filePath);
+                    return;
+                }
             }
         }
         public void SoftDeleteObjectInDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
-            if (database.ContainsKey(key))
+
+            foreach (var item in database)
             {
-                database[key][isDeletedKey] = true;
-                SaveDatabase(database, filePath);
-            }
-            else
-            {
-                Helpers.messageBoxError("No Key");
+                if (item.ContainsValue(key))
+                {
+                    item[isDeletedKey] = "true";
+                    SaveDatabase(database, filePath);
+                    return;
+                }
+                else
+                {
+                    Helpers.messageBoxError("No Key");
+                }
             }
         }
         public DataTable GetDataTableSpecificKeys(string filePath, List<string> keys)
         {
             DataTable dataTable = new DataTable();
-
 
             var data = LoadDatabase(filePath);
 
@@ -296,7 +293,6 @@ namespace Groomy
                 return dataTable;
 
             // Add columns
-            var firstItem = data.First().Value;
             foreach (var key in keys)
             {
                 dataTable.Columns.Add(key);
@@ -305,14 +301,14 @@ namespace Groomy
             // Add rows
             foreach (var item in data)
             {
-                if (item.Value.ContainsKey(isDeletedKey))
+                if (item.ContainsKey(isDeletedKey))
                 {
                     continue;
                 }
                 DataRow row = dataTable.NewRow();
                 foreach (var key in keys)
                 {
-                    row[key] = item.Value[key];
+                    row[key] = item[key];
                 }
                 dataTable.Rows.Add(row);
             }

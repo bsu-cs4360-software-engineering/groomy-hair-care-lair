@@ -20,7 +20,7 @@ namespace Groomy
         }
         public Dictionary<string, string> ReadAppointmentData(string appointmentID)
         {
-            return databaseManager.LoadJsonFromDBString(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            return databaseManager.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
         }
         public void DeleteAppointment(string appointmentID)
         {
@@ -29,6 +29,7 @@ namespace Groomy
         public void SoftDeleteAppointment(string appointmentID)
         {
             databaseManager.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            databaseManager.SoftDeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(dbRS.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
 
         public List<Dictionary<string, string>> GetAppointments()
@@ -56,20 +57,32 @@ namespace Groomy
             if (appointments.Count > 0)
             {
                 // Add columns based on the keys of the first appointment
-                foreach (var key in appointments[0].Keys)
+                foreach (var appointment in appointments)
                 {
-                    dataTable.Columns.Add(key);
+                    if (appointment != null)
+                    {
+                        foreach (var key in appointment.Keys)
+                        {
+                            if (!dataTable.Columns.Contains(key))
+                            {
+                                dataTable.Columns.Add(key);
+                            }
+                        }
+                    }
                 }
 
                 // Add rows
                 foreach (var appointment in appointments)
                 {
-                    var row = dataTable.NewRow();
-                    foreach (var key in appointment.Keys)
+                    if (appointment != null)
                     {
-                        row[key] = appointment[key];
+                        var row = dataTable.NewRow();
+                        foreach (var key in appointment.Keys)
+                        {
+                            row[key] = appointment[key];
+                        }
+                        dataTable.Rows.Add(row);
                     }
-                    dataTable.Rows.Add(row);
                 }
             }
 
