@@ -5,42 +5,51 @@ namespace Groomy
 {
     internal class AppointmentDBService
     {
-        DatabaseManager databaseManager;
-        DBRelationshipService dbRS;
+        ManagerSingleton ms;
 
-        public AppointmentDBService(DatabaseManager dbm, DBRelationshipService dbrs)
+        public AppointmentDBService(ManagerSingleton ms)
         {
-            databaseManager = dbm;
-            dbRS = dbrs;
+            this.ms = ms;
         }
         public void CreateAppointment(Appointment appointment, string customerID)
         {
-            databaseManager.AddObjectsToDB(appointment);
-            databaseManager.AddRelationshipToDB(new Relationships.Customer_Appointment_Relationship(customerID, appointment.GetKey()));
+            ms.dbm.AddObjectsToDB(appointment);
+            ms.dbm.AddRelationshipToDB(new Relationships.Customer_Appointment_Relationship(customerID, appointment.GetKey()));
         }
         public Dictionary<string, string> ReadAppointmentData(string appointmentID)
         {
-            return databaseManager.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            return ms.dbm.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+        }
+        public void UpdateAppointmentData(Appointment appointment, string customerID)
+        {
+            var appointmentID = appointment.GetKey();
+            var appointmentData = appointment.GetFields()["AppointmentData"];
+
+            //update appointment
+            ms.dbm.UpdateObjectInDB(appointmentID, appointmentData, Appointment.FilePaths["AppointmentData"]);
+            //update relationship
+            ms.dbm.UpdateRelationshipInDB(new Relationships.Customer_Appointment_Relationship(customerID, appointmentID));
         }
         public void DeleteAppointment(string appointmentID)
         {
-            databaseManager.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.DeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
         public void SoftDeleteAppointment(string appointmentID)
         {
-            databaseManager.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            databaseManager.SoftDeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(dbRS.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            ms.dbm.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
 
         public List<Dictionary<string, string>> GetAppointments()
         {
             Debug.WriteLine("Getting appointments");
             var appointments = new List<Dictionary<string, string>>();
-            var customerIDs = dbRS.GetCustomerIDs();
+            var customerIDs = ms.dbrs.GetCustomerIDs();
             foreach (var customerID in customerIDs)
             {
                 Debug.WriteLine(customerID);
-                var customerAppointmentIDs = dbRS.GetAppointmentsFromCustomerID(customerID);
+                var customerAppointmentIDs = ms.dbrs.GetAppointmentsFromCustomerID(customerID);
                 foreach (var appointmentID in customerAppointmentIDs)
                 {
                     Debug.WriteLine(appointmentID);
@@ -49,43 +58,39 @@ namespace Groomy
             }
             return appointments;
         }
-        public DataTable GetAppointmentTable()
+        public DataTable GetAppointmentDataTable(List<string> keys = null)
         {
             var appointments = GetAppointments();
             var dataTable = new DataTable();
 
             if (appointments.Count > 0)
             {
-                // Add columns based on the keys of the first appointment
-                foreach (var appointment in appointments)
+                if (keys == null || keys.Count == 0)
                 {
-                    if (appointment != null)
-                    {
-                        foreach (var key in appointment.Keys)
-                        {
-                            if (!dataTable.Columns.Contains(key))
-                            {
-                                dataTable.Columns.Add(key);
-                            }
-                        }
-                    }
+                    keys = appointments.First().Keys.ToList();
                 }
 
-                // Add rows
+                foreach (var key in keys)
+                {
+                    dataTable.Columns.Add(key);
+                }
+
                 foreach (var appointment in appointments)
                 {
                     if (appointment != null)
                     {
                         var row = dataTable.NewRow();
-                        foreach (var key in appointment.Keys)
+                        foreach (var key in keys)
                         {
-                            row[key] = appointment[key];
+                            if (appointment.ContainsKey(key))
+                            {
+                                row[key] = appointment[key];
+                            }
                         }
                         dataTable.Rows.Add(row);
                     }
                 }
             }
-
             return dataTable;
         }
     }

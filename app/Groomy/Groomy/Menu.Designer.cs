@@ -33,6 +33,8 @@
             btnCustomers = new Label();
             btnWelcome = new Label();
             apptCreEdit = new Panel();
+            fieldAppointmentID = new Label();
+            lblAppointmentID = new Label();
             comboCustomer = new ComboBox();
             lblCustomer = new Label();
             txtApptNotes = new TextBox();
@@ -142,6 +144,8 @@
             // 
             // apptCreEdit
             // 
+            apptCreEdit.Controls.Add(fieldAppointmentID);
+            apptCreEdit.Controls.Add(lblAppointmentID);
             apptCreEdit.Controls.Add(comboCustomer);
             apptCreEdit.Controls.Add(lblCustomer);
             apptCreEdit.Controls.Add(txtApptNotes);
@@ -164,10 +168,28 @@
             apptCreEdit.Size = new Size(528, 550);
             apptCreEdit.TabIndex = 43;
             // 
+            // fieldAppointmentID
+            // 
+            fieldAppointmentID.AutoSize = true;
+            fieldAppointmentID.Location = new Point(98, 508);
+            fieldAppointmentID.Name = "fieldAppointmentID";
+            fieldAppointmentID.Size = new Size(87, 15);
+            fieldAppointmentID.TabIndex = 85;
+            fieldAppointmentID.Text = "appointmentID";
+            // 
+            // lblAppointmentID
+            // 
+            lblAppointmentID.AutoSize = true;
+            lblAppointmentID.Location = new Point(98, 491);
+            lblAppointmentID.Name = "lblAppointmentID";
+            lblAppointmentID.Size = new Size(92, 15);
+            lblAppointmentID.TabIndex = 84;
+            lblAppointmentID.Text = "AppointmentID:";
+            // 
             // comboCustomer
             // 
             comboCustomer.FormattingEnabled = true;
-            comboCustomer.Location = new Point(89, 124);
+            comboCustomer.Location = new Point(97, 98);
             comboCustomer.Name = "comboCustomer";
             comboCustomer.Size = new Size(321, 23);
             comboCustomer.TabIndex = 83;
@@ -175,7 +197,7 @@
             // lblCustomer
             // 
             lblCustomer.AutoSize = true;
-            lblCustomer.Location = new Point(90, 106);
+            lblCustomer.Location = new Point(98, 80);
             lblCustomer.Name = "lblCustomer";
             lblCustomer.Size = new Size(62, 15);
             lblCustomer.TabIndex = 82;
@@ -183,7 +205,7 @@
             // 
             // txtApptNotes
             // 
-            txtApptNotes.Location = new Point(89, 436);
+            txtApptNotes.Location = new Point(97, 410);
             txtApptNotes.Multiline = true;
             txtApptNotes.Name = "txtApptNotes";
             txtApptNotes.Size = new Size(321, 71);
@@ -192,7 +214,7 @@
             // lblApptNotes
             // 
             lblApptNotes.AutoSize = true;
-            lblApptNotes.Location = new Point(89, 418);
+            lblApptNotes.Location = new Point(97, 392);
             lblApptNotes.Name = "lblApptNotes";
             lblApptNotes.Size = new Size(41, 15);
             lblApptNotes.TabIndex = 79;
@@ -201,7 +223,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(91, 150);
+            label1.Location = new Point(99, 124);
             label1.Name = "label1";
             label1.Size = new Size(32, 15);
             label1.TabIndex = 78;
@@ -210,7 +232,7 @@
             // 
             // txtTitle
             // 
-            txtTitle.Location = new Point(89, 168);
+            txtTitle.Location = new Point(97, 142);
             txtTitle.Name = "txtTitle";
             txtTitle.Size = new Size(321, 23);
             txtTitle.TabIndex = 77;
@@ -218,7 +240,7 @@
             // lblDescription
             // 
             lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(89, 194);
+            lblDescription.Location = new Point(97, 168);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(70, 15);
             lblDescription.TabIndex = 76;
@@ -227,7 +249,7 @@
             // lblLocation
             // 
             lblLocation.AutoSize = true;
-            lblLocation.Location = new Point(89, 326);
+            lblLocation.Location = new Point(97, 300);
             lblLocation.Name = "lblLocation";
             lblLocation.Size = new Size(56, 15);
             lblLocation.TabIndex = 75;
@@ -235,7 +257,7 @@
             // 
             // txtLocation
             // 
-            txtLocation.Location = new Point(89, 344);
+            txtLocation.Location = new Point(97, 318);
             txtLocation.Multiline = true;
             txtLocation.Name = "txtLocation";
             txtLocation.Size = new Size(321, 71);
@@ -244,7 +266,7 @@
             // timeEnd
             // 
             timeEnd.Format = DateTimePickerFormat.Time;
-            timeEnd.Location = new Point(89, 300);
+            timeEnd.Location = new Point(97, 274);
             timeEnd.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
             timeEnd.Name = "timeEnd";
             timeEnd.Size = new Size(321, 23);
@@ -253,7 +275,7 @@
             // lblEndTime
             // 
             lblEndTime.AutoSize = true;
-            lblEndTime.Location = new Point(89, 282);
+            lblEndTime.Location = new Point(97, 256);
             lblEndTime.Name = "lblEndTime";
             lblEndTime.Size = new Size(59, 15);
             lblEndTime.TabIndex = 72;
@@ -261,7 +283,7 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(89, 212);
+            txtDescription.Location = new Point(97, 186);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(321, 23);
             txtDescription.TabIndex = 71;
@@ -269,7 +291,7 @@
             // timeStart
             // 
             timeStart.Format = DateTimePickerFormat.Time;
-            timeStart.Location = new Point(89, 256);
+            timeStart.Location = new Point(97, 230);
             timeStart.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
             timeStart.Name = "timeStart";
             timeStart.Size = new Size(321, 23);
@@ -278,7 +300,7 @@
             // lblStartTime
             // 
             lblStartTime.AutoSize = true;
-            lblStartTime.Location = new Point(89, 238);
+            lblStartTime.Location = new Point(97, 212);
             lblStartTime.Name = "lblStartTime";
             lblStartTime.Size = new Size(63, 15);
             lblStartTime.TabIndex = 69;
@@ -288,7 +310,7 @@
             // 
             apptSave.BackColor = Color.FromArgb(21, 96, 130);
             apptSave.ForeColor = Color.White;
-            apptSave.Location = new Point(259, 71);
+            apptSave.Location = new Point(259, 53);
             apptSave.Name = "apptSave";
             apptSave.Size = new Size(103, 23);
             apptSave.TabIndex = 67;
@@ -300,7 +322,7 @@
             // 
             apptBack.BackColor = Color.FromArgb(21, 96, 130);
             apptBack.ForeColor = Color.White;
-            apptBack.Location = new Point(137, 71);
+            apptBack.Location = new Point(137, 53);
             apptBack.Name = "apptBack";
             apptBack.Size = new Size(103, 23);
             apptBack.TabIndex = 66;
@@ -722,5 +744,7 @@
         private Label lblApptNotes;
         private Label lblCustomer;
         private ComboBox comboCustomer;
+        private Label fieldAppointmentID;
+        private Label lblAppointmentID;
     }
 }

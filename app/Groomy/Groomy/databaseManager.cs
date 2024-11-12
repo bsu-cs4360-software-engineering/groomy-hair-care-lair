@@ -1,4 +1,5 @@
 ﻿using Groomy.Customers;
+using Groomy.Relationships;
 using System.Data;
 using System.Diagnostics;
 using System.Text.Json;
@@ -229,14 +230,23 @@ namespace Groomy
         }
         public void AddObjectsToDB(IGenericObject genericObject)
         {
+            var objectKey = genericObject.GetKey();
             var objectFields = genericObject.GetFields();
             var objectFilePaths = genericObject.GetDBFilePaths();
             foreach (var item in objectFilePaths)
             {
                 var dataType = item.Key;
+                var obj = objectFields[dataType];
+
                 var filePath = item.Value;
+                if (KeyExists(objectKey, filePath))
+                {
+                    UpdateObjectInDB(objectKey, objectFields[item.Key], item.Value);
+                    return;
+                }
+                
                 var database = LoadDatabase(filePath);
-                database.Add(objectFields[dataType]);
+                database.Add(obj);
                 SaveDatabase(database, filePath);
             }
         }
@@ -251,6 +261,22 @@ namespace Groomy
                 }
             }
             return false;
+        }
+        internal void UpdateObjectInDB(string objectID, Dictionary<string, string> data, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            foreach (var item in database)
+            {
+                if (item.ContainsValue(objectID))
+                {
+                    foreach (var key in data.Keys)
+                    {
+                        item[key] = data[key];
+                    }
+                    SaveDatabase(database, filePath);
+                    return;
+                }
+            }
         }
         public void RemoveObjectFromDB(string key, string filePath)
         {
@@ -314,6 +340,36 @@ namespace Groomy
             }
 
             return dataTable;
+        }
+
+        public void UpdateRelationshipInDB(Relationships.IRelationship relationship)
+        {
+            var relationshipFilePath = relationship.GetFilePath();
+            var allRelationshipData = LoadRelationship(relationshipFilePath);
+            Dictionary<string, string> IDs = relationship.GetIDs();
+
+            if (IDs.Count < 2)
+            {
+                throw new ArgumentException("IDs dictionary must contain at least two values.");
+            }
+
+            var id_to_modify = IDs.ElementAt(0).Value;
+            var id_to_keep = IDs.ElementAt(1).Value;
+
+            // Find the relationship item containing the value id_to_keep
+            var relationshipToModify = allRelationshipData.FirstOrDefault(r => r.ContainsValue(id_to_keep));
+
+            if (relationshipToModify != null)
+            {
+                foreach (var key in relationshipToModify.Keys.ToList())
+                {
+                    if (relationshipToModify[key] != id_to_keep)
+                    {
+                        relationshipToModify[key] = id_to_modify;
+                    }
+                }
+                SaveRelationship(allRelationshipData, relationshipFilePath);
+            }
         }
     }
 }

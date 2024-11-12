@@ -2,15 +2,14 @@
 {
     internal class DBRelationshipService
     {
-        DatabaseManager databaseManager;
-        UserAuth userAuth;
-        public DBRelationshipService(DatabaseManager dbm, UserAuth ua)
+        ManagerSingleton ms;
+        public DBRelationshipService(ManagerSingleton ms)
         {
-            databaseManager = dbm;            userAuth = ua;
+            this.ms = ms;
         }
         public List<string> GetCustomerIDs()
         {
-            var user_customer_relationships = databaseManager.GetRelationshipsByID(userAuth.getID(), "users_customers.json");
+            var user_customer_relationships = ms.dbm.GetRelationshipsByID(ms.ua.getID(), "users_customers.json");
             var customerIDs = new List<string>();
             foreach (var relationship in user_customer_relationships)
             {
@@ -20,7 +19,7 @@
         }
         public List<string> GetAppointmentsFromCustomerID(string customerID)
         {
-            var customer_appointment_relationships = databaseManager.GetRelationshipsByID(customerID, "customers_appointments.json");
+            var customer_appointment_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_appointments.json");
             var appointmentIDs = new List<string>();
             foreach (var relationship in customer_appointment_relationships)
             {
@@ -30,12 +29,12 @@
         }
         public string GetCustomerIDFromAppointmentID(string appointmentID)
         {
-            var appointment_customer_relationships = databaseManager.GetRelationshipsByID(appointmentID, "customers_appointments.json");
+            var appointment_customer_relationships = ms.dbm.GetRelationshipsByID(appointmentID, "customers_appointments.json");
             return appointment_customer_relationships[0]["customerID"];
         }
         public string GetUserIDFromCustomerID(string customerID)
         {
-            var user_customer_relationships = databaseManager.GetRelationshipsByID(customerID, "users_customers.json");
+            var user_customer_relationships = ms.dbm.GetRelationshipsByID(customerID, "users_customers.json");
             return user_customer_relationships[0]["userID"];
         }
     }
