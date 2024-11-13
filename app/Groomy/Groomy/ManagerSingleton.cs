@@ -1,4 +1,5 @@
 ﻿using Groomy.Customers;
+using Groomy.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,17 @@ namespace Groomy
         public DBRelationshipService dbrs;
         public CustomerDBService cDBS;
         public AppointmentDBService aDBS;
+        public NotesDBService nDBS;
 
         private ManagerSingleton()
         {
             fs = new FileService();
             dbm = DatabaseManager.GetInstance(fs);
             ua = UserAuth.GetInstance();
-            dbrs = new DBRelationshipService(this);
-            cDBS = new CustomerDBService(this);
-            aDBS = new AppointmentDBService(this);
+            dbrs = new DBRelationshipService(instance);
+            cDBS = new CustomerDBService(instance);
+            aDBS = new AppointmentDBService(instance);
+            nDBS = new NotesDBService(instance);
         }
 
         public static ManagerSingleton GetInstance()
