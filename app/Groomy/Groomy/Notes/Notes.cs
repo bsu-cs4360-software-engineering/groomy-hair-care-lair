@@ -14,7 +14,7 @@ namespace Groomy.Notes
         public string payload;
         public string createDate;
 
-        public Dictionary<string, string> FilePaths = new Dictionary<string, string>
+        public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
         {
             { "NotesData", "notes.json" }
         };

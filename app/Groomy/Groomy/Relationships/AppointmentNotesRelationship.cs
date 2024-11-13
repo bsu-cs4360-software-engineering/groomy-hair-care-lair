@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Groomy.Relationships
 {
-    internal class AppointmentNotesRelationship
+    internal class AppointmentNotesRelationship: IRelationship
     {
         string appointmentID;
         string noteID;
