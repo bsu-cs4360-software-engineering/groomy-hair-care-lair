@@ -37,5 +37,15 @@
             var user_customer_relationships = ms.dbm.GetRelationshipsByID(customerID, "users_customers.json");
             return user_customer_relationships[0]["userID"];
         }
+        public string GetNotesFromCustomerID(string customerID)
+        {
+            var customer_notes_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_notes.json");
+            return customer_notes_relationships[0]["noteID"];
+        }
+        public string GetNotesFromAppointmentID(string appointmentID)
+        {
+            var appointment_notes_relationships = ms.dbm.GetRelationshipsByID(appointmentID, "appointments_notes.json");
+            return appointment_notes_relationships[0]["noteID"];
+        }
     }
 }
