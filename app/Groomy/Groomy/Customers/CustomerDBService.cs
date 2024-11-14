@@ -12,9 +12,10 @@ namespace Groomy.Customers
         private ManagerSingleton ms;
         public CustomerDBService(ManagerSingleton ms)
         {
+
+            this.ms = ms;
             dbManager = ms.dbm;
             userAuth = ms.ua;
-            this.ms = ms;
         }
         public void CreateCustomer(Customer customer)
         {

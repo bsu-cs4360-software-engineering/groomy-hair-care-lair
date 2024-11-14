@@ -24,10 +24,10 @@ namespace Groomy
             fs = new FileService();
             dbm = DatabaseManager.GetInstance(fs);
             ua = UserAuth.GetInstance();
-            dbrs = new DBRelationshipService(instance);
-            cDBS = new CustomerDBService(instance);
-            aDBS = new AppointmentDBService(instance);
-            nDBS = new NotesDBService(instance);
+            dbrs = new DBRelationshipService(this);
+            cDBS = new CustomerDBService(this);
+            aDBS = new AppointmentDBService(this);
+            nDBS = new NotesDBService(this);
         }
 
         public static ManagerSingleton GetInstance()
