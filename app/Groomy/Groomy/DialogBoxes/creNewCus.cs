@@ -13,17 +13,14 @@ namespace Groomy.DialogBoxes
 {
     public partial class creNewCus : Form
     {
-        FileService fs;
+        ManagerSingleton ms = ManagerSingleton.GetInstance();
         CustomerDBService customerDBService;
-        DatabaseManager dbManager;
         private string email;  // Store the passed email here
 
         // Modify constructor to accept the email as a parameter
         public creNewCus(string email)
         {
-            fs = new FileService();
-            dbManager = DatabaseManager.GetInstance(fs);
-            customerDBService = new CustomerDBService(dbManager);
+            customerDBService = ms.cDBS;
             InitializeComponent();
             this.email = email; // Set the email to use for fetching customer data
         }

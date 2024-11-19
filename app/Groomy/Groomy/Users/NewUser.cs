@@ -49,7 +49,7 @@
             {
                 //create new user object + save new user object to database
                 var (fName, lName, eMail, password) = getNewUserFields();
-                User newUser = new User(fName, lName, eMail, password);
+                Users.User newUser = new Users.User(fName, lName, eMail, password);
                 userDBService.CreateUser(newUser);
                 Helpers.messageBoxSuccess("User Successfully Created");
                 this.Close();

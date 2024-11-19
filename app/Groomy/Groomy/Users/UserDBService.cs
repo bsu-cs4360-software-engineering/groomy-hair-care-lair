@@ -9,7 +9,7 @@
         }
         public bool IsUser(string userID)
         {
-            return dbManager.KeyExists(userID, User.FilePaths["PasswordData"]);
+            return dbManager.KeyExists(userID, Users.User.FilePaths["PasswordData"]);
         }
         public bool IsCorrectPassword(string userID, string hashedPassword)
         {
@@ -24,22 +24,22 @@
                 return false;
             }
         }
-        public void CreateUser(User user)
+        public void CreateUser(Users.User user)
         {
             dbManager.AddObjectsToDB(user);
         }
         public Dictionary<string, string> ReadUserData(string userID)
         {
-            return dbManager.LoadJsonFromDB(userID, User.FilePaths["UserData"]);
+            return dbManager.LoadJsonFromDB(userID, Users.User.FilePaths["UserData"]);
         }
         public Dictionary<string, string> ReadPasswordData(string userID)
         {
-            return dbManager.LoadJsonFromDB(userID, User.FilePaths["PasswordData"]);
+            return dbManager.LoadJsonFromDB(userID, Users.User.FilePaths["PasswordData"]);
         }
         public void DeleteUser(string userID)
         {
-            dbManager.RemoveObjectFromDB(userID, User.FilePaths["UserData"]);
-            dbManager.RemoveObjectFromDB(userID, User.FilePaths["PasswordData"]);
+            dbManager.RemoveObjectFromDB(userID, Users.User.FilePaths["UserData"]);
+            dbManager.RemoveObjectFromDB(userID, Users.User.FilePaths["PasswordData"]);
         }
     }
 }

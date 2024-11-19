@@ -16,7 +16,7 @@ namespace Groomy
         public UserAuth ua;
         public DBRelationshipService dbrs;
         public CustomerDBService cDBS;
-        public AppointmentDBService aDBS;
+        public Appointments.AppointmentDBService aDBS;
         public NotesDBService nDBS;
 
         private ManagerSingleton()
@@ -26,7 +26,7 @@ namespace Groomy
             ua = UserAuth.GetInstance();
             dbrs = new DBRelationshipService(this);
             cDBS = new CustomerDBService(this);
-            aDBS = new AppointmentDBService(this);
+            aDBS = new Appointments.AppointmentDBService(this);
             nDBS = new NotesDBService(this);
         }
 

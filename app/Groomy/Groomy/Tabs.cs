@@ -15,16 +15,13 @@ namespace Groomy
 {
     public partial class Tabs : Form
     {
-        FileService fs;
+        ManagerSingleton ms = ManagerSingleton.GetInstance();
         CustomerDBService customerDBService;
         AppointmentDBService appointmentDBService;
-        DatabaseManager dbManager;
         public Tabs()
         {
-            fs = new FileService();
-            dbManager = DatabaseManager.GetInstance(fs);
-            customerDBService = new CustomerDBService(dbManager);
-            appointmentDBService = new AppointmentDBService(dbManager);
+            customerDBService = ms.cDBS;
+            appointmentDBService = ms.aDBS;
             InitializeComponent();
         }
         public string pubEmail = "No Email";

@@ -15,17 +15,15 @@ namespace Groomy.DialogBoxes
 {
     public partial class creNewAppt : Form
     {
-        FileService fs;
+        ManagerSingleton ms = ManagerSingleton.GetInstance();
         CustomerDBService customerDBService;
         AppointmentDBService appointmentDBService;
-        DatabaseManager dbManager;
+
         private string ApptID;
         public creNewAppt(string ApptID)
         {
-            fs = new FileService();
-            dbManager = DatabaseManager.GetInstance(fs);
-            customerDBService = new CustomerDBService(dbManager);
-            appointmentDBService = new AppointmentDBService(dbManager);
+            customerDBService = ms.cDBS;
+            appointmentDBService = ms.aDBS;
             InitializeComponent();
             this.ApptID = ApptID;
         }
@@ -87,9 +85,9 @@ namespace Groomy.DialogBoxes
             }
 
             // Creating a new Appointment object
-            Appointment newAppointment = new Appointment(customerID, title, description, startTime, endTime, location);
+            Appointment newAppointment = new Appointment(title, description, startTime, endTime, location);
 
-            appointmentDBService.CreateAppointment(newAppointment);
+            appointmentDBService.CreateAppointment(newAppointment, customerID);
             Helpers.messageBoxSuccess("Appointment saved successfully!");
             this.Hide();
         }

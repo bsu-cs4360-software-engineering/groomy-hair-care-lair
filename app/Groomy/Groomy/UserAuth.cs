@@ -4,7 +4,7 @@
     {
         private static readonly object _lock = new object(); // Lock for thread safety
         private static UserAuth _instance;
-        private static User user;
+        private static Users.User user;
         public static UserAuth GetInstance()
         {
             if (_instance == null)
@@ -19,7 +19,7 @@
             }
             return _instance;
         }
-        public void setUser(User user)
+        public void setUser(Users.User user)
         {
             UserAuth.user = user;
         }
