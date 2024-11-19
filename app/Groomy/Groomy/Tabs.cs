@@ -54,6 +54,7 @@ namespace Groomy
         public void loadCustomerData()
         {
             cusDataView.DataSource = customerDBService.GetCustomerDataTable();
+            apptDataView.DataSource = appointmentDBService.GetAppointmentDataTable();
             // To Do: Implement a way of acsessing the appointment data and put it in the dataview
         }
 

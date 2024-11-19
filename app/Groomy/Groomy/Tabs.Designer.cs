@@ -43,7 +43,7 @@
             btnEdit = new Button();
             appointmentsTab = new TabPage();
             btnNewAppt = new Button();
-            dataGridView1 = new DataGridView();
+            apptDataView = new DataGridView();
             label1 = new Label();
             btnApptDel = new Button();
             btnEditAppt = new Button();
@@ -53,7 +53,7 @@
             customersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cusDataView).BeginInit();
             appointmentsTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)apptDataView).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -195,7 +195,7 @@
             // 
             appointmentsTab.BackColor = Color.White;
             appointmentsTab.Controls.Add(btnNewAppt);
-            appointmentsTab.Controls.Add(dataGridView1);
+            appointmentsTab.Controls.Add(apptDataView);
             appointmentsTab.Controls.Add(label1);
             appointmentsTab.Controls.Add(btnApptDel);
             appointmentsTab.Controls.Add(btnEditAppt);
@@ -217,13 +217,13 @@
             btnNewAppt.UseVisualStyleBackColor = false;
             btnNewAppt.Click += btnNewAppt_Click;
             // 
-            // dataGridView1
+            // apptDataView
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(14, 102);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(924, 377);
-            dataGridView1.TabIndex = 47;
+            apptDataView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            apptDataView.Location = new Point(14, 102);
+            apptDataView.Name = "apptDataView";
+            apptDataView.Size = new Size(924, 377);
+            apptDataView.TabIndex = 47;
             // 
             // label1
             // 
@@ -282,7 +282,7 @@
             customersTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)cusDataView).EndInit();
             appointmentsTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)apptDataView).EndInit();
             ResumeLayout(false);
         }
 
@@ -300,7 +300,7 @@
         private System.Windows.Forms.Timer refreshTimer;
         private Button button1;
         private Button btnNewAppt;
-        private DataGridView dataGridView1;
+        private DataGridView apptDataView;
         private Label label1;
         private Button btnApptDel;
         private Button btnEditAppt;
