@@ -1,15 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Diagnostics;
-using System.Reflection;
-
-namespace Groomy.Tests
+﻿namespace Groomy.Tests
 {
 
     [TestClass()]

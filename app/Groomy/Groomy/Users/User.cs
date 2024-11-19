@@ -1,11 +1,4 @@
 ﻿using Groomy.Customers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Text.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Groomy.Users
 {
@@ -37,6 +30,10 @@ namespace Groomy.Users
             p = dict["Password"].ToString();
             return this;
         }
+        public User()
+        {
+
+        }
         public User(string fName, string lName, string eMail, string password)
         {
             f = fName;
@@ -44,22 +41,32 @@ namespace Groomy.Users
             e = eMail;
             p = Helpers.GenerateSHA256Hash(password);
         }
+        public User createWithHashedPassword(string fName, string lName, string eMail, string hashedPassword)
+        {
+            f = fName;
+            l = lName;
+            e = eMail;
+            p = hashedPassword;
+            return this;
+        }
         public string GetKey()
         {
             return userID;
         }
-        public Dictionary<string, Dictionary<string, object>> GetFields()
+        public Dictionary<string, Dictionary<string, string>> GetFields()
         {
-            var temp = new Dictionary<string, Dictionary<string, object>>();
-            temp["UserData"] = new Dictionary<string, object>
+            var temp = new Dictionary<string, Dictionary<string, string>>();
+            temp["UserData"] = new Dictionary<string, string>
             {
-                { "FirstName", f },
-                { "LastName", l },
-                { "Email", e }
+                { "UserID", GetKey()},
+                { "FirstName", f.ToString() },
+                { "LastName", l.ToString() },
+                { "Email", e.ToString() }
             };
-            temp["PasswordData"] = new Dictionary<string, object>
+            temp["PasswordData"] = new Dictionary<string, string>
             {
-                { "Password", p }
+                { "UserID", GetKey()},
+                { "Password", p.ToString()  }
             };
             return temp;
         }

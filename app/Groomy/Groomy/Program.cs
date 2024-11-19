@@ -1,7 +1,3 @@
-using System.Text;
-using System.Text.Json;
-using Microsoft.VisualBasic.ApplicationServices;
-
 namespace Groomy
 {
     internal static class Program

@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Groomy.Users;
-using static System.Windows.Forms.DataFormats;
-
-namespace Groomy
+﻿namespace Groomy
 {
     public partial class NewUser : Form
     {
@@ -58,7 +45,7 @@ namespace Groomy
         }
         private void btn_submitNewUser_Click(object sender, EventArgs e)
         {
-           if (validateNewUserFields() == true)
+            if (validateNewUserFields() == true)
             {
                 //create new user object + save new user object to database
                 var (fName, lName, eMail, password) = getNewUserFields();
@@ -67,7 +54,7 @@ namespace Groomy
                 Helpers.messageBoxSuccess("User Successfully Created");
                 this.Close();
             }
-           else
+            else
             {
                 //do nothing
             }

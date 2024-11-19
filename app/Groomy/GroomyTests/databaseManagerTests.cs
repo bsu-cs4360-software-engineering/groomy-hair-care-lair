@@ -1,15 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Groomy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Groomy.Customers;
 using Moq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using Groomy.Customers;
-using System.Diagnostics;
-using System.Text.Json;
 using Newtonsoft.Json;
 
 namespace Groomy.Tests
@@ -142,58 +132,56 @@ namespace Groomy.Tests
         }
 
         [TestMethod()]
-public void SoftDeleteObjectInDBTest()
-    {
-        //Arrange
-        var mockFileService = new Mock<IFileService>();
-        var DBM = new DatabaseManager(mockFileService.Object);
+        public void SoftDeleteObjectInDBTest()
+        {
+            //Arrange
+            var mockFileService = new Mock<IFileService>();
+            var DBM = new DatabaseManager(mockFileService.Object);
 
-        var testFilePath = "test.json";
-        var testID = "testID";
-        var testKey = "testKey";
-        var testValue = "testValue";
+            var testFilePath = "test.json";
+            var testID = "testID";
+            var testKey = "testKey";
+            var testValue = "testValue";
 
-        var testJson = $@"{{""{testID}"": {{""{testKey}"": ""{testValue}""}} }}";
+            var testJson = $@"{{""{testID}"": {{""{testKey}"": ""{testValue}""}} }}";
 
-        //Mock the file service methods
-        mockFileService.Setup(fs => fs.ReadAllText(testFilePath)).Returns(testJson);
-        mockFileService.Setup(fs => fs.Exists(testFilePath)).Returns(true);
+            //Mock the file service methods
+            mockFileService.Setup(fs => fs.ReadAllText(testFilePath)).Returns(testJson);
+            mockFileService.Setup(fs => fs.Exists(testFilePath)).Returns(true);
 
-        //Variable to capture the content written to the file
-        string updatedJson = null;
-        mockFileService.Setup(fs => fs.WriteAllText(testFilePath, It.IsAny<string>()))
-            .Callback<string, string>((path, content) => updatedJson = content);
+            //Variable to capture the content written to the file
+            string updatedJson = null;
+            mockFileService.Setup(fs => fs.WriteAllText(testFilePath, It.IsAny<string>()))
+                .Callback<string, string>((path, content) => updatedJson = content);
 
-        //Act - Before SoftDelete: Load the current database
-        var itemBeforeDelete = DBM.LoadJsonFromDB(testID, testFilePath); //Returns Dictionary<string, object>
+            //Act - Before SoftDelete: Load the current database
+            var itemBeforeDelete = DBM.LoadJsonFromDB(testID, testFilePath); //Returns Dictionary<string, object>
 
-        //Assert - Confirm "isDeleted" doesn't exist before SoftDelete
-        Assert.IsNotNull(itemBeforeDelete, "The item should be a dictionary.");
-        Assert.IsFalse(itemBeforeDelete.ContainsKey(DBM.isDeletedKey), "isDeleted should not exist before soft deletion.");
+            //Assert - Confirm "isDeleted" doesn't exist before SoftDelete
+            Assert.IsNotNull(itemBeforeDelete, "The item should be a dictionary.");
+            Assert.IsFalse(itemBeforeDelete.ContainsKey(DBM.isDeletedKey), "isDeleted should not exist before soft deletion.");
 
-        //Act - Perform SoftDelete
-        DBM.SoftDeleteObjectInDB(testID, testFilePath);
+            //Act - Perform SoftDelete
+            DBM.SoftDeleteObjectInDB(testID, testFilePath);
 
-        //Assert - Verify the content of the updatedJson
-        Assert.IsNotNull(updatedJson, "The updated JSON should not be null.");
+            //Assert - Verify the content of the updatedJson
+            Assert.IsNotNull(updatedJson, "The updated JSON should not be null.");
 
-        //Deserialize the updated JSON content
-        var dbAfterDelete = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(updatedJson);
+            //Deserialize the updated JSON content
+            var dbAfterDelete = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(updatedJson);
 
-        //Assert - Confirm "isDeleted" exists after SoftDelete
-        Assert.IsTrue(dbAfterDelete.ContainsKey(testID), "The testID should still exist in the database after deletion.");
-        var itemAfterDelete = dbAfterDelete[testID];
-        Assert.IsTrue(itemAfterDelete.ContainsKey(DBM.isDeletedKey), "isDeleted should exist after soft deletion.");
-        Assert.AreEqual(true, itemAfterDelete[DBM.isDeletedKey], "isDeleted should be true after soft deletion.");
+            //Assert - Confirm "isDeleted" exists after SoftDelete
+            Assert.IsTrue(dbAfterDelete.ContainsKey(testID), "The testID should still exist in the database after deletion.");
+            var itemAfterDelete = dbAfterDelete[testID];
+            Assert.IsTrue(itemAfterDelete.ContainsKey(DBM.isDeletedKey), "isDeleted should exist after soft deletion.");
+            Assert.AreEqual(true, itemAfterDelete[DBM.isDeletedKey], "isDeleted should be true after soft deletion.");
 
-        //Optional: Verify that WriteAllText was called once
-        mockFileService.Verify(fs => fs.WriteAllText(testFilePath, It.IsAny<string>()), Times.Once);
-    }
+            //Optional: Verify that WriteAllText was called once
+            mockFileService.Verify(fs => fs.WriteAllText(testFilePath, It.IsAny<string>()), Times.Once);
+        }
 
-
-
-    [TestMethod()]
-        public void GetDataTableTest()
+        [TestMethod()]
+        public void GetDataTableSpecificKeys()
         {
             //Arrange
             var mockFileService = new Mock<IFileService>();
@@ -210,7 +198,7 @@ public void SoftDeleteObjectInDBTest()
             mockFileService.Setup(fs => fs.Exists(testFilePath)).Returns(true);
 
             //Act
-            var dataTable = DBM.GetDataTable(testFilePath, 4);
+            var dataTable = DBM.GetDataTableSpecificKeys(testFilePath, [testKey]);
 
             //Assert
             Assert.IsNotNull(dataTable);

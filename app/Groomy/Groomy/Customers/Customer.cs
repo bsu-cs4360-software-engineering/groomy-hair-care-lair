@@ -2,10 +2,9 @@
 {
     public interface IGenericObject
     {
-        public Dictionary< string, Dictionary<string, object>> GetFields();
+        public Dictionary<string, Dictionary<string, string>> GetFields();
         public string GetKey();
         public Dictionary<string, string> GetDBFilePaths();
-        public IGenericObject FromDictionary(Dictionary<string, object> dict);
     }
     internal class Customer : IGenericObject
     {
@@ -17,18 +16,9 @@
         public string customerID => Helpers.GenerateSHA256Hash(email);
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
-        { 
-            { "CustomerData", "customers.json" } 
-        };
-        public IGenericObject FromDictionary(Dictionary<string, object> dict)
         {
-            firstName = dict["FirstName"].ToString();
-            lastName = dict["LastName"].ToString();
-            email = dict["Email"].ToString();
-            phoneNumber = dict["PhoneNumber"].ToString();
-            address = dict["Address"].ToString();
-            return this;
-        }
+            { "CustomerData", "customers.json" }
+        };
         public Customer(string fName, string lName, string eMail, string pNumber, string addr)
         {
             firstName = fName;
@@ -37,16 +27,17 @@
             phoneNumber = pNumber;
             address = addr;
         }
-        public Dictionary<string, Dictionary<string, object>> GetFields()
+        public Dictionary<string, Dictionary<string, string>> GetFields()
         {
-            var temp = new Dictionary<string, Dictionary<string, object>>();
-            temp["CustomerData"] = new Dictionary<string, object>
+            var temp = new Dictionary<string, Dictionary<string, string>>();
+            temp["CustomerData"] = new Dictionary<string, string>
             {
-                { "FirstName", firstName },
-                { "LastName", lastName },
-                { "Email", email },
-                { "PhoneNumber", phoneNumber },
-                { "Address", address }
+                {"CustomerID", GetKey() },
+                { "FirstName", firstName.ToString() },
+                { "LastName", lastName.ToString() },
+                { "Email", email.ToString() },
+                { "PhoneNumber", phoneNumber.ToString() },
+                { "Address", address.ToString() }
             };
             return temp;
         }

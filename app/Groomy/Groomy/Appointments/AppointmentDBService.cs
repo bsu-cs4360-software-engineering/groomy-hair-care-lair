@@ -1,33 +1,97 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+using System.Diagnostics;
 
 namespace Groomy.Appointments
 {
     internal class AppointmentDBService
     {
-        DatabaseManager _DatabaseManager;
-        public AppointmentDBService(DatabaseManager dbm)
+        ManagerSingleton ms;
+
+        public AppointmentDBService(ManagerSingleton ms)
         {
-            _DatabaseManager = dbm;
+            this.ms = ms;
         }
-        public void CreateAppointment(Appointment appointment)
+        public void CreateAppointment(Appointment appointment, string customerID)
         {
-            _DatabaseManager.AddObjectsToDB(appointment);
+            ms.dbm.AddObjectsToDB(appointment);
+            ms.dbm.AddRelationshipToDB(new Relationships.Customer_Appointment_Relationship(customerID, appointment.GetKey()));
         }
-        public Dictionary<string, object> ReadAppointmentData(string appointmentID)
+        public Dictionary<string, string> ReadAppointmentData(string appointmentID)
         {
-            return _DatabaseManager.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            return ms.dbm.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+        }
+        public void UpdateAppointmentData(Appointment appointment, string customerID)
+        {
+            var appointmentID = appointment.GetKey();
+            var appointmentData = appointment.GetFields()["AppointmentData"];
+
+            //update appointment
+            ms.dbm.UpdateObjectInDB(appointmentID, appointmentData, Appointment.FilePaths["AppointmentData"]);
+            //update relationship
+            ms.dbm.UpdateRelationshipInDB(new Relationships.Customer_Appointment_Relationship(customerID, appointmentID));
         }
         public void DeleteAppointment(string appointmentID)
         {
-            _DatabaseManager.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.DeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
         public void SoftDeleteAppointment(string appointmentID)
         {
-            _DatabaseManager.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+        }
+
+        public List<Dictionary<string, string>> GetAppointments()
+        {
+            Debug.WriteLine("Getting appointments");
+            var appointments = new List<Dictionary<string, string>>();
+            var customerIDs = ms.dbrs.GetCustomerIDs();
+            foreach (var customerID in customerIDs)
+            {
+                Debug.WriteLine(customerID);
+                var customerAppointmentIDs = ms.dbrs.GetAppointmentsFromCustomerID(customerID);
+                foreach (var appointmentID in customerAppointmentIDs)
+                {
+                    Debug.WriteLine(appointmentID);
+                    appointments.Add(ReadAppointmentData(appointmentID));
+                }
+            }
+            return appointments;
+        }
+        public DataTable GetAppointmentDataTable(List<string> keys = null)
+        {
+            var appointments = GetAppointments();
+            var dataTable = new DataTable();
+
+            if (appointments.Count > 0)
+            {
+                if (keys == null || keys.Count == 0)
+                {
+                    keys = appointments.First().Keys.ToList();
+                }
+
+                foreach (var key in keys)
+                {
+                    dataTable.Columns.Add(key);
+                }
+
+                foreach (var appointment in appointments)
+                {
+                    if (appointment != null)
+                    {
+                        var row = dataTable.NewRow();
+                        foreach (var key in keys)
+                        {
+                            if (appointment.ContainsKey(key))
+                            {
+                                row[key] = appointment[key];
+                            }
+                        }
+                        dataTable.Rows.Add(row);
+                    }
+                }
+            }
+            return dataTable;
         }
     }
 }

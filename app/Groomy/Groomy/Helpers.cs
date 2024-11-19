@@ -1,10 +1,13 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 
 public class Helpers
 {
+    public static string RandomSHA256Hash()
+    {
+        return GenerateSHA256Hash(Guid.NewGuid().ToString());
+    }
     public static string GenerateSHA256Hash(string input)
     {
         // Create a new SHA256 instance

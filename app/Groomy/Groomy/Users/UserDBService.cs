@@ -1,8 +1,4 @@
-﻿
-
-using System.Data;
-
-namespace Groomy.Users
+﻿namespace Groomy
 {
     internal class UserDBService
     {
@@ -32,11 +28,11 @@ namespace Groomy.Users
         {
             dbManager.AddObjectsToDB(user);
         }
-        public Dictionary<string, object> ReadUserData(string userID)
+        public Dictionary<string, string> ReadUserData(string userID)
         {
             return dbManager.LoadJsonFromDB(userID, User.FilePaths["UserData"]);
         }
-        public Dictionary<string, object> ReadPasswordData(string userID)
+        public Dictionary<string, string> ReadPasswordData(string userID)
         {
             return dbManager.LoadJsonFromDB(userID, User.FilePaths["PasswordData"]);
         }
