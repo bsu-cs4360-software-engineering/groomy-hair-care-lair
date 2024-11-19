@@ -69,25 +69,7 @@ namespace Groomy
                 Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
             }
         }
-        private void apptEdit_Click(object sender, EventArgs e)
-        {
-            var appointmentID = GetFieldFromSelection("AppointmentID", apptView);
-            var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID);
-
-            var editedAppointment = ms.aDBS.ReadAppointmentData(appointmentID);
-            var customerData = ms.cDBS.ReadCustomer(customerID);
-            var customerName = (customerData["FirstName"].ToString(), customerData["LastName"].ToString());
-            selectCustomerByName(customerName);
-            txtTitle.Text = editedAppointment["Title"].ToString();
-            txtDescription.Text = editedAppointment["Description"].ToString();
-            timeStart.Value = DateTime.Parse(editedAppointment["StartTime"].ToString());
-            timeEnd.Value = DateTime.Parse(editedAppointment["EndTime"].ToString());
-            txtLocation.Text = editedAppointment["Location"].ToString();
-            editing = true;
-            fieldAppointmentID.Text = editedAppointment["AppointmentID"].ToString();
-            makeAppointmentIDVisible();
-            activatePanel(apptCreEdit);
-        }
+        
         private string GetFieldFromSelection(string field, DataGridView dgv)
         {
             string val = null;
@@ -246,6 +228,8 @@ namespace Groomy
             timeStart.Value = DateTime.Now;
             timeEnd.Value = DateTime.Now;
             txtLocation.Text = "";
+
+            txtApptNotes.Text = "";
         }
         private void loadAppointmentData()
         {
@@ -272,11 +256,16 @@ namespace Groomy
                 var selectedCustomer = ((string, string))comboCustomer.SelectedItem;
                 var customerID = ms.cDBS.GetCustomerIDByFirstLast(selectedCustomer);
                 var appointmentID = fieldAppointmentID.Text;
+                var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
 
                 var newAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
+                var appointmentNotes = new Notes.Notes("testTitle", txtApptNotes.Text, DateTime.Now.ToString());
+
                 if (editing)
                 {
                     newAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text, appointmentID);
+                    appointmentNotes = new Notes.Notes("testTitle", txtApptNotes.Text, DateTime.Now.ToString(), noteID);
+
                     editing = false;
                     ms.aDBS.UpdateAppointmentData(newAppointment, customerID);
                 }
@@ -285,12 +274,41 @@ namespace Groomy
                     newAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
                     ms.aDBS.CreateAppointment(newAppointment, customerID);
                 }
-                
+
                 ms.aDBS.CreateAppointment(newAppointment, customerID);
+                ms.nDBS.CreateAppointmentNotes(appointmentNotes, newAppointment.GetKey());
                 loadAppointmentData();
                 activatePanel(apptPanel);
             }
         }
+        private void btnEditAppointment_Click(object sender, EventArgs e)
+        {
+            var appointmentID = GetFieldFromSelection("AppointmentID", apptView);
+            var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID);
+
+            var editedAppointment = ms.aDBS.ReadAppointmentData(appointmentID);
+            var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
+            var editedNotes = ms.nDBS.ReadNotesData(noteID);
+
+            var customerData = ms.cDBS.ReadCustomer(customerID);
+            var customerName = (customerData["FirstName"].ToString(), customerData["LastName"].ToString());
+            selectCustomerByName(customerName);
+
+            //Loading Appointment Data
+            txtTitle.Text = editedAppointment["Title"].ToString();
+            txtDescription.Text = editedAppointment["Description"].ToString();
+            timeStart.Value = DateTime.Parse(editedAppointment["StartTime"].ToString());
+            timeEnd.Value = DateTime.Parse(editedAppointment["EndTime"].ToString());
+            txtLocation.Text = editedAppointment["Location"].ToString();
+            editing = true;
+            fieldAppointmentID.Text = editedAppointment["AppointmentID"].ToString();
+            //Loading Notes Data
+            txtApptNotes.Text = editedNotes["Payload"].ToString();
+
+            makeAppointmentIDVisible();
+            activatePanel(apptCreEdit);
+        }
+
         private void makeAppointmentIDVisible()
         {
             lblAppointmentID.Visible = fieldAppointmentID.Visible = true;
@@ -318,6 +336,8 @@ namespace Groomy
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
                 ms.aDBS.SoftDeleteAppointment(appointmentID);
+                var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
+                ms.nDBS.SoftDeleteAppointmentNotes(noteID);
                 loadAppointmentData();
             }
         }

@@ -384,7 +384,7 @@
             apptEdit.TabIndex = 40;
             apptEdit.Text = "Edit Appointment";
             apptEdit.UseVisualStyleBackColor = false;
-            apptEdit.Click += apptEdit_Click;
+            apptEdit.Click += btnEditAppointment_Click;
             // 
             // apptNew
             // 
