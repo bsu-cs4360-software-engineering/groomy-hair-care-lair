@@ -67,10 +67,12 @@
             btnNew = new Button();
             lblGroomyCustomers = new Label();
             panelNewCustomer = new Panel();
+            fieldCustomerID = new Label();
+            lblCustomerID = new Label();
             btnSave = new Button();
             btnBack = new Button();
             lblNewCustomer = new Label();
-            txtNotes = new TextBox();
+            txtCustomerNotes = new TextBox();
             lblNotes = new Label();
             txtAddress = new TextBox();
             lblAddress = new Label();
@@ -163,7 +165,7 @@
             apptCreEdit.Controls.Add(apptSave);
             apptCreEdit.Controls.Add(apptBack);
             apptCreEdit.Controls.Add(label3);
-            apptCreEdit.Location = new Point(227, 12);
+            apptCreEdit.Location = new Point(823, 21);
             apptCreEdit.Name = "apptCreEdit";
             apptCreEdit.Size = new Size(528, 550);
             apptCreEdit.TabIndex = 43;
@@ -437,7 +439,7 @@
             panelCustomers.Controls.Add(btnEdit);
             panelCustomers.Controls.Add(btnNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
-            panelCustomers.Location = new Point(227, 12);
+            panelCustomers.Location = new Point(821, 21);
             panelCustomers.Name = "panelCustomers";
             panelCustomers.Size = new Size(520, 553);
             panelCustomers.TabIndex = 19;
@@ -472,7 +474,7 @@
             btnEdit.TabIndex = 34;
             btnEdit.Text = "Edit Customer";
             btnEdit.UseVisualStyleBackColor = false;
-            btnEdit.Click += btnEditCustomer_Click;
+            btnEdit.Click += btnCustomerEdit_Click;
             // 
             // btnNew
             // 
@@ -484,7 +486,7 @@
             btnNew.TabIndex = 22;
             btnNew.Text = "New Customer";
             btnNew.UseVisualStyleBackColor = false;
-            btnNew.Click += btnNewCustomer_Click;
+            btnNew.Click += btnCustomerNew_Click;
             // 
             // lblGroomyCustomers
             // 
@@ -501,10 +503,12 @@
             // panelNewCustomer
             // 
             panelNewCustomer.AllowDrop = true;
+            panelNewCustomer.Controls.Add(fieldCustomerID);
+            panelNewCustomer.Controls.Add(lblCustomerID);
             panelNewCustomer.Controls.Add(btnSave);
             panelNewCustomer.Controls.Add(btnBack);
             panelNewCustomer.Controls.Add(lblNewCustomer);
-            panelNewCustomer.Controls.Add(txtNotes);
+            panelNewCustomer.Controls.Add(txtCustomerNotes);
             panelNewCustomer.Controls.Add(lblNotes);
             panelNewCustomer.Controls.Add(txtAddress);
             panelNewCustomer.Controls.Add(lblAddress);
@@ -520,6 +524,24 @@
             panelNewCustomer.Name = "panelNewCustomer";
             panelNewCustomer.Size = new Size(520, 550);
             panelNewCustomer.TabIndex = 36;
+            // 
+            // fieldCustomerID
+            // 
+            fieldCustomerID.AutoSize = true;
+            fieldCustomerID.Location = new Point(108, 479);
+            fieldCustomerID.Name = "fieldCustomerID";
+            fieldCustomerID.Size = new Size(68, 15);
+            fieldCustomerID.TabIndex = 56;
+            fieldCustomerID.Text = "customerID";
+            // 
+            // lblCustomerID
+            // 
+            lblCustomerID.AutoSize = true;
+            lblCustomerID.Location = new Point(108, 464);
+            lblCustomerID.Name = "lblCustomerID";
+            lblCustomerID.Size = new Size(76, 15);
+            lblCustomerID.TabIndex = 54;
+            lblCustomerID.Text = "Customer ID:";
             // 
             // btnSave
             // 
@@ -557,18 +579,18 @@
             lblNewCustomer.Text = "Create/Edit Customer";
             lblNewCustomer.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // txtNotes
+            // txtCustomerNotes
             // 
-            txtNotes.Location = new Point(108, 398);
-            txtNotes.Multiline = true;
-            txtNotes.Name = "txtNotes";
-            txtNotes.Size = new Size(321, 70);
-            txtNotes.TabIndex = 49;
+            txtCustomerNotes.Location = new Point(108, 391);
+            txtCustomerNotes.Multiline = true;
+            txtCustomerNotes.Name = "txtCustomerNotes";
+            txtCustomerNotes.Size = new Size(321, 70);
+            txtCustomerNotes.TabIndex = 49;
             // 
             // lblNotes
             // 
             lblNotes.AutoSize = true;
-            lblNotes.Location = new Point(108, 380);
+            lblNotes.Location = new Point(108, 373);
             lblNotes.Name = "lblNotes";
             lblNotes.Size = new Size(41, 15);
             lblNotes.TabIndex = 48;
@@ -576,7 +598,7 @@
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(108, 307);
+            txtAddress.Location = new Point(108, 300);
             txtAddress.Multiline = true;
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(321, 70);
@@ -585,7 +607,7 @@
             // lblAddress
             // 
             lblAddress.AutoSize = true;
-            lblAddress.Location = new Point(108, 289);
+            lblAddress.Location = new Point(108, 282);
             lblAddress.Name = "lblAddress";
             lblAddress.Size = new Size(52, 15);
             lblAddress.TabIndex = 46;
@@ -593,7 +615,7 @@
             // 
             // txtPN
             // 
-            txtPN.Location = new Point(108, 263);
+            txtPN.Location = new Point(108, 256);
             txtPN.Name = "txtPN";
             txtPN.Size = new Size(321, 23);
             txtPN.TabIndex = 45;
@@ -601,7 +623,7 @@
             // lblPN
             // 
             lblPN.AutoSize = true;
-            lblPN.Location = new Point(108, 245);
+            lblPN.Location = new Point(108, 238);
             lblPN.Name = "lblPN";
             lblPN.Size = new Size(91, 15);
             lblPN.TabIndex = 44;
@@ -609,7 +631,7 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(108, 219);
+            txtEmail.Location = new Point(108, 212);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(321, 23);
             txtEmail.TabIndex = 43;
@@ -617,7 +639,7 @@
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(108, 201);
+            lblEmail.Location = new Point(108, 194);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(39, 15);
             lblEmail.TabIndex = 42;
@@ -625,7 +647,7 @@
             // 
             // txtLast
             // 
-            txtLast.Location = new Point(108, 175);
+            txtLast.Location = new Point(108, 168);
             txtLast.Name = "txtLast";
             txtLast.Size = new Size(321, 23);
             txtLast.TabIndex = 41;
@@ -633,7 +655,7 @@
             // lblLast
             // 
             lblLast.AutoSize = true;
-            lblLast.Location = new Point(108, 157);
+            lblLast.Location = new Point(108, 150);
             lblLast.Name = "lblLast";
             lblLast.Size = new Size(66, 15);
             lblLast.TabIndex = 40;
@@ -641,7 +663,7 @@
             // 
             // txtFirst
             // 
-            txtFirst.Location = new Point(108, 131);
+            txtFirst.Location = new Point(108, 124);
             txtFirst.Name = "txtFirst";
             txtFirst.Size = new Size(321, 23);
             txtFirst.TabIndex = 39;
@@ -649,7 +671,7 @@
             // lblFirst
             // 
             lblFirst.AutoSize = true;
-            lblFirst.Location = new Point(108, 113);
+            lblFirst.Location = new Point(108, 106);
             lblFirst.Name = "lblFirst";
             lblFirst.Size = new Size(67, 15);
             lblFirst.TabIndex = 38;
@@ -659,7 +681,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(762, 565);
+            ClientSize = new Size(751, 565);
             Controls.Add(apptPanel);
             Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);
@@ -701,7 +723,7 @@
         private Button btnDelete;
         private Button btnEdit;
         private Panel panelNewCustomer;
-        private TextBox txtNotes;
+        private TextBox txtCustomerNotes;
         private Label lblNotes;
         private TextBox txtAddress;
         private Label lblAddress;
@@ -746,5 +768,7 @@
         private ComboBox comboCustomer;
         private Label fieldAppointmentID;
         private Label lblAppointmentID;
+        private Label fieldCustomerID;
+        private Label lblCustomerID;
     }
 }
