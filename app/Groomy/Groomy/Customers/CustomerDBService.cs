@@ -26,6 +26,15 @@ namespace Groomy.Customers
         {
             return dbManager.LoadJsonFromDB(customerID, Customer.FilePaths["CustomerData"]);
         }
+        public void UpdateCustomerData(Customer customer)
+        {
+            var customerID = customer.GetKey();
+            var customerData = customer.GetFields()["CustomerData"];
+            //update customer
+            dbManager.UpdateObjectInDB(customerID, customerData, Customer.FilePaths["CustomerData"]);
+            //update relationship
+            dbManager.UpdateRelationshipInDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customerID));
+        }
         public void DeleteCustomer(string customerID)
         {
             dbManager.RemoveObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
@@ -86,6 +95,19 @@ namespace Groomy.Customers
                 customers.Add(ReadCustomer(customerID));
             });
             return customers;
+        }
+        public string GetCustomerIDByEmail(string email)
+        {
+            var customers = dbManager.GetJsonsByKeyValue("Email", email, Customer.FilePaths["CustomerData"]);
+
+            if (customers == null || customers.Count == 0)
+            {
+                return null;
+            }
+
+            var customerIDs = dbManager.GetValuesFromJsons("CustomerID", customers);
+
+            return customerIDs?.FirstOrDefault();
         }
         public string GetCustomerIDByFirstLast((string, string) name)
         {
