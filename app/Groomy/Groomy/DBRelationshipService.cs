@@ -40,6 +40,15 @@
         public string GetNotesFromCustomerID(string customerID)
         {
             var customer_notes_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_notes.json");
+            // If there are no notes for the customer, create an empty note
+            if (customer_notes_relationships.Count == 0)
+            {
+                var emptyNote = new Notes.Notes("customer", "", DateTime.Now.ToString());
+                var newRelationship = new Relationships.CustomerNotesRelationship(customerID, emptyNote.GetKey());
+                ms.nDBS.CreateCustomerNotes(emptyNote, customerID);
+                ms.dbm.AddRelationshipToDB(newRelationship);
+                customer_notes_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_notes.json");
+            }
             return customer_notes_relationships[0]["noteID"];
         }
         public string GetNotesFromAppointmentID(string appointmentID)
