@@ -165,7 +165,7 @@
             apptCreEdit.Controls.Add(apptSave);
             apptCreEdit.Controls.Add(apptBack);
             apptCreEdit.Controls.Add(label3);
-            apptCreEdit.Location = new Point(823, 21);
+            apptCreEdit.Location = new Point(792, 21);
             apptCreEdit.Name = "apptCreEdit";
             apptCreEdit.Size = new Size(528, 550);
             apptCreEdit.TabIndex = 43;
@@ -351,7 +351,7 @@
             apptPanel.Controls.Add(apptEdit);
             apptPanel.Controls.Add(apptNew);
             apptPanel.Controls.Add(label2);
-            apptPanel.Location = new Point(823, 21);
+            apptPanel.Location = new Point(226, 12);
             apptPanel.Name = "apptPanel";
             apptPanel.Size = new Size(521, 553);
             apptPanel.TabIndex = 38;
@@ -681,7 +681,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(751, 565);
+            ClientSize = new Size(1416, 565);
             Controls.Add(apptPanel);
             Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);

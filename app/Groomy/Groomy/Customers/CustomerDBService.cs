@@ -117,10 +117,8 @@ namespace Groomy.Customers
             foreach (var customerID in customerIDs)
             {
                 var customerData = ReadCustomer(customerID);
-                Debug.WriteLine($"Customer Data: {string.Join(", ", customerData.Select(kv => kv.Key + "=" + kv.Value))}");
                 if (customerData["LastName"].ToString() == name.Item2)
                 {
-                    Debug.WriteLine($"Matched Customer ID: {customerID}");
                     return customerID;
                 }
             }

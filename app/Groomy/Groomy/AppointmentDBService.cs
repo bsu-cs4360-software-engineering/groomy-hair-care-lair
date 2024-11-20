@@ -43,16 +43,13 @@ namespace Groomy
 
         public List<Dictionary<string, string>> GetAppointments()
         {
-            Debug.WriteLine("Getting appointments");
             var appointments = new List<Dictionary<string, string>>();
             var customerIDs = ms.dbrs.GetCustomerIDs();
             foreach (var customerID in customerIDs)
             {
-                Debug.WriteLine(customerID);
                 var customerAppointmentIDs = ms.dbrs.GetAppointmentsFromCustomerID(customerID);
                 foreach (var appointmentID in customerAppointmentIDs)
                 {
-                    Debug.WriteLine(appointmentID);
                     appointments.Add(ReadAppointmentData(appointmentID));
                 }
             }

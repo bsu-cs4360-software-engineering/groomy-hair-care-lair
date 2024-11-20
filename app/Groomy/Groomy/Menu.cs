@@ -292,11 +292,12 @@ namespace Groomy
         }
         private void btnSaveAppointment_Click(object sender, EventArgs e)
         {
+
             if (validateAppointmentForms())
             {
                 var selectedCustomer = ((string, string))comboCustomer.SelectedItem;
                 var customerID = ms.cDBS.GetCustomerIDByFirstLast(selectedCustomer);
-
+                Debug.WriteLine($"CustomerID: {customerID}");
                 var newAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
                 var appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString());
 
