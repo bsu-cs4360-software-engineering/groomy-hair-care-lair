@@ -308,7 +308,7 @@ namespace Groomy
             {
                 bool deleted = false;
                 bool found = false;
-                if (item.ContainsKey(key) && item[key] != null)
+                if (item.ContainsKey(key) && item[key] == value)
                 {
                     found = true;
                 }
