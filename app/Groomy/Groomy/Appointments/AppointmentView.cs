@@ -31,6 +31,7 @@ namespace Groomy.Appointments
         {
             this.Size = new Size(778, 493);
             loadCustomers();
+
             txtTitle.Text = appointmentData["Title"];
             txtDescription.Text = appointmentData["Description"];
             timeAppointmentStart.Value = DateTime.Parse(appointmentData["StartTime"]);
@@ -41,6 +42,13 @@ namespace Groomy.Appointments
             if (fieldAppointmentID.Text == "")
             {
                 btnAppointmentEditSave_Click(sender, e);
+            } 
+            else
+            {
+                var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
+                var customerData = ms.cDBS.ReadCustomer(customerID);
+                var customerName = (customerData["FirstName"], customerData["LastName"]);
+                selectCustomerByName(customerName);
             }
         }
         private void loadAppointmentNotes()
@@ -95,6 +103,7 @@ namespace Groomy.Appointments
         }
         private void setAppointmentEditMode(bool isEditable)
         {
+            comboCustomer.Enabled = isEditable;
             txtTitle.ReadOnly = !isEditable;
             txtDescription.ReadOnly = !isEditable;
             timeAppointmentStart.Enabled = isEditable;
@@ -233,6 +242,19 @@ namespace Groomy.Appointments
                 .Where(c => c != null && c.ContainsKey("FirstName") && c.ContainsKey("LastName"))
                 .Select(c => (c["FirstName"], c["LastName"]))
                 .ToList();
+        }
+        private void selectCustomerByName((string, string) name)
+        {
+            loadCustomers();
+            for (int i = 0; i < comboCustomer.Items.Count; i++)
+            {
+                var item = ((string, string))comboCustomer.Items[i];
+                if (item.Item1 == name.Item1 && item.Item2 == name.Item2)
+                {
+                    comboCustomer.SelectedIndex = i;
+                    break;
+                }
+            }
         }
     }
 }
