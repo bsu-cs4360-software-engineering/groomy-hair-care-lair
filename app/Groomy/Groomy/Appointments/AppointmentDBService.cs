@@ -56,40 +56,5 @@ namespace Groomy.Appointments
             }
             return appointments;
         }
-        public DataTable GetAppointmentDataTable(List<string> keys = null)
-        {
-            var appointments = GetAppointments();
-            var dataTable = new DataTable();
-
-            if (appointments.Count > 0)
-            {
-                if (keys == null || keys.Count == 0)
-                {
-                    keys = appointments.First().Keys.ToList();
-                }
-
-                foreach (var key in keys)
-                {
-                    dataTable.Columns.Add(key);
-                }
-
-                foreach (var appointment in appointments)
-                {
-                    if (appointment != null)
-                    {
-                        var row = dataTable.NewRow();
-                        foreach (var key in keys)
-                        {
-                            if (appointment.ContainsKey(key))
-                            {
-                                row[key] = appointment[key];
-                            }
-                        }
-                        dataTable.Rows.Add(row);
-                    }
-                }
-            }
-            return dataTable;
-        }
     }
 }

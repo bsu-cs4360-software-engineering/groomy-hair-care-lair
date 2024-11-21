@@ -34,7 +34,7 @@
             btnCustomers = new Label();
             btnWelcome = new Label();
             apptPanel = new Panel();
-            apptView = new DataGridView();
+            dataAppointments = new DataGridView();
             apptDel = new Button();
             btnAppointmentView = new Button();
             apptNew = new Button();
@@ -43,7 +43,7 @@
             panelWelcome = new Panel();
             panelCustomers = new Panel();
             btnCustomerView = new Button();
-            dataGridView1 = new DataGridView();
+            dataCustomers = new DataGridView();
             btnDelete = new Button();
             btnNew = new Button();
             lblGroomyCustomers = new Label();
@@ -55,10 +55,10 @@
             lblServices = new Label();
             panel1.SuspendLayout();
             apptPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)apptView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataAppointments).BeginInit();
             panelWelcome.SuspendLayout();
             panelCustomers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataCustomers).BeginInit();
             panelServices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).BeginInit();
             SuspendLayout();
@@ -129,7 +129,7 @@
             // 
             // apptPanel
             // 
-            apptPanel.Controls.Add(apptView);
+            apptPanel.Controls.Add(dataAppointments);
             apptPanel.Controls.Add(apptDel);
             apptPanel.Controls.Add(btnAppointmentView);
             apptPanel.Controls.Add(apptNew);
@@ -141,11 +141,11 @@
             // 
             // apptView
             // 
-            apptView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            apptView.Location = new Point(36, 128);
-            apptView.Name = "apptView";
-            apptView.Size = new Size(449, 377);
-            apptView.TabIndex = 42;
+            dataAppointments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataAppointments.Location = new Point(36, 128);
+            dataAppointments.Name = "apptView";
+            dataAppointments.Size = new Size(449, 377);
+            dataAppointments.TabIndex = 42;
             // 
             // apptDel
             // 
@@ -218,7 +218,7 @@
             // panelCustomers
             // 
             panelCustomers.Controls.Add(btnCustomerView);
-            panelCustomers.Controls.Add(dataGridView1);
+            panelCustomers.Controls.Add(dataCustomers);
             panelCustomers.Controls.Add(btnDelete);
             panelCustomers.Controls.Add(btnNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
@@ -241,11 +241,11 @@
             // 
             // dataGridView1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(33, 128);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(449, 377);
-            dataGridView1.TabIndex = 37;
+            dataCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataCustomers.Location = new Point(33, 128);
+            dataCustomers.Name = "dataGridView1";
+            dataCustomers.Size = new Size(449, 377);
+            dataCustomers.TabIndex = 37;
             // 
             // btnDelete
             // 
@@ -370,12 +370,12 @@
             panel1.ResumeLayout(false);
             apptPanel.ResumeLayout(false);
             apptPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)apptView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataAppointments).EndInit();
             panelWelcome.ResumeLayout(false);
             panelWelcome.PerformLayout();
             panelCustomers.ResumeLayout(false);
             panelCustomers.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataCustomers).EndInit();
             panelServices.ResumeLayout(false);
             panelServices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).EndInit();
@@ -393,10 +393,10 @@
         private Button btnNew;
         private Label lblGroomyCustomers;
         private Button btnDelete;
-        private DataGridView dataGridView1;
+        private DataGridView dataCustomers;
         private Label btnAppointment;
         private Panel apptPanel;
-        private DataGridView apptView;
+        private DataGridView dataAppointments;
         private Button apptDel;
         private Button btnAppointmentView;
         private Button apptNew;
