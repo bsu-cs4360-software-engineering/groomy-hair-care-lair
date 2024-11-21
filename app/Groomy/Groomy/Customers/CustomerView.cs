@@ -29,6 +29,19 @@ namespace Groomy.Customers
             this.Load += new EventHandler(onLoad);
         }
 
+        public void onLoad(object sender, EventArgs e)
+        {
+            this.Size = new Size(778, 493);
+            txtFirst.Text = customerData["FirstName"];
+            txtLast.Text = customerData["LastName"];
+            txtPN.Text = customerData["PhoneNumber"];
+            txtEmail.Text = customerData["Email"];
+            txtAddress.Text = customerData["Address"];
+            fieldCustomerID.Text = customerData["CustomerID"];
+            loadCustomerNotes();
+            Helpers.activatePanel(panelNotesCustomerAll, panelSize, panelLocation);
+        }
+
         public void loadCustomerNotes()
         {
             this.customerNotes = new List<Dictionary<string, string>>();
@@ -47,18 +60,6 @@ namespace Groomy.Customers
                 customerNotesDataGridView.Columns["Title"].DisplayIndex = 1;
                 customerNotesDataGridView.Columns["Payload"].DisplayIndex = 2;
             }
-        }
-        public void onLoad(object sender, EventArgs e)
-        {
-            this.Size = new Size(778, 493);
-            txtFirst.Text = customerData["FirstName"];
-            txtLast.Text = customerData["LastName"];
-            txtPN.Text = customerData["PhoneNumber"];
-            txtEmail.Text = customerData["Email"];
-            txtAddress.Text = customerData["Address"];
-            fieldCustomerID.Text = customerData["CustomerID"];
-            loadCustomerNotes();
-            Helpers.activatePanel(panelNotesCustomerAll, panelSize, panelLocation);
         }
 
         private void btnCustomerEditSave_Click(object sender, EventArgs e)
@@ -100,6 +101,7 @@ namespace Groomy.Customers
         }
         private void btnNotesCustomerView_Click(object sender, EventArgs e)
         {
+            setCustomerNotesNoteIDVisibility(true);
             var noteID = Helpers.GetFieldFromSelection("NoteID", customerNotesDataGridView);
             if (noteID != null)
             {
@@ -127,9 +129,18 @@ namespace Groomy.Customers
             else if (btnCustomerNotesEditSave.Text == "Save")
             {
                 var editedNote = new Notes.Notes(txtNotesCustomerTitle.Text, txtNotesCustomerPayload.Text, timeNotesCustomersCreateDate.Text, fieldNotesCustomersNoteID.Text);
-                ms.nDBS.UpdateCustomerNotesData(editedNote, fieldCustomerID.Text);
+                if (lblNotesCustomersNoteID.Visible == false) //new note
+                {
+                    editedNote = new Notes.Notes(txtNotesCustomerTitle.Text, txtNotesCustomerPayload.Text, timeNotesCustomersCreateDate.Text);
+                    ms.nDBS.CreateCustomerNotes(editedNote, fieldCustomerID.Text);
+                }
+                else //pre-existing note 
+                {
+                    ms.nDBS.UpdateCustomerNotesData(editedNote, fieldCustomerID.Text);
+                }
                 ToggleNotesEditMode(false);
                 btnCustomerNotesEditSave.Text = "Edit";
+                loadCustomerNotes(); 
             }
         }
 
@@ -143,11 +154,37 @@ namespace Groomy.Customers
         private void btnNotesCustomerDelete_Click(object sender, EventArgs e)
         {
             var noteToDelete = Helpers.GetFieldFromSelection("NoteID", customerNotesDataGridView);
-            if (Helpers.messageBoxConfirm("Are you sure you want to delete this note?"))
+            if (noteToDelete != null)
             {
-                ms.nDBS.SoftDeleteCustomerNotes(noteToDelete);
-                loadCustomerNotes();
+                if (Helpers.messageBoxConfirm("Are you sure you want to delete this note?"))
+                {
+                    ms.nDBS.SoftDeleteCustomerNotes(noteToDelete);
+                    loadCustomerNotes();
+                }
             }
+            else
+            {
+                Helpers.messageBoxError("Please select a note to delete.");
+            }
+
+        }
+        private void clearNoteFields()
+        {
+            txtNotesCustomerTitle.Text = "";
+            txtNotesCustomerPayload.Text = "";
+            timeNotesCustomersCreateDate.Value = DateTime.Now;
+            setCustomerNotesNoteIDVisibility(false);
+        }
+        private void setCustomerNotesNoteIDVisibility(bool visible)
+        {
+            lblNotesCustomersNoteID.Visible = visible;
+            fieldNotesCustomersNoteID.Visible = visible;
+        }
+        private void btnNotesCustomerNew_Click(object sender, EventArgs e)
+        {
+            clearNoteFields();
+            btnCustomerNotesEditSave_Click(sender, e);
+            Helpers.activatePanel(panelNotesCustomerNewEdit, panelSize, panelLocation);
         }
     }
 }

@@ -58,14 +58,10 @@ namespace Groomy.Notes
             ms.dbm.RemoveObjectFromDB(noteID, Notes.FilePaths["NotesData"]);
             ms.dbm.DeleteRelationshipFromDB(new Relationships.AppointmentNotesRelationship(ms.dbrs.GetAppointmentIDFromNotesID(noteID), noteID));
         }
-        public void SoftDeleteCustomerNotes(string customerID)
+        public void SoftDeleteCustomerNotes(string noteId)
         {
-            var noteIDs = ms.dbrs.GetNotesIDFromCustomerID(customerID);
-            foreach (var noteID in noteIDs)
-            {
-                ms.dbm.SoftDeleteObjectInDB(noteID, Notes.FilePaths["NotesData"]);
-                ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.CustomerNotesRelationship(customerID, noteID));
-            }
+            ms.dbm.SoftDeleteObjectInDB(noteId, Notes.FilePaths["NotesData"]);
+            ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.CustomerNotesRelationship(ms.dbrs.GetCustomerIDFromNotesID(noteId), noteId));
         }
         public void SoftDeleteAppointmentNotes(string noteID)
         {

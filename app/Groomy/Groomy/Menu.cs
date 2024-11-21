@@ -91,7 +91,6 @@ namespace Groomy
             {
                 //initialize new customer and notes
                 var newCustomer = new Customer(txtFirst.Text, txtLast.Text, txtEmail.Text, txtPN.Text, txtAddress.Text);
-                var customerNotes = new Notes.Notes("customer", txtCustomerNotes.Text, DateTime.Now.ToString());
                 if (editing)
                 {
                     //create new customer and notes with existing IDs
@@ -110,7 +109,7 @@ namespace Groomy
                 {
                     ms.cDBS.CreateCustomer(newCustomer);
                     var customerID = newCustomer.GetKey();
-                    ms.nDBS.CreateCustomerNotes(customerNotes, newCustomer.GetKey());
+                    
                 };
 
                 loadCustomerData();
@@ -191,7 +190,7 @@ namespace Groomy
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
             var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
-            var customerID = Helpers.GenerateSHA256Hash(email);
+            var customerID = ms.cDBS.GetCustomerIDByEmail(email);
 
             if (!string.IsNullOrEmpty(email))
             {

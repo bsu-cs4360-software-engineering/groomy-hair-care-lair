@@ -328,6 +328,7 @@
             btnNotesCustomerNew.TabIndex = 74;
             btnNotesCustomerNew.Text = "New";
             btnNotesCustomerNew.UseVisualStyleBackColor = false;
+            btnNotesCustomerNew.Click += btnNotesCustomerNew_Click;
             // 
             // customerNotesDataGridView
             // 
