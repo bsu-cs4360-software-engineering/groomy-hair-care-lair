@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {}
+    "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {
+    "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
+        "projectUniqueName": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
         "projectName": "Groomy",
-        "projectPath": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
-        "packagesPath": "C:\\Users\\Ryan Langlie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ryan Langlie\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\obj\\",
+        "projectPath": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\Groomy.csproj",
+        "packagesPath": "C:\\Users\\jon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jon\\Documents\\GitHub\\groomy-hair-care-lair\\app\\Groomy\\Groomy\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ryan Langlie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,8 +38,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
-        }
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -69,7 +70,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

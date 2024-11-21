@@ -52,7 +52,6 @@ namespace Groomy
         {
             cusDataView.DataSource = customerDBService.GetCustomerDataTable();
             apptDataView.DataSource = appointmentDBService.GetAppointmentDataTable();
-            // To Do: Implement a way of acsessing the appointment data and put it in the dataview
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
