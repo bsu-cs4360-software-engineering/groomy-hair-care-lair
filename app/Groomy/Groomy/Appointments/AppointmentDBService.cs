@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Diagnostics;
 
-namespace Groomy
+namespace Groomy.Appointments
 {
     internal class AppointmentDBService
     {

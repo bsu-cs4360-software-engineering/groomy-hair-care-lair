@@ -1,6 +1,6 @@
 ﻿using Groomy.Customers;
 
-namespace Groomy
+namespace Groomy.Appointments
 {
     internal class Appointment : IGenericObject
     {

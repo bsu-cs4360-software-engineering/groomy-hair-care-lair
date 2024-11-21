@@ -55,7 +55,7 @@
             apptPanel = new Panel();
             apptView = new DataGridView();
             apptDel = new Button();
-            apptEdit = new Button();
+            btnAppointmentView = new Button();
             apptNew = new Button();
             label2 = new Label();
             label9 = new Label();
@@ -66,24 +66,6 @@
             btnDelete = new Button();
             btnNew = new Button();
             lblGroomyCustomers = new Label();
-            panelNewCustomer = new Panel();
-            fieldCustomerID = new Label();
-            lblCustomerID = new Label();
-            btnSave = new Button();
-            btnBack = new Button();
-            lblNewCustomer = new Label();
-            txtCustomerNotes = new TextBox();
-            lblNotes = new Label();
-            txtAddress = new TextBox();
-            lblAddress = new Label();
-            txtPN = new TextBox();
-            lblPN = new Label();
-            txtEmail = new TextBox();
-            lblEmail = new Label();
-            txtLast = new TextBox();
-            lblLast = new Label();
-            txtFirst = new TextBox();
-            lblFirst = new Label();
             panel1.SuspendLayout();
             apptCreEdit.SuspendLayout();
             apptPanel.SuspendLayout();
@@ -91,7 +73,6 @@
             panelWelcome.SuspendLayout();
             panelCustomers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            panelNewCustomer.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -230,7 +211,6 @@
             label1.Size = new Size(32, 15);
             label1.TabIndex = 78;
             label1.Text = "Title:";
-            label1.Click += label1_Click_1;
             // 
             // txtTitle
             // 
@@ -348,7 +328,7 @@
             // 
             apptPanel.Controls.Add(apptView);
             apptPanel.Controls.Add(apptDel);
-            apptPanel.Controls.Add(apptEdit);
+            apptPanel.Controls.Add(btnAppointmentView);
             apptPanel.Controls.Add(apptNew);
             apptPanel.Controls.Add(label2);
             apptPanel.Location = new Point(1281, 18);
@@ -359,7 +339,7 @@
             // apptView
             // 
             apptView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            apptView.Location = new Point(36, 140);
+            apptView.Location = new Point(36, 128);
             apptView.Name = "apptView";
             apptView.Size = new Size(449, 377);
             apptView.TabIndex = 42;
@@ -368,33 +348,32 @@
             // 
             apptDel.BackColor = Color.FromArgb(21, 96, 130);
             apptDel.ForeColor = Color.White;
-            apptDel.Location = new Point(345, 99);
+            apptDel.Location = new Point(325, 83);
             apptDel.Name = "apptDel";
-            apptDel.Size = new Size(140, 23);
+            apptDel.Size = new Size(123, 23);
             apptDel.TabIndex = 41;
             apptDel.Text = "Delete Appointment";
             apptDel.UseVisualStyleBackColor = false;
-            apptDel.Click += apptDel_Click;
             // 
-            // apptEdit
+            // btnAppointmentView
             // 
-            apptEdit.BackColor = Color.FromArgb(21, 96, 130);
-            apptEdit.ForeColor = Color.White;
-            apptEdit.Location = new Point(192, 99);
-            apptEdit.Name = "apptEdit";
-            apptEdit.Size = new Size(140, 23);
-            apptEdit.TabIndex = 40;
-            apptEdit.Text = "Edit Appointment";
-            apptEdit.UseVisualStyleBackColor = false;
-            apptEdit.Click += btnEditAppointment_Click;
+            btnAppointmentView.BackColor = Color.FromArgb(21, 96, 130);
+            btnAppointmentView.ForeColor = Color.White;
+            btnAppointmentView.Location = new Point(196, 83);
+            btnAppointmentView.Name = "btnAppointmentView";
+            btnAppointmentView.Size = new Size(123, 23);
+            btnAppointmentView.TabIndex = 40;
+            btnAppointmentView.Text = "View Appointment";
+            btnAppointmentView.UseVisualStyleBackColor = false;
+            btnAppointmentView.Click += btnAppointmentView_Click;
             // 
             // apptNew
             // 
             apptNew.BackColor = Color.FromArgb(21, 96, 130);
             apptNew.ForeColor = Color.White;
-            apptNew.Location = new Point(36, 99);
+            apptNew.Location = new Point(67, 83);
             apptNew.Name = "apptNew";
-            apptNew.Size = new Size(140, 23);
+            apptNew.Size = new Size(123, 23);
             apptNew.TabIndex = 39;
             apptNew.Text = "New Appointment";
             apptNew.UseVisualStyleBackColor = false;
@@ -454,7 +433,7 @@
             btnCustomerView.TabIndex = 38;
             btnCustomerView.Text = "View Customer";
             btnCustomerView.UseVisualStyleBackColor = false;
-            btnCustomerView.Click += btnCustomerView_Click_1;
+            btnCustomerView.Click += btnCustomerView_Click;
             // 
             // dataGridView1
             // 
@@ -500,183 +479,6 @@
             lblGroomyCustomers.Text = "Groomy Customers";
             lblGroomyCustomers.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // panelNewCustomer
-            // 
-            panelNewCustomer.AllowDrop = true;
-            panelNewCustomer.Controls.Add(fieldCustomerID);
-            panelNewCustomer.Controls.Add(lblCustomerID);
-            panelNewCustomer.Controls.Add(btnSave);
-            panelNewCustomer.Controls.Add(btnBack);
-            panelNewCustomer.Controls.Add(lblNewCustomer);
-            panelNewCustomer.Controls.Add(txtCustomerNotes);
-            panelNewCustomer.Controls.Add(lblNotes);
-            panelNewCustomer.Controls.Add(txtAddress);
-            panelNewCustomer.Controls.Add(lblAddress);
-            panelNewCustomer.Controls.Add(txtPN);
-            panelNewCustomer.Controls.Add(lblPN);
-            panelNewCustomer.Controls.Add(txtEmail);
-            panelNewCustomer.Controls.Add(lblEmail);
-            panelNewCustomer.Controls.Add(txtLast);
-            panelNewCustomer.Controls.Add(lblLast);
-            panelNewCustomer.Controls.Add(txtFirst);
-            panelNewCustomer.Controls.Add(lblFirst);
-            panelNewCustomer.Location = new Point(227, 12);
-            panelNewCustomer.Name = "panelNewCustomer";
-            panelNewCustomer.Size = new Size(520, 550);
-            panelNewCustomer.TabIndex = 36;
-            // 
-            // fieldCustomerID
-            // 
-            fieldCustomerID.AutoSize = true;
-            fieldCustomerID.Location = new Point(108, 479);
-            fieldCustomerID.Name = "fieldCustomerID";
-            fieldCustomerID.Size = new Size(68, 15);
-            fieldCustomerID.TabIndex = 56;
-            fieldCustomerID.Text = "customerID";
-            // 
-            // lblCustomerID
-            // 
-            lblCustomerID.AutoSize = true;
-            lblCustomerID.Location = new Point(108, 464);
-            lblCustomerID.Name = "lblCustomerID";
-            lblCustomerID.Size = new Size(76, 15);
-            lblCustomerID.TabIndex = 54;
-            lblCustomerID.Text = "Customer ID:";
-            // 
-            // btnSave
-            // 
-            btnSave.BackColor = Color.FromArgb(21, 96, 130);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(266, 72);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(103, 23);
-            btnSave.TabIndex = 53;
-            btnSave.Text = "Save";
-            btnSave.UseVisualStyleBackColor = false;
-            btnSave.Click += btnSaveCustomer_Click;
-            // 
-            // btnBack
-            // 
-            btnBack.BackColor = Color.FromArgb(21, 96, 130);
-            btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(157, 72);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(103, 23);
-            btnBack.TabIndex = 52;
-            btnBack.Text = "Back";
-            btnBack.UseVisualStyleBackColor = false;
-            btnBack.Click += btnBackToCustomers_Click;
-            // 
-            // lblNewCustomer
-            // 
-            lblNewCustomer.AutoSize = true;
-            lblNewCustomer.Font = new Font("Arial Black", 24F, FontStyle.Bold);
-            lblNewCustomer.ForeColor = Color.FromArgb(21, 96, 130);
-            lblNewCustomer.Location = new Point(83, 24);
-            lblNewCustomer.Name = "lblNewCustomer";
-            lblNewCustomer.Size = new Size(393, 45);
-            lblNewCustomer.TabIndex = 50;
-            lblNewCustomer.Text = "Create/Edit Customer";
-            lblNewCustomer.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // txtCustomerNotes
-            // 
-            txtCustomerNotes.Location = new Point(108, 391);
-            txtCustomerNotes.Multiline = true;
-            txtCustomerNotes.Name = "txtCustomerNotes";
-            txtCustomerNotes.Size = new Size(321, 70);
-            txtCustomerNotes.TabIndex = 49;
-            // 
-            // lblNotes
-            // 
-            lblNotes.AutoSize = true;
-            lblNotes.Location = new Point(108, 373);
-            lblNotes.Name = "lblNotes";
-            lblNotes.Size = new Size(41, 15);
-            lblNotes.TabIndex = 48;
-            lblNotes.Text = "Notes:";
-            // 
-            // txtAddress
-            // 
-            txtAddress.Location = new Point(108, 300);
-            txtAddress.Multiline = true;
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(321, 70);
-            txtAddress.TabIndex = 47;
-            // 
-            // lblAddress
-            // 
-            lblAddress.AutoSize = true;
-            lblAddress.Location = new Point(108, 282);
-            lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(52, 15);
-            lblAddress.TabIndex = 46;
-            lblAddress.Text = "Address:";
-            // 
-            // txtPN
-            // 
-            txtPN.Location = new Point(108, 256);
-            txtPN.Name = "txtPN";
-            txtPN.Size = new Size(321, 23);
-            txtPN.TabIndex = 45;
-            // 
-            // lblPN
-            // 
-            lblPN.AutoSize = true;
-            lblPN.Location = new Point(108, 238);
-            lblPN.Name = "lblPN";
-            lblPN.Size = new Size(91, 15);
-            lblPN.TabIndex = 44;
-            lblPN.Text = "Phone Number:";
-            // 
-            // txtEmail
-            // 
-            txtEmail.Location = new Point(108, 212);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(321, 23);
-            txtEmail.TabIndex = 43;
-            // 
-            // lblEmail
-            // 
-            lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(108, 194);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(39, 15);
-            lblEmail.TabIndex = 42;
-            lblEmail.Text = "Email:";
-            // 
-            // txtLast
-            // 
-            txtLast.Location = new Point(108, 168);
-            txtLast.Name = "txtLast";
-            txtLast.Size = new Size(321, 23);
-            txtLast.TabIndex = 41;
-            // 
-            // lblLast
-            // 
-            lblLast.AutoSize = true;
-            lblLast.Location = new Point(108, 150);
-            lblLast.Name = "lblLast";
-            lblLast.Size = new Size(66, 15);
-            lblLast.TabIndex = 40;
-            lblLast.Text = "Last Name:";
-            // 
-            // txtFirst
-            // 
-            txtFirst.Location = new Point(108, 124);
-            txtFirst.Name = "txtFirst";
-            txtFirst.Size = new Size(321, 23);
-            txtFirst.TabIndex = 39;
-            // 
-            // lblFirst
-            // 
-            lblFirst.AutoSize = true;
-            lblFirst.Location = new Point(108, 106);
-            lblFirst.Name = "lblFirst";
-            lblFirst.Size = new Size(67, 15);
-            lblFirst.TabIndex = 38;
-            lblFirst.Text = "First Name:";
-            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -685,7 +487,6 @@
             Controls.Add(apptPanel);
             Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);
-            Controls.Add(panelNewCustomer);
             Controls.Add(panelWelcome);
             Controls.Add(panel1);
             MaximizeBox = false;
@@ -694,7 +495,6 @@
             Name = "Menu";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Groomy";
-            Load += Menu_Load;
             panel1.ResumeLayout(false);
             apptCreEdit.ResumeLayout(false);
             apptCreEdit.PerformLayout();
@@ -706,8 +506,6 @@
             panelCustomers.ResumeLayout(false);
             panelCustomers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            panelNewCustomer.ResumeLayout(false);
-            panelNewCustomer.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -722,28 +520,12 @@
         private Button btnNew;
         private Label lblGroomyCustomers;
         private Button btnDelete;
-        private Panel panelNewCustomer;
-        private TextBox txtCustomerNotes;
-        private Label lblNotes;
-        private TextBox txtAddress;
-        private Label lblAddress;
-        private TextBox txtPN;
-        private Label lblPN;
-        private TextBox txtEmail;
-        private Label lblEmail;
-        private TextBox txtLast;
-        private Label lblLast;
-        private TextBox txtFirst;
-        private Label lblFirst;
-        private Label lblNewCustomer;
-        private Button btnSave;
-        private Button btnBack;
         private DataGridView dataGridView1;
         private Label btnAppointment;
         private Panel apptPanel;
         private DataGridView apptView;
         private Button apptDel;
-        private Button apptEdit;
+        private Button btnAppointmentView;
         private Button apptNew;
         private Label label2;
         private Panel apptCreEdit;
@@ -768,8 +550,6 @@
         private ComboBox comboCustomer;
         private Label fieldAppointmentID;
         private Label lblAppointmentID;
-        private Label fieldCustomerID;
-        private Label lblCustomerID;
         private Button btnCustomerView;
     }
 }

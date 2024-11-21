@@ -48,22 +48,23 @@
             }
             return noteIDs;
         }
-        public string GetNotesFromAppointmentID(string appointmentID)
+        public List<string> GetNotesIDFromAppointmentID(string appointmentID)
         {
             var appointment_notes_relationships = ms.dbm.GetRelationshipsByID(appointmentID, "appointments_notes.json");
-            if (appointment_notes_relationships.Count == 0)
+            var noteIDs = new List<string>();
+            foreach (var relationship in appointment_notes_relationships)
             {
-                var emptyNote = new Notes.Notes("appointment", "", DateTime.Now.ToString());
-                var newRelationship = new Relationships.AppointmentNotesRelationship(appointmentID, emptyNote.GetKey());
-                ms.nDBS.CreateAppointmentNotes(emptyNote, appointmentID);
-                ms.dbm.AddRelationshipToDB(newRelationship);
-                appointment_notes_relationships = ms.dbm.GetRelationshipsByID(appointmentID, "appointments_notes.json");
+                noteIDs.Add(relationship["noteID"]);
             }
-            return appointment_notes_relationships[0]["noteID"];
+            return noteIDs;
         }
         public string GetCustomerIDFromNotesID(string noteID)
         {
             var customer_notes_relationships = ms.dbm.GetRelationshipsByID(noteID, "customers_notes.json");
+            if (customer_notes_relationships.Count == 0)
+            {
+                throw new Exception("No relationships found for the provided noteID.");
+            }
             return customer_notes_relationships[0]["customerID"];
         }
         public string GetAppointmentIDFromNotesID(string noteID)

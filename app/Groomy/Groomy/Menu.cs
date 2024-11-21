@@ -1,4 +1,5 @@
-﻿using Groomy.Customers;
+﻿using Groomy.Appointments;
+using Groomy.Customers;
 using System.Data;
 using System.Diagnostics;
 
@@ -33,58 +34,30 @@ namespace Groomy
             //windowFx.OpenForm("Groomy.Login", false);
             Helpers.activatePanel(panelWelcome, panelWH, panelLoc);
         }
-        private void makeCustomerIDVisible()
-        {
-            lblCustomerID.Visible = fieldCustomerID.Visible = true;
-        }
-        private void makeCustomerIDInvisible()
-        {
-            lblCustomerID.Visible = fieldCustomerID.Visible = false;
-        }
         private void btnCustomerNew_Click(object sender, EventArgs e)
         {
-            makeCustomerIDInvisible();
-            clearCustomerForms();
-            Helpers.activatePanel(panelNewCustomer, panelWH, panelLoc);
+            var newCustomer = new Customer("", "", "", "", "", "");
+            var customerData = newCustomer.GetFields()["CustomerData"];
+            Form customerView = new CustomerView(customerData, this);
+            customerView.Show();
+        }
+        private void btnNewAppointment_Click(object sender, EventArgs e)
+        {
+            var newAppointment = new Appointments.Appointment("", "", DateTime.Now, DateTime.Now, "", "");
+            var appointmentData = newAppointment.GetFields()["AppointmentData"];
+            Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
+            appointmentView.Show();
         }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
             Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
-        }
-        private void btnCustomerEdit_Click(object sender, EventArgs e)
-        {
-            var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
-            if (!string.IsNullOrEmpty(email))
-            {
-                var customerID = ms.cDBS.GetCustomerIDByEmail(email);
-                var noteID = ms.dbrs.GetNotesIDFromCustomerID(customerID);
-                var editedCustomer = ms.cDBS.ReadCustomer(customerID);
-                //var editedNotes = ms.nDBS.ReadNotesData(noteID);
-
-                //assign customer data
-                txtFirst.Text = editedCustomer["FirstName"].ToString();
-                txtLast.Text = editedCustomer["LastName"].ToString();
-                txtEmail.Text = editedCustomer["Email"].ToString();
-                txtPN.Text = editedCustomer["PhoneNumber"].ToString();
-                txtAddress.Text = editedCustomer["Address"].ToString();
-                fieldCustomerID.Text = editedCustomer["CustomerID"].ToString();
-                //assign notes data
-                //txtCustomerNotes.Text = editedNotes["Payload"].ToString();
-                editing = true;
-
-                makeCustomerIDVisible();
-                Helpers.activatePanel(panelNewCustomer, panelWH, panelLoc);
-            }
-            else
-            {
-                Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
-            }
         }
         public void reloadData()
         {
             loadAppointmentData();
             loadCustomerData();
         }
+        /*
         private void btnSaveCustomer_Click(object sender, EventArgs e)
         {
             if (validateCustomerForms())
@@ -116,6 +89,7 @@ namespace Groomy
                 Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
             }
         }
+        */
         private void loadCustomerData()
         {
             dataGridView1.DataSource = ms.cDBS.GetCustomerDataTable(["FirstName", "LastName", "Email", "PhoneNumber"]);
@@ -138,55 +112,6 @@ namespace Groomy
                 }
             }
         }
-        private bool validateCustomerForms()
-        {
-            // First name check
-            if (string.IsNullOrWhiteSpace(txtFirst.Text))
-            {
-                Helpers.messageBoxError("You did not enter a first name. Please try again.");
-                return false;
-            }
-
-            // Last name check
-            if (string.IsNullOrWhiteSpace(txtLast.Text))
-            {
-                Helpers.messageBoxError("You did not enter a last name. Please try again.");
-                return false;
-            }
-
-            // Valid email check using a simple regex for validation
-            if (string.IsNullOrWhiteSpace(txtEmail.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-            {
-                Helpers.messageBoxError("You did not enter a valid email. Please try again.");
-                return false;
-            }
-
-            // City input check
-            if (string.IsNullOrWhiteSpace(txtPN.Text))
-            {
-                Helpers.messageBoxError("You did not enter a phone number. Please try again.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtAddress.Text))
-            {
-                Helpers.messageBoxError("You did not enter an Address. Please try again.");
-                return false;
-            }
-
-
-            // If all checks pass, return true
-            return true;
-        }
-        private void clearCustomerForms()
-        {
-            txtFirst.Text = "";
-            txtLast.Text = "";
-            txtEmail.Text = "";
-            txtPN.Text = "";
-            txtAddress.Text = "";
-            txtCustomerNotes.Text = "";
-        }
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
             var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
@@ -196,8 +121,12 @@ namespace Groomy
             {
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?"))
                 {
+                    var noteIDs = ms.dbrs.GetNotesIDFromCustomerID(customerID);
+                    foreach(var noteID in noteIDs)
+                    {
+                        ms.nDBS.SoftDeleteCustomerNotes(noteID);
+                    }
                     ms.cDBS.SoftDeleteCustomer(customerID);
-                    ms.nDBS.SoftDeleteCustomerNotes(customerID);
                     loadCustomerData();
                 }
             }
@@ -206,9 +135,20 @@ namespace Groomy
                 Helpers.messageBoxError("No customer selected. Please select a customer to delete.");
             }
         }
-        private void Menu_Load(object sender, EventArgs e)
+        private void btnDeleteAppointment_Click(object sender, EventArgs e)
         {
+            var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", apptView);
+            if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
+            {
+                var noteIDs = ms.dbrs.GetNotesIDFromAppointmentID(appointmentID);
+                foreach (var noteID in noteIDs)
+                {
+                    ms.nDBS.SoftDeleteAppointmentNotes(noteID);
+                }
 
+                ms.aDBS.SoftDeleteAppointment(appointmentID);
+                loadAppointmentData();
+            }
         }
         private bool validateAppointmentForms()
         {
@@ -257,12 +197,6 @@ namespace Groomy
                 apptView.Columns["Description"].Visible = false;
             }
         }
-        private void btnNewAppointment_Click(object sender, EventArgs e)
-        {
-            makeAppointmentIDInvisible();
-            clearAppointmentForms();
-            Helpers.activatePanel(apptCreEdit, panelWH, panelLoc);
-        }
         private void btnSaveAppointment_Click(object sender, EventArgs e)
         {
 
@@ -271,19 +205,19 @@ namespace Groomy
                 var selectedCustomer = ((string, string))comboCustomer.SelectedItem;
                 var customerID = ms.cDBS.GetCustomerIDByFirstLast(selectedCustomer);
                 Debug.WriteLine($"CustomerID: {customerID}");
-                var newAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
-                var appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString());
+                var newAppointment = new Appointments.Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
+                //var appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString());
 
                 if (editing)
                 {
                     //if editing assign new appointment and notes with existing IDs
                     var appointmentID = fieldAppointmentID.Text;
-                    newAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text, appointmentID);
+                    newAppointment = new Appointments.Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text, appointmentID);
                     ms.aDBS.UpdateAppointmentData(newAppointment, customerID);
 
-                    var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
-                    appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString(), noteID);
-                    ms.nDBS.UpdateAppointmentNotesData(appointmentNotes, newAppointment.GetKey());
+                    var noteID = ms.dbrs.GetNotesIDFromAppointmentID(appointmentID);
+                   // appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString(), noteID);
+                    //ms.nDBS.UpdateAppointmentNotesData(appointmentNotes, newAppointment.GetKey());
 
                     editing = false;
 
@@ -293,42 +227,13 @@ namespace Groomy
                     //if not editing save new appointment and notes to DB
                     ms.aDBS.CreateAppointment(newAppointment, customerID);
                     var appointmentID = newAppointment.GetKey();
-                    ms.nDBS.CreateAppointmentNotes(appointmentNotes, appointmentID);
+                    //ms.nDBS.CreateAppointmentNotes(appointmentNotes, appointmentID);
                 }
 
                 loadAppointmentData();
                 Helpers.activatePanel(apptPanel, panelWH, panelLoc);
             }
         }
-        private void btnEditAppointment_Click(object sender, EventArgs e)
-        {
-            var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", apptView);
-
-            var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID);
-            var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
-
-            var editedAppointment = ms.aDBS.ReadAppointmentData(appointmentID);
-            var editedNotes = ms.nDBS.ReadNotesData(noteID);
-
-            var customerData = ms.cDBS.ReadCustomer(customerID);
-            var customerName = (customerData["FirstName"].ToString(), customerData["LastName"].ToString());
-            selectCustomerByName(customerName);
-
-            //Loading Appointment Data
-            txtTitle.Text = editedAppointment["Title"].ToString();
-            txtDescription.Text = editedAppointment["Description"].ToString();
-            timeStart.Value = DateTime.Parse(editedAppointment["StartTime"].ToString());
-            timeEnd.Value = DateTime.Parse(editedAppointment["EndTime"].ToString());
-            txtLocation.Text = editedAppointment["Location"].ToString();
-            editing = true;
-            fieldAppointmentID.Text = editedAppointment["AppointmentID"].ToString();
-            //Loading Notes Data
-            txtApptNotes.Text = editedNotes["Payload"].ToString();
-
-            makeAppointmentIDVisible();
-            Helpers.activatePanel(apptCreEdit, panelWH, panelLoc);
-        }
-
         private void makeAppointmentIDVisible()
         {
             lblAppointmentID.Visible = fieldAppointmentID.Visible = true;
@@ -346,23 +251,25 @@ namespace Groomy
         {
             Helpers.activatePanel(apptPanel, panelWH, panelLoc);
         }
-        private void label1_Click_1(object sender, EventArgs e)
-        {
 
-        }
-        private void apptDel_Click(object sender, EventArgs e)
+        
+
+        private void btnAppointmentView_Click(object sender, EventArgs e)
         {
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", apptView);
-            if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
+            if (!string.IsNullOrEmpty(appointmentID))
             {
-                ms.aDBS.SoftDeleteAppointment(appointmentID);
-                var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
-                ms.nDBS.SoftDeleteAppointmentNotes(noteID);
-                loadAppointmentData();
+                var appointmentData = ms.aDBS.ReadAppointmentData(appointmentID);
+                Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
+                appointmentView.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No appointment selected. Please select an appointment.");
             }
         }
 
-        private void btnCustomerView_Click_1(object sender, EventArgs e)
+        private void btnCustomerView_Click(object sender, EventArgs e)
         {
             var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
             if (!string.IsNullOrEmpty(email))

@@ -90,10 +90,11 @@ namespace Groomy.Customers
         {
             Debug.WriteLine("Getting customers");
             var customers = new List<Dictionary<string, string>>();
-            ms.dbrs.GetCustomerIDs().ForEach(customerID =>
+            var customerIDs = ms.dbrs.GetCustomerIDs();
+            foreach (var customerID in customerIDs)
             {
                 customers.Add(ReadCustomer(customerID));
-            });
+            }
             return customers;
         }
         public string GetCustomerIDByEmail(string email)

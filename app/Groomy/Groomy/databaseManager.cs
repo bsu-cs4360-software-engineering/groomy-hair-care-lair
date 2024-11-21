@@ -281,10 +281,6 @@ namespace Groomy
                     SaveDatabase(database, filePath);
                     return;
                 }
-                else
-                {
-                    Helpers.messageBoxError("No Key");
-                }
             }
         }
 
