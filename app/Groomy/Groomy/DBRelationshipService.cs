@@ -37,7 +37,7 @@
             var user_customer_relationships = ms.dbm.GetRelationshipsByID(customerID, "users_customers.json");
             return user_customer_relationships[0]["userID"];
         }
-        public string GetNotesFromCustomerID(string customerID)
+        public List<string> GetNotesIDFromCustomerID(string customerID)
         {
             var customer_notes_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_notes.json");
             // If there are no notes for the customer, create an empty note
@@ -49,7 +49,13 @@
                 ms.dbm.AddRelationshipToDB(newRelationship);
                 customer_notes_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_notes.json");
             }
-            return customer_notes_relationships[0]["noteID"];
+
+            var noteIDs = new List<string>();
+            foreach (var relationship in customer_notes_relationships)
+            {
+                noteIDs.Add(relationship["noteID"]);
+            }
+            return noteIDs;
         }
         public string GetNotesFromAppointmentID(string appointmentID)
         {

@@ -63,9 +63,9 @@ namespace Groomy
             if (!string.IsNullOrEmpty(email))
             {
                 var customerID = ms.cDBS.GetCustomerIDByEmail(email);
-                var noteID = ms.dbrs.GetNotesFromCustomerID(customerID);
+                var noteID = ms.dbrs.GetNotesIDFromCustomerID(customerID);
                 var editedCustomer = ms.cDBS.ReadCustomer(customerID);
-                var editedNotes = ms.nDBS.ReadNotesData(noteID);
+                //var editedNotes = ms.nDBS.ReadNotesData(noteID);
 
                 //assign customer data
                 txtFirst.Text = editedCustomer["FirstName"].ToString();
@@ -75,7 +75,7 @@ namespace Groomy
                 txtAddress.Text = editedCustomer["Address"].ToString();
                 fieldCustomerID.Text = editedCustomer["CustomerID"].ToString();
                 //assign notes data
-                txtCustomerNotes.Text = editedNotes["Payload"].ToString();
+                //txtCustomerNotes.Text = editedNotes["Payload"].ToString();
                 editing = true;
 
                 makeCustomerIDVisible();
@@ -86,7 +86,7 @@ namespace Groomy
                 Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
             }
         }
-        
+
         private string GetFieldFromSelection(string field, DataGridView dgv)
         {
             string val = null;
@@ -125,9 +125,9 @@ namespace Groomy
                     ms.cDBS.UpdateCustomerData(newCustomer);
 
 
-                    var noteID = ms.dbrs.GetNotesFromCustomerID(customerID);
-                    customerNotes = new Notes.Notes("customer", txtCustomerNotes.Text, DateTime.Now.ToString(), noteID);
-                    ms.nDBS.UpdateCustomerNotesData(customerNotes, newCustomer.GetKey());
+                    //var noteID = ms.dbrs.GetNotesIDFromCustomerID(customerID);
+                    //customerNotes = new Notes.Notes("customer", txtCustomerNotes.Text, DateTime.Now.ToString(), noteID);
+                    //ms.nDBS.UpdateCustomerNotesData(customerNotes, newCustomer.GetKey());
 
                     editing = false;
                 }
@@ -217,14 +217,13 @@ namespace Groomy
         {
             var email = GetFieldFromSelection("Email", dataGridView1);
             var customerID = Helpers.GenerateSHA256Hash(email);
-            var noteID = ms.dbrs.GetNotesFromCustomerID(customerID);
 
             if (!string.IsNullOrEmpty(email))
             {
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?"))
                 {
                     ms.cDBS.SoftDeleteCustomer(customerID);
-                    ms.nDBS.SoftDeleteCustomerNotes(noteID);
+                    ms.nDBS.SoftDeleteCustomerNotes(customerID);
                     loadCustomerData();
                 }
             }
@@ -313,7 +312,7 @@ namespace Groomy
                     ms.nDBS.UpdateAppointmentNotesData(appointmentNotes, newAppointment.GetKey());
 
                     editing = false;
-                    
+
                 }
                 else
                 {
@@ -386,6 +385,22 @@ namespace Groomy
                 var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
                 ms.nDBS.SoftDeleteAppointmentNotes(noteID);
                 loadAppointmentData();
+            }
+        }
+
+        private void btnCustomerView_Click_1(object sender, EventArgs e)
+        {
+            var email = GetFieldFromSelection("Email", dataGridView1);
+            if (!string.IsNullOrEmpty(email))
+            {
+                var customerID = ms.cDBS.GetCustomerIDByEmail(email);
+                var customerData = ms.cDBS.ReadCustomer(customerID);
+                Form customerView = new CustomerView(customerData);
+                customerView.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No customer selected. Please select a customer.");
             }
         }
     }
