@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Groomy.Notes
 {
-    internal class Notes : IGenericObject
+    internal class Note : IGenericObject
     {
         public string noteID;
         public string title;
@@ -18,14 +18,14 @@ namespace Groomy.Notes
         {
             { "NotesData", "notes.json" }
         };
-        public Notes(string t, string p, string cd, string nID)
+        public Note(string t, string p, string cd, string nID)
         {
             this.noteID = nID;
             this.title = t;
             this.payload = p;
             this.createDate = cd;
         }
-        public Notes(string t, string p, string cd) : this(t, p, cd, Helpers.RandomSHA256Hash())
+        public Note(string t, string p, string cd) : this(t, p, cd, Helpers.RandomSHA256Hash())
         {
         }
         public Dictionary< string, Dictionary<string, string>> GetFields()

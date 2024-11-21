@@ -141,10 +141,10 @@ namespace Groomy.Appointments
             }
             else if (btnAppointmentNotesEditSave.Text == "Save")
             {
-                var editedNote = new Notes.Notes(txtNotesAppointmentTitle.Text, txtNotesAppointmentPayload.Text, timeNotesAppointmentCreateDate.Text, fieldNotesAppointmentNoteID.Text);
+                var editedNote = new Notes.Note(txtNotesAppointmentTitle.Text, txtNotesAppointmentPayload.Text, timeNotesAppointmentCreateDate.Text, fieldNotesAppointmentNoteID.Text);
                 if (lblNotesAppointmentNoteID.Visible == false) //new note
                 {
-                    editedNote = new Notes.Notes(txtNotesAppointmentTitle.Text, txtNotesAppointmentPayload.Text, timeNotesAppointmentCreateDate.Text);
+                    editedNote = new Notes.Note(txtNotesAppointmentTitle.Text, txtNotesAppointmentPayload.Text, timeNotesAppointmentCreateDate.Text);
                     ms.nDBS.CreateAppointmentNotes(editedNote, fieldAppointmentID.Text);
                 }
                 else //pre-existing note

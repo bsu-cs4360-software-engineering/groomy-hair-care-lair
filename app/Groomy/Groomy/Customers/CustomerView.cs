@@ -143,10 +143,10 @@ namespace Groomy.Customers
             }
             else if (btnCustomerNotesEditSave.Text == "Save")
             {
-                var editedNote = new Notes.Notes(txtNotesCustomerTitle.Text, txtNotesCustomerPayload.Text, timeNotesCustomersCreateDate.Text, fieldNotesCustomersNoteID.Text);
+                var editedNote = new Notes.Note(txtNotesCustomerTitle.Text, txtNotesCustomerPayload.Text, timeNotesCustomersCreateDate.Text, fieldNotesCustomersNoteID.Text);
                 if (lblNotesCustomersNoteID.Visible == false) //new note
                 {
-                    editedNote = new Notes.Notes(txtNotesCustomerTitle.Text, txtNotesCustomerPayload.Text, timeNotesCustomersCreateDate.Text);
+                    editedNote = new Notes.Note(txtNotesCustomerTitle.Text, txtNotesCustomerPayload.Text, timeNotesCustomersCreateDate.Text);
                     ms.nDBS.CreateCustomerNotes(editedNote, fieldCustomerID.Text);
                 }
                 else //pre-existing note 
