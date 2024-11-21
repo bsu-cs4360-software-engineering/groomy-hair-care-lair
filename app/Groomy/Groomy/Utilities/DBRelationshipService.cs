@@ -1,4 +1,4 @@
-﻿namespace Groomy
+﻿namespace Groomy.Utilities
 {
     internal class DBRelationshipService
     {

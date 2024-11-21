@@ -1,4 +1,4 @@
-﻿namespace Groomy
+﻿namespace Groomy.Users
 {
     internal class UserAuth
     {

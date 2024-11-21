@@ -32,26 +32,6 @@
             btnAppointment = new Label();
             btnCustomers = new Label();
             btnWelcome = new Label();
-            apptCreEdit = new Panel();
-            fieldAppointmentID = new Label();
-            lblAppointmentID = new Label();
-            comboCustomer = new ComboBox();
-            lblCustomer = new Label();
-            txtApptNotes = new TextBox();
-            lblApptNotes = new Label();
-            label1 = new Label();
-            txtTitle = new TextBox();
-            lblDescription = new Label();
-            lblLocation = new Label();
-            txtLocation = new TextBox();
-            timeEnd = new DateTimePicker();
-            lblEndTime = new Label();
-            txtDescription = new TextBox();
-            timeStart = new DateTimePicker();
-            lblStartTime = new Label();
-            apptSave = new Button();
-            apptBack = new Button();
-            label3 = new Label();
             apptPanel = new Panel();
             apptView = new DataGridView();
             apptDel = new Button();
@@ -66,18 +46,27 @@
             btnDelete = new Button();
             btnNew = new Button();
             lblGroomyCustomers = new Label();
+            btnServices = new Label();
+            panelServices = new Panel();
+            btnServiceView = new Button();
+            dataServices = new DataGridView();
+            btnServiceDelete = new Button();
+            btnServiceNew = new Button();
+            lblServices = new Label();
             panel1.SuspendLayout();
-            apptCreEdit.SuspendLayout();
             apptPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)apptView).BeginInit();
             panelWelcome.SuspendLayout();
             panelCustomers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panelServices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataServices).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(21, 96, 130);
+            panel1.Controls.Add(btnServices);
             panel1.Controls.Add(btnAppointment);
             panel1.Controls.Add(btnCustomers);
             panel1.Controls.Add(btnWelcome);
@@ -91,7 +80,7 @@
             btnAppointment.BackColor = Color.FromArgb(29, 129, 175);
             btnAppointment.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAppointment.ForeColor = Color.White;
-            btnAppointment.Location = new Point(0, 320);
+            btnAppointment.Location = new Point(0, 326);
             btnAppointment.Name = "btnAppointment";
             btnAppointment.Size = new Size(216, 44);
             btnAppointment.TabIndex = 22;
@@ -104,7 +93,7 @@
             btnCustomers.BackColor = Color.FromArgb(29, 129, 175);
             btnCustomers.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCustomers.ForeColor = Color.White;
-            btnCustomers.Location = new Point(0, 261);
+            btnCustomers.Location = new Point(0, 267);
             btnCustomers.Name = "btnCustomers";
             btnCustomers.Size = new Size(216, 44);
             btnCustomers.TabIndex = 21;
@@ -117,212 +106,13 @@
             btnWelcome.BackColor = Color.FromArgb(29, 129, 175);
             btnWelcome.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnWelcome.ForeColor = Color.White;
-            btnWelcome.Location = new Point(0, 200);
+            btnWelcome.Location = new Point(0, 148);
             btnWelcome.Name = "btnWelcome";
             btnWelcome.Size = new Size(216, 44);
             btnWelcome.TabIndex = 20;
             btnWelcome.Text = "Welcome";
             btnWelcome.TextAlign = ContentAlignment.MiddleCenter;
             btnWelcome.Click += btnWelcome_Click;
-            // 
-            // apptCreEdit
-            // 
-            apptCreEdit.Controls.Add(fieldAppointmentID);
-            apptCreEdit.Controls.Add(lblAppointmentID);
-            apptCreEdit.Controls.Add(comboCustomer);
-            apptCreEdit.Controls.Add(lblCustomer);
-            apptCreEdit.Controls.Add(txtApptNotes);
-            apptCreEdit.Controls.Add(lblApptNotes);
-            apptCreEdit.Controls.Add(label1);
-            apptCreEdit.Controls.Add(txtTitle);
-            apptCreEdit.Controls.Add(lblDescription);
-            apptCreEdit.Controls.Add(lblLocation);
-            apptCreEdit.Controls.Add(txtLocation);
-            apptCreEdit.Controls.Add(timeEnd);
-            apptCreEdit.Controls.Add(lblEndTime);
-            apptCreEdit.Controls.Add(txtDescription);
-            apptCreEdit.Controls.Add(timeStart);
-            apptCreEdit.Controls.Add(lblStartTime);
-            apptCreEdit.Controls.Add(apptSave);
-            apptCreEdit.Controls.Add(apptBack);
-            apptCreEdit.Controls.Add(label3);
-            apptCreEdit.Location = new Point(1281, 577);
-            apptCreEdit.Name = "apptCreEdit";
-            apptCreEdit.Size = new Size(528, 550);
-            apptCreEdit.TabIndex = 43;
-            // 
-            // fieldAppointmentID
-            // 
-            fieldAppointmentID.AutoSize = true;
-            fieldAppointmentID.Location = new Point(98, 508);
-            fieldAppointmentID.Name = "fieldAppointmentID";
-            fieldAppointmentID.Size = new Size(87, 15);
-            fieldAppointmentID.TabIndex = 85;
-            fieldAppointmentID.Text = "appointmentID";
-            // 
-            // lblAppointmentID
-            // 
-            lblAppointmentID.AutoSize = true;
-            lblAppointmentID.Location = new Point(98, 491);
-            lblAppointmentID.Name = "lblAppointmentID";
-            lblAppointmentID.Size = new Size(92, 15);
-            lblAppointmentID.TabIndex = 84;
-            lblAppointmentID.Text = "AppointmentID:";
-            // 
-            // comboCustomer
-            // 
-            comboCustomer.FormattingEnabled = true;
-            comboCustomer.Location = new Point(97, 98);
-            comboCustomer.Name = "comboCustomer";
-            comboCustomer.Size = new Size(321, 23);
-            comboCustomer.TabIndex = 83;
-            // 
-            // lblCustomer
-            // 
-            lblCustomer.AutoSize = true;
-            lblCustomer.Location = new Point(98, 80);
-            lblCustomer.Name = "lblCustomer";
-            lblCustomer.Size = new Size(62, 15);
-            lblCustomer.TabIndex = 82;
-            lblCustomer.Text = "Customer:";
-            // 
-            // txtApptNotes
-            // 
-            txtApptNotes.Location = new Point(97, 410);
-            txtApptNotes.Multiline = true;
-            txtApptNotes.Name = "txtApptNotes";
-            txtApptNotes.Size = new Size(321, 71);
-            txtApptNotes.TabIndex = 80;
-            // 
-            // lblApptNotes
-            // 
-            lblApptNotes.AutoSize = true;
-            lblApptNotes.Location = new Point(97, 392);
-            lblApptNotes.Name = "lblApptNotes";
-            lblApptNotes.Size = new Size(41, 15);
-            lblApptNotes.TabIndex = 79;
-            lblApptNotes.Text = "Notes:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(99, 124);
-            label1.Name = "label1";
-            label1.Size = new Size(32, 15);
-            label1.TabIndex = 78;
-            label1.Text = "Title:";
-            // 
-            // txtTitle
-            // 
-            txtTitle.Location = new Point(97, 142);
-            txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(321, 23);
-            txtTitle.TabIndex = 77;
-            // 
-            // lblDescription
-            // 
-            lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(97, 168);
-            lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(70, 15);
-            lblDescription.TabIndex = 76;
-            lblDescription.Text = "Description:";
-            // 
-            // lblLocation
-            // 
-            lblLocation.AutoSize = true;
-            lblLocation.Location = new Point(97, 300);
-            lblLocation.Name = "lblLocation";
-            lblLocation.Size = new Size(56, 15);
-            lblLocation.TabIndex = 75;
-            lblLocation.Text = "Location:";
-            // 
-            // txtLocation
-            // 
-            txtLocation.Location = new Point(97, 318);
-            txtLocation.Multiline = true;
-            txtLocation.Name = "txtLocation";
-            txtLocation.Size = new Size(321, 71);
-            txtLocation.TabIndex = 74;
-            // 
-            // timeEnd
-            // 
-            timeEnd.Format = DateTimePickerFormat.Time;
-            timeEnd.Location = new Point(97, 274);
-            timeEnd.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
-            timeEnd.Name = "timeEnd";
-            timeEnd.Size = new Size(321, 23);
-            timeEnd.TabIndex = 73;
-            // 
-            // lblEndTime
-            // 
-            lblEndTime.AutoSize = true;
-            lblEndTime.Location = new Point(97, 256);
-            lblEndTime.Name = "lblEndTime";
-            lblEndTime.Size = new Size(59, 15);
-            lblEndTime.TabIndex = 72;
-            lblEndTime.Text = "End Time:";
-            // 
-            // txtDescription
-            // 
-            txtDescription.Location = new Point(97, 186);
-            txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(321, 23);
-            txtDescription.TabIndex = 71;
-            // 
-            // timeStart
-            // 
-            timeStart.Format = DateTimePickerFormat.Time;
-            timeStart.Location = new Point(97, 230);
-            timeStart.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
-            timeStart.Name = "timeStart";
-            timeStart.Size = new Size(321, 23);
-            timeStart.TabIndex = 70;
-            // 
-            // lblStartTime
-            // 
-            lblStartTime.AutoSize = true;
-            lblStartTime.Location = new Point(97, 212);
-            lblStartTime.Name = "lblStartTime";
-            lblStartTime.Size = new Size(63, 15);
-            lblStartTime.TabIndex = 69;
-            lblStartTime.Text = "Start Time:";
-            // 
-            // apptSave
-            // 
-            apptSave.BackColor = Color.FromArgb(21, 96, 130);
-            apptSave.ForeColor = Color.White;
-            apptSave.Location = new Point(259, 53);
-            apptSave.Name = "apptSave";
-            apptSave.Size = new Size(103, 23);
-            apptSave.TabIndex = 67;
-            apptSave.Text = "Save";
-            apptSave.UseVisualStyleBackColor = false;
-            apptSave.Click += btnSaveAppointment_Click;
-            // 
-            // apptBack
-            // 
-            apptBack.BackColor = Color.FromArgb(21, 96, 130);
-            apptBack.ForeColor = Color.White;
-            apptBack.Location = new Point(137, 53);
-            apptBack.Name = "apptBack";
-            apptBack.Size = new Size(103, 23);
-            apptBack.TabIndex = 66;
-            apptBack.Text = "Back";
-            apptBack.UseVisualStyleBackColor = false;
-            apptBack.Click += apptBack_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial Black", 24F, FontStyle.Bold);
-            label3.ForeColor = Color.FromArgb(21, 96, 130);
-            label3.Location = new Point(44, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(448, 45);
-            label3.TabIndex = 65;
-            label3.Text = "Create/Edit Appointment";
-            label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // apptPanel
             // 
@@ -479,13 +269,91 @@
             lblGroomyCustomers.Text = "Groomy Customers";
             lblGroomyCustomers.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btnServices
+            // 
+            btnServices.BackColor = Color.FromArgb(29, 129, 175);
+            btnServices.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnServices.ForeColor = Color.White;
+            btnServices.Location = new Point(0, 207);
+            btnServices.Name = "btnServices";
+            btnServices.Size = new Size(216, 44);
+            btnServices.TabIndex = 23;
+            btnServices.Text = "Services";
+            btnServices.TextAlign = ContentAlignment.MiddleCenter;
+            btnServices.Click += btnServices_Click;
+            // 
+            // panelServices
+            // 
+            panelServices.Controls.Add(btnServiceView);
+            panelServices.Controls.Add(dataServices);
+            panelServices.Controls.Add(btnServiceDelete);
+            panelServices.Controls.Add(btnServiceNew);
+            panelServices.Controls.Add(lblServices);
+            panelServices.Location = new Point(229, 559);
+            panelServices.Name = "panelServices";
+            panelServices.Size = new Size(520, 553);
+            panelServices.TabIndex = 39;
+            // 
+            // btnServiceView
+            // 
+            btnServiceView.BackColor = Color.FromArgb(21, 96, 130);
+            btnServiceView.ForeColor = Color.White;
+            btnServiceView.Location = new Point(207, 83);
+            btnServiceView.Name = "btnServiceView";
+            btnServiceView.Size = new Size(103, 23);
+            btnServiceView.TabIndex = 38;
+            btnServiceView.Text = "View Service";
+            btnServiceView.UseVisualStyleBackColor = false;
+            // 
+            // dataServices
+            // 
+            dataServices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataServices.Location = new Point(33, 128);
+            dataServices.Name = "dataServices";
+            dataServices.Size = new Size(449, 377);
+            dataServices.TabIndex = 37;
+            // 
+            // btnServiceDelete
+            // 
+            btnServiceDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnServiceDelete.ForeColor = Color.White;
+            btnServiceDelete.Location = new Point(316, 83);
+            btnServiceDelete.Name = "btnServiceDelete";
+            btnServiceDelete.Size = new Size(103, 23);
+            btnServiceDelete.TabIndex = 35;
+            btnServiceDelete.Text = "Delete Service";
+            btnServiceDelete.UseVisualStyleBackColor = false;
+            // 
+            // btnServiceNew
+            // 
+            btnServiceNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnServiceNew.ForeColor = Color.White;
+            btnServiceNew.Location = new Point(98, 83);
+            btnServiceNew.Name = "btnServiceNew";
+            btnServiceNew.Size = new Size(103, 23);
+            btnServiceNew.TabIndex = 22;
+            btnServiceNew.Text = "New Service";
+            btnServiceNew.UseVisualStyleBackColor = false;
+            // 
+            // lblServices
+            // 
+            lblServices.AutoSize = true;
+            lblServices.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            lblServices.ForeColor = Color.FromArgb(21, 96, 130);
+            lblServices.Location = new Point(97, 24);
+            lblServices.Name = "lblServices";
+            lblServices.Size = new Size(320, 45);
+            lblServices.TabIndex = 21;
+            lblServices.Text = "Groomy Services";
+            lblServices.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1061);
+            Controls.Add(panelServices);
             Controls.Add(apptPanel);
-            Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);
             Controls.Add(panelWelcome);
             Controls.Add(panel1);
@@ -496,8 +364,6 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Groomy";
             panel1.ResumeLayout(false);
-            apptCreEdit.ResumeLayout(false);
-            apptCreEdit.PerformLayout();
             apptPanel.ResumeLayout(false);
             apptPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)apptView).EndInit();
@@ -506,6 +372,9 @@
             panelCustomers.ResumeLayout(false);
             panelCustomers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panelServices.ResumeLayout(false);
+            panelServices.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataServices).EndInit();
             ResumeLayout(false);
         }
 
@@ -528,28 +397,15 @@
         private Button btnAppointmentView;
         private Button apptNew;
         private Label label2;
-        private Panel apptCreEdit;
-        private Button apptBack;
-        private Label label3;
         private Label label5;
-        private Button apptSave;
         private DateTimePicker apptDate;
-        private Label lblStartTime;
-        private DateTimePicker timeStart;
-        private TextBox txtDescription;
-        private DateTimePicker timeEnd;
-        private Label lblEndTime;
-        private Label lblDescription;
-        private Label lblLocation;
-        private TextBox txtLocation;
-        private Label label1;
-        private TextBox txtTitle;
-        private TextBox txtApptNotes;
-        private Label lblApptNotes;
-        private Label lblCustomer;
-        private ComboBox comboCustomer;
-        private Label fieldAppointmentID;
-        private Label lblAppointmentID;
         private Button btnCustomerView;
+        private Label btnServices;
+        private Panel panelServices;
+        private Button btnServiceView;
+        private DataGridView dataServices;
+        private Button btnServiceDelete;
+        private Button btnServiceNew;
+        private Label lblServices;
     }
 }

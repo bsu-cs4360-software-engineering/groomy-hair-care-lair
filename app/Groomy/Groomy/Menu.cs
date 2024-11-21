@@ -1,5 +1,6 @@
 ﻿using Groomy.Appointments;
 using Groomy.Customers;
+using Groomy.Utilities;
 using System.Data;
 using System.Diagnostics;
 
@@ -33,6 +34,10 @@ namespace Groomy
         {
             //windowFx.OpenForm("Groomy.Login", false);
             Helpers.activatePanel(panelWelcome, panelWH, panelLoc);
+        }
+        private void btnServices_Click(object sender, EventArgs e)
+        {
+            Helpers.activatePanel(panelServices, panelWH, panelLoc);
         }
         private void btnCustomerNew_Click(object sender, EventArgs e)
         {
@@ -94,24 +99,6 @@ namespace Groomy
         {
             dataGridView1.DataSource = ms.cDBS.GetCustomerDataTable(["FirstName", "LastName", "Email", "PhoneNumber"]);
         }
-        private void loadCustomers()
-        {
-            var customers = ms.cDBS.GetCustomers();
-            comboCustomer.DataSource = customers.Select(c => (c["FirstName"], c["LastName"])).ToList();
-        }
-        private void selectCustomerByName((string, string) name)
-        {
-            loadCustomers();
-            for (int i = 0; i < comboCustomer.Items.Count; i++)
-            {
-                var item = ((string, string))comboCustomer.Items[i];
-                if (item.Item1 == name.Item1 && item.Item2 == name.Item2)
-                {
-                    comboCustomer.SelectedIndex = i;
-                    break;
-                }
-            }
-        }
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
             var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
@@ -122,7 +109,7 @@ namespace Groomy
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?"))
                 {
                     var noteIDs = ms.dbrs.GetNotesIDFromCustomerID(customerID);
-                    foreach(var noteID in noteIDs)
+                    foreach (var noteID in noteIDs)
                     {
                         ms.nDBS.SoftDeleteCustomerNotes(noteID);
                     }
@@ -150,41 +137,6 @@ namespace Groomy
                 loadAppointmentData();
             }
         }
-        private bool validateAppointmentForms()
-        {
-            if (txtTitle.Text == "")
-            {
-                Helpers.messageBoxError("Please enter a title for the appointment.");
-                return false;
-            }
-            if (txtDescription.Text == "")
-            {
-                Helpers.messageBoxError("Please enter a description for the appointment.");
-                return false;
-            }
-            if (timeStart.Value >= timeEnd.Value)
-            {
-                Helpers.messageBoxError("The start time must be before the end time.");
-                return false;
-            }
-            if (txtLocation.Text == "")
-            {
-                Helpers.messageBoxError("Please enter a location for the appointment.");
-                return false;
-            }
-            return true;
-        }
-        private void clearAppointmentForms()
-        {
-            loadCustomers();
-            txtTitle.Text = "";
-            txtDescription.Text = "";
-            timeStart.Value = DateTime.Now;
-            timeEnd.Value = DateTime.Now;
-            txtLocation.Text = "";
-
-            txtApptNotes.Text = "";
-        }
         private void loadAppointmentData()
         {
             apptView.DataSource = ms.aDBS.GetAppointmentDataTable(null);
@@ -197,51 +149,6 @@ namespace Groomy
                 apptView.Columns["Description"].Visible = false;
             }
         }
-        private void btnSaveAppointment_Click(object sender, EventArgs e)
-        {
-
-            if (validateAppointmentForms())
-            {
-                var selectedCustomer = ((string, string))comboCustomer.SelectedItem;
-                var customerID = ms.cDBS.GetCustomerIDByFirstLast(selectedCustomer);
-                Debug.WriteLine($"CustomerID: {customerID}");
-                var newAppointment = new Appointments.Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text);
-                //var appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString());
-
-                if (editing)
-                {
-                    //if editing assign new appointment and notes with existing IDs
-                    var appointmentID = fieldAppointmentID.Text;
-                    newAppointment = new Appointments.Appointment(txtTitle.Text, txtDescription.Text, timeStart.Value, timeEnd.Value, txtLocation.Text, appointmentID);
-                    ms.aDBS.UpdateAppointmentData(newAppointment, customerID);
-
-                    var noteID = ms.dbrs.GetNotesIDFromAppointmentID(appointmentID);
-                   // appointmentNotes = new Notes.Notes("appointment", txtApptNotes.Text, DateTime.Now.ToString(), noteID);
-                    //ms.nDBS.UpdateAppointmentNotesData(appointmentNotes, newAppointment.GetKey());
-
-                    editing = false;
-
-                }
-                else
-                {
-                    //if not editing save new appointment and notes to DB
-                    ms.aDBS.CreateAppointment(newAppointment, customerID);
-                    var appointmentID = newAppointment.GetKey();
-                    //ms.nDBS.CreateAppointmentNotes(appointmentNotes, appointmentID);
-                }
-
-                loadAppointmentData();
-                Helpers.activatePanel(apptPanel, panelWH, panelLoc);
-            }
-        }
-        private void makeAppointmentIDVisible()
-        {
-            lblAppointmentID.Visible = fieldAppointmentID.Visible = true;
-        }
-        private void makeAppointmentIDInvisible()
-        {
-            lblAppointmentID.Visible = fieldAppointmentID.Visible = false;
-        }
         private void label1_Click(object sender, EventArgs e)
         {
             loadAppointmentData();
@@ -252,7 +159,7 @@ namespace Groomy
             Helpers.activatePanel(apptPanel, panelWH, panelLoc);
         }
 
-        
+
 
         private void btnAppointmentView_Click(object sender, EventArgs e)
         {
@@ -284,5 +191,6 @@ namespace Groomy
                 Helpers.messageBoxError("No customer selected. Please select a customer.");
             }
         }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Groomy.Customers;
 
-namespace Groomy
+namespace Groomy.Users
 {
 
     public class User : IGenericObject

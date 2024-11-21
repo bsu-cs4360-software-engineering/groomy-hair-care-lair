@@ -1,4 +1,6 @@
-﻿namespace Groomy
+﻿using Groomy.Utilities;
+
+namespace Groomy.Users
 {
     internal class UserDBService
     {

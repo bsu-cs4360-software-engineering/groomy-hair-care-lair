@@ -1,4 +1,4 @@
-﻿namespace Groomy
+﻿namespace Groomy.Utilities
 {
     public class windowFx
     {

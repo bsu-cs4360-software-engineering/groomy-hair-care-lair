@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Diagnostics;
+using Groomy.Utilities;
 
 namespace Groomy.Appointments
 {

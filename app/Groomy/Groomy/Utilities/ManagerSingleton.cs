@@ -1,13 +1,14 @@
 ﻿using Groomy.Appointments;
 using Groomy.Customers;
 using Groomy.Notes;
+using Groomy.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Groomy
+namespace Groomy.Utilities
 {
     internal class ManagerSingleton
     {

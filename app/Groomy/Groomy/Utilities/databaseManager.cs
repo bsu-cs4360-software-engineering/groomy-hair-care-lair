@@ -4,7 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace Groomy
+namespace Groomy.Utilities
 {
     public interface IFileService
     {
@@ -103,7 +103,7 @@ namespace Groomy
             }
             return matchingRelationships;
         }
-        public void AddRelationshipToDB(Relationships.IRelationship relationship)
+        public void AddRelationshipToDB(IRelationship relationship)
         {
             var relationshipFilePath = relationship.GetFilePath();
             var previousRelationshipData = LoadRelationships(relationshipFilePath);
@@ -116,7 +116,7 @@ namespace Groomy
                 SaveRelationships(previousRelationshipData, relationshipFilePath);
             }
         }
-        public void UpdateRelationshipInDB(Relationships.IRelationship relationship)
+        public void UpdateRelationshipInDB(IRelationship relationship)
         {
             var relationshipFilePath = relationship.GetFilePath();
             var allRelationshipData = LoadRelationships(relationshipFilePath);
@@ -145,7 +145,7 @@ namespace Groomy
                 SaveRelationships(allRelationshipData, relationshipFilePath);
             }
         }
-        public void DeleteRelationshipFromDB(Relationships.IRelationship relationship)
+        public void DeleteRelationshipFromDB(IRelationship relationship)
         {
             var relationshipFilePath = relationship.GetFilePath();
             var previousRelationshipData = LoadRelationships(relationshipFilePath);
@@ -159,7 +159,7 @@ namespace Groomy
                 SaveRelationships(previousRelationshipData, relationshipFilePath);
             }
         }
-        public void SoftDeleteRelationshipFromDB(Relationships.IRelationship relationship)
+        public void SoftDeleteRelationshipFromDB(IRelationship relationship)
         {
             var relationshipFilePath = relationship.GetFilePath();
             var previousRelationshipData = LoadRelationships(relationshipFilePath);
@@ -234,7 +234,7 @@ namespace Groomy
                     UpdateObjectInDB(objectKey, objectFields[item.Key], item.Value);
                     return;
                 }
-                
+
                 var database = LoadDatabase(filePath);
                 database.Add(obj);
                 SaveDatabase(database, filePath);
