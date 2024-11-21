@@ -51,6 +51,7 @@ namespace Groomy.Appointments
                 var customerName = (customerData["FirstName"], customerData["LastName"]);
                 selectCustomerByName(customerName);
             }
+            loadAppointmentNotes();
         }
         private void loadAppointmentNotes()
         {

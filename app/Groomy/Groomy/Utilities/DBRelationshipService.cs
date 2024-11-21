@@ -17,6 +17,16 @@
             }
             return customerIDs;
         }
+        public List<string> GetServiceIDs()
+        {
+            var serviceIDs = new List<string>();
+            var serviceDB = ms.dbm.LoadJsonsFromDB("services.json");
+            foreach (var service in serviceDB)
+            {
+                serviceIDs.Add(service["ServiceID"]);
+            }
+            return serviceIDs;
+        }
         public List<string> GetAppointmentsFromCustomerID(string customerID)
         {
             var customer_appointment_relationships = ms.dbm.GetRelationshipsByID(customerID, "customers_appointments.json");
@@ -58,7 +68,17 @@
             }
             return noteIDs;
         }
-        public string GetCustomerIDFromNotesID(string noteID)
+        public List<string> GetNotesIDFromServiceID(string serviceID)
+        {
+            var service_notes_relationships = ms.dbm.GetRelationshipsByID(serviceID, "services_notes.json");
+            var noteIDs = new List<string>();
+            foreach (var relationship in service_notes_relationships)
+            {
+                noteIDs.Add(relationship["noteID"]);
+            }
+            return noteIDs;
+        }
+         public string GetCustomerIDFromNotesID(string noteID)
         {
             var customer_notes_relationships = ms.dbm.GetRelationshipsByID(noteID, "customers_notes.json");
             if (customer_notes_relationships.Count == 0)
@@ -71,6 +91,11 @@
         {
             var appointment_notes_relationships = ms.dbm.GetRelationshipsByID(noteID, "appointments_notes.json");
             return appointment_notes_relationships[0]["appointmentID"];
+        }
+        public string GetServiceIDFromNotesID(string noteID)
+        {
+            var service_notes_relationships = ms.dbm.GetRelationshipsByID(noteID, "services_notes.json");
+            return service_notes_relationships[0]["serviceID"];
         }
     }
 }

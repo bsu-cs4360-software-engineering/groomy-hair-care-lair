@@ -2,6 +2,7 @@
 using Groomy.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,17 @@ namespace Groomy.Services
         public void SoftDeleteService(string serviceID)
         {
             ms.dbm.SoftDeleteObjectInDB(serviceID, Service.FilePaths["ServiceData"]);
+        }
+        public List<Dictionary<string, string>> GetServices()
+        {
+            Debug.WriteLine("Getting services");
+            var services = new List<Dictionary<string, string>>();
+            var serviceIDs = ms.dbrs.GetServiceIDs();
+            foreach (var customerID in serviceIDs)
+            {
+                services.Add(ReadServiceData(customerID));
+            }
+            return services;
         }
     }
 }

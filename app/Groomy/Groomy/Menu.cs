@@ -28,6 +28,7 @@ namespace Groomy
         }
         private void btnCustomers_Click(object sender, EventArgs e)
         {
+            loadCustomerData();
             Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
         }
         private void btnWelcome_Click(object sender, EventArgs e)
@@ -37,7 +38,15 @@ namespace Groomy
         }
         private void btnServices_Click(object sender, EventArgs e)
         {
+            loadServiceData();
             Helpers.activatePanel(panelServices, panelWH, panelLoc);
+        }
+
+
+        private void btnAppointment_Click(object sender, EventArgs e)
+        {
+            loadAppointmentData();
+            Helpers.activatePanel(apptPanel, panelWH, panelLoc);
         }
         private void btnCustomerNew_Click(object sender, EventArgs e)
         {
@@ -53,6 +62,13 @@ namespace Groomy
             Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
             appointmentView.Show();
         }
+        private void btnServiceNew_Click(object sender, EventArgs e)
+        {
+            var newService = new Services.Service("", "", "", "");
+            var serviceData = newService.GetFields()["ServiceData"];
+            Form serviceView = new Services.ServiceView(serviceData, this);
+            serviceView.Show();
+        }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
             Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
@@ -61,6 +77,7 @@ namespace Groomy
         {
             loadAppointmentData();
             loadCustomerData();
+            loadServiceData();
         }
         /*
         private void btnSaveCustomer_Click(object sender, EventArgs e)
@@ -95,10 +112,7 @@ namespace Groomy
             }
         }
         */
-        private void loadCustomerData()
-        {
-            dataGridView1.DataSource = ms.cDBS.GetCustomerDataTable(["FirstName", "LastName", "Email", "PhoneNumber"]);
-        }
+        
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
             var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
@@ -137,6 +151,37 @@ namespace Groomy
                 loadAppointmentData();
             }
         }
+
+        private void btnServiceDelete_Click(object sender, EventArgs e)
+        {
+            var serviceID = Helpers.GetFieldFromSelection("ServiceID", dataServices);
+            if (Helpers.messageBoxConfirm("Are you sure you want to delete this service?"))
+            {
+                var noteIDs = ms.dbrs.GetNotesIDFromServiceID(serviceID);
+                foreach (var noteID in noteIDs)
+                {
+                    ms.nDBS.SoftDeleteServiceNotes(noteID);
+                }
+                ms.sDBS.SoftDeleteService(serviceID);
+                loadServiceData();
+            }
+        }
+
+        private void apptDel_Click(object sender, EventArgs e)
+        {
+            var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", apptView);
+            if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
+            {
+                var noteIDs = ms.dbrs.GetNotesIDFromAppointmentID(appointmentID);
+                foreach (var noteID in noteIDs)
+                {
+                    ms.nDBS.SoftDeleteAppointmentNotes(noteID);
+                }
+                ms.aDBS.SoftDeleteAppointment(appointmentID);
+                loadAppointmentData();
+            }
+
+        }
         private void loadAppointmentData()
         {
             apptView.DataSource = ms.aDBS.GetAppointmentDataTable(null);
@@ -148,6 +193,16 @@ namespace Groomy
             {
                 apptView.Columns["Description"].Visible = false;
             }
+        }
+        private void loadServiceData()
+        {
+            var services = ms.sDBS.GetServices();
+            dataServices.DataSource = Helpers.ConvertToDataTable(services);
+        }
+        private void loadCustomerData()
+        {
+            var customers = ms.cDBS.GetCustomers();
+            dataGridView1.DataSource = Helpers.ConvertToDataTable(customers);
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -176,12 +231,27 @@ namespace Groomy
             }
         }
 
+        private void btnServiceView_Click(object sender, EventArgs e)
+        {
+            var serviceID = Helpers.GetFieldFromSelection("ServiceID", dataServices);
+            if (!string.IsNullOrEmpty(serviceID))
+            {
+                var serviceData = ms.sDBS.ReadServiceData(serviceID);
+                Form serviceView = new Services.ServiceView(serviceData, this);
+                serviceView.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No service selected. Please select a service.");
+            }
+
+        }
+
         private void btnCustomerView_Click(object sender, EventArgs e)
         {
-            var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
-            if (!string.IsNullOrEmpty(email))
+            var customerID = Helpers.GetFieldFromSelection("CustomerID", dataGridView1);
+            if (!string.IsNullOrEmpty(customerID))
             {
-                var customerID = ms.cDBS.GetCustomerIDByEmail(email);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 Form customerView = new CustomerView(customerData, this);
                 customerView.Show();

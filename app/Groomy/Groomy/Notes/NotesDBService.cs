@@ -25,6 +25,11 @@ namespace Groomy.Notes
             ms.dbm.AddObjectsToDB(notes);
             ms.dbm.AddRelationshipToDB(new Relationships.AppointmentNotesRelationship(appointmentID, notes.GetKey()));
         }
+        public void CreateServiceNotes(Note notes, string serviceID)
+        {
+            ms.dbm.AddObjectsToDB(notes);
+            ms.dbm.AddRelationshipToDB(new Relationships.ServiceNotesRelationship(serviceID, notes.GetKey()));
+        }
         public Dictionary<string, string> ReadNotesData(string noteID)
         {
             return ms.dbm.LoadJsonFromDB(noteID, Note.FilePaths["NotesData"]);
@@ -49,6 +54,16 @@ namespace Groomy.Notes
             //update relationship
             ms.dbm.UpdateRelationshipInDB(new Relationships.AppointmentNotesRelationship(appointmentID, noteID));
         }
+        public void UpdateServiceNotesData(Note notes, string serviceID)
+        {
+            var noteID = notes.GetKey();
+            var notesData = notes.GetFields()["NotesData"];
+
+            //update notes
+            ms.dbm.UpdateObjectInDB(noteID, notesData, Note.FilePaths["NotesData"]);
+            //update relationship
+            ms.dbm.UpdateRelationshipInDB(new Relationships.ServiceNotesRelationship(serviceID, noteID));
+        }
         public void DeleteCustomerNotes(string noteID)
         {
             ms.dbm.RemoveObjectFromDB(noteID, Note.FilePaths["NotesData"]);
@@ -68,6 +83,11 @@ namespace Groomy.Notes
         {
             ms.dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
             ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.AppointmentNotesRelationship(ms.dbrs.GetAppointmentIDFromNotesID(noteID), noteID));
+        }
+        public void SoftDeleteServiceNotes(string noteID)
+        {
+            ms.dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
+            ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.ServiceNotesRelationship(ms.dbrs.GetServiceIDFromNotesID(noteID), noteID));
         }
     }
 }

@@ -43,8 +43,11 @@ namespace Groomy.Customers
             {
                 btnCustomerEditSave_Click(sender, e);
             }
-            loadCustomerNotes();
+
+
             Helpers.activatePanel(panelNotesCustomerAll, panelSize, panelLocation);
+
+            loadCustomerNotes();
         }
 
         public void loadCustomerNotes()

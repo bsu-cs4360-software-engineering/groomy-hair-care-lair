@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnServices = new Label();
             btnAppointment = new Label();
             btnCustomers = new Label();
             btnWelcome = new Label();
@@ -46,7 +47,6 @@
             btnDelete = new Button();
             btnNew = new Button();
             lblGroomyCustomers = new Label();
-            btnServices = new Label();
             panelServices = new Panel();
             btnServiceView = new Button();
             dataServices = new DataGridView();
@@ -75,6 +75,19 @@
             panel1.Size = new Size(221, 566);
             panel1.TabIndex = 17;
             // 
+            // btnServices
+            // 
+            btnServices.BackColor = Color.FromArgb(29, 129, 175);
+            btnServices.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnServices.ForeColor = Color.White;
+            btnServices.Location = new Point(0, 207);
+            btnServices.Name = "btnServices";
+            btnServices.Size = new Size(216, 44);
+            btnServices.TabIndex = 23;
+            btnServices.Text = "Services";
+            btnServices.TextAlign = ContentAlignment.MiddleCenter;
+            btnServices.Click += btnServices_Click;
+            // 
             // btnAppointment
             // 
             btnAppointment.BackColor = Color.FromArgb(29, 129, 175);
@@ -86,7 +99,7 @@
             btnAppointment.TabIndex = 22;
             btnAppointment.Text = "Appointments";
             btnAppointment.TextAlign = ContentAlignment.MiddleCenter;
-            btnAppointment.Click += label1_Click;
+            btnAppointment.Click += btnAppointment_Click;
             // 
             // btnCustomers
             // 
@@ -144,6 +157,7 @@
             apptDel.TabIndex = 41;
             apptDel.Text = "Delete Appointment";
             apptDel.UseVisualStyleBackColor = false;
+            apptDel.Click += apptDel_Click;
             // 
             // btnAppointmentView
             // 
@@ -269,19 +283,6 @@
             lblGroomyCustomers.Text = "Groomy Customers";
             lblGroomyCustomers.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // btnServices
-            // 
-            btnServices.BackColor = Color.FromArgb(29, 129, 175);
-            btnServices.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnServices.ForeColor = Color.White;
-            btnServices.Location = new Point(0, 207);
-            btnServices.Name = "btnServices";
-            btnServices.Size = new Size(216, 44);
-            btnServices.TabIndex = 23;
-            btnServices.Text = "Services";
-            btnServices.TextAlign = ContentAlignment.MiddleCenter;
-            btnServices.Click += btnServices_Click;
-            // 
             // panelServices
             // 
             panelServices.Controls.Add(btnServiceView);
@@ -304,6 +305,7 @@
             btnServiceView.TabIndex = 38;
             btnServiceView.Text = "View Service";
             btnServiceView.UseVisualStyleBackColor = false;
+            btnServiceView.Click += btnServiceView_Click;
             // 
             // dataServices
             // 
@@ -323,6 +325,7 @@
             btnServiceDelete.TabIndex = 35;
             btnServiceDelete.Text = "Delete Service";
             btnServiceDelete.UseVisualStyleBackColor = false;
+            btnServiceDelete.Click += btnServiceDelete_Click;
             // 
             // btnServiceNew
             // 
@@ -334,6 +337,7 @@
             btnServiceNew.TabIndex = 22;
             btnServiceNew.Text = "New Service";
             btnServiceNew.UseVisualStyleBackColor = false;
+            btnServiceNew.Click += btnServiceNew_Click;
             // 
             // lblServices
             // 

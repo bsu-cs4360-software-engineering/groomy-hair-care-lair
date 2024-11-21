@@ -97,6 +97,7 @@ namespace Groomy.Customers
             {
                 customers.Add(ReadCustomer(customerID));
             }
+            Debug.WriteLine($"{customers.Count}");
             return customers;
         }
         public string GetCustomerIDByEmail(string email)

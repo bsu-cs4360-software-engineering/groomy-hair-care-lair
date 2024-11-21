@@ -218,6 +218,19 @@ namespace Groomy.Utilities
             }
             return null;
         }
+        public List<Dictionary<string, string>> LoadJsonsFromDB(string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            var jsons = new List<Dictionary<string, string>>();
+            foreach (var item in database)
+            {
+                if (!item.ContainsKey(isDeletedKey))
+                {
+                    jsons.Add(item);
+                }
+            }
+            return jsons;
+        }
         public void AddObjectsToDB(IGenericObject genericObject)
         {
             var objectKey = genericObject.GetKey();
