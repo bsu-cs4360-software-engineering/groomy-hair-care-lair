@@ -14,7 +14,7 @@ namespace Groomy.Customers
         {
 
             this.ms = ms;
-            dbManager = ms.dbm;
+            dbManager = ms.dbm;  
             userAuth = ms.ua;
         }
         public void CreateCustomer(Customer customer)

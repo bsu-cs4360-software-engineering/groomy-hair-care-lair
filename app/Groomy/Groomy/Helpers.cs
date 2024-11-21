@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Data;
+using System.Security.Cryptography;
 using System.Text;
 
 
@@ -53,5 +54,62 @@ public class Helpers
     public static bool messageBoxConfirm(string message)
     {
         return MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+    }
+    public static void activatePanel(Panel panel, Size size, Point location)
+    {
+        panel.Size = size;
+        panel.Location = location;
+        panel.BringToFront();
+    }
+    public static DataTable ConvertToDataTable(List<Dictionary<string, string>> items)
+    {
+        DataTable table = new DataTable();
+
+        if (items.Count == 0)
+            return table;
+        if (items[0] != null)
+        {
+            foreach (var key in items[0].Keys)
+            {
+                table.Columns.Add(key);
+            }
+        } else
+        {
+            return table;
+        }
+        foreach (var item in items)
+        {
+            var row = table.NewRow();
+            foreach (var key in item.Keys)
+            {
+                row[key] = item[key];
+            }
+            table.Rows.Add(row);
+        }
+
+        return table;
+    }
+    public static string GetFieldFromSelection(string field, DataGridView dgv)
+    {
+        string val = null;
+
+        if (dgv.SelectedRows.Count > 0)
+        {
+            var selectedRow = dgv.SelectedRows[0];
+            if (selectedRow.Cells[field].Value != null)
+            {
+                val = selectedRow.Cells[field].Value.ToString();
+            }
+        }
+        else if (dgv.SelectedCells.Count > 0)
+        {
+            var selectedCell = dgv.SelectedCells[0];
+            var selectedRow = dgv.Rows[selectedCell.RowIndex];
+            if (selectedRow.Cells[field].Value != null)
+            {
+                val = selectedRow.Cells[field].Value.ToString();
+            }
+        }
+        return val;
     }
 }

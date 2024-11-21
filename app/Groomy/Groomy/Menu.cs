@@ -7,16 +7,9 @@ namespace Groomy
     public partial class Menu : Form
     {
         ManagerSingleton ms;
+        Size panelWH = new Size(520, 550);
+        Point panelLoc = new Point(227, 9);
         public bool editing;
-
-        private void activatePanel(Panel panel)
-        {
-            var panelWH = new Size(520, 550);
-            var panelLoc = new Point(227, 9);
-            panel.Size = panelWH;
-            panel.Location = panelLoc;
-            panel.BringToFront();
-        }
         public Menu()
         {
             InitializeComponent();
@@ -24,20 +17,21 @@ namespace Groomy
         }
         private void onLoad(object sender, EventArgs e)
         {
+            this.Size = new Size(750, 550);
             ms = ManagerSingleton.GetInstance();
             editing = false; // Use the class-level 'editing' variable
-            activatePanel(panelWelcome);
+            Helpers.activatePanel(panelWelcome, panelWH, panelLoc);
             loadAppointmentData();
             loadCustomerData();
         }
         private void btnCustomers_Click(object sender, EventArgs e)
         {
-            activatePanel(panelCustomers);
+            Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
         }
         private void btnWelcome_Click(object sender, EventArgs e)
         {
             //windowFx.OpenForm("Groomy.Login", false);
-            activatePanel(panelWelcome);
+            Helpers.activatePanel(panelWelcome, panelWH, panelLoc);
         }
         private void makeCustomerIDVisible()
         {
@@ -51,15 +45,15 @@ namespace Groomy
         {
             makeCustomerIDInvisible();
             clearCustomerForms();
-            activatePanel(panelNewCustomer);
+            Helpers.activatePanel(panelNewCustomer, panelWH, panelLoc);
         }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
-            activatePanel(panelCustomers);
+            Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
         }
         private void btnCustomerEdit_Click(object sender, EventArgs e)
         {
-            var email = GetFieldFromSelection("Email", dataGridView1);
+            var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
             if (!string.IsNullOrEmpty(email))
             {
                 var customerID = ms.cDBS.GetCustomerIDByEmail(email);
@@ -79,36 +73,17 @@ namespace Groomy
                 editing = true;
 
                 makeCustomerIDVisible();
-                activatePanel(panelNewCustomer);
+                Helpers.activatePanel(panelNewCustomer, panelWH, panelLoc);
             }
             else
             {
                 Helpers.messageBoxError("No customer selected. Please select a customer to edit.");
             }
         }
-
-        private string GetFieldFromSelection(string field, DataGridView dgv)
+        public void reloadData()
         {
-            string val = null;
-
-            if (dgv.SelectedRows.Count > 0)
-            {
-                var selectedRow = dgv.SelectedRows[0];
-                if (selectedRow.Cells[field].Value != null)
-                {
-                    val = selectedRow.Cells[field].Value.ToString();
-                }
-            }
-            else if (dgv.SelectedCells.Count > 0)
-            {
-                var selectedCell = dgv.SelectedCells[0];
-                var selectedRow = dgv.Rows[selectedCell.RowIndex];
-                if (selectedRow.Cells[field].Value != null)
-                {
-                    val = selectedRow.Cells[field].Value.ToString();
-                }
-            }
-            return val;
+            loadAppointmentData();
+            loadCustomerData();
         }
         private void btnSaveCustomer_Click(object sender, EventArgs e)
         {
@@ -139,7 +114,7 @@ namespace Groomy
                 };
 
                 loadCustomerData();
-                activatePanel(panelCustomers);
+                Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
             }
         }
         private void loadCustomerData()
@@ -215,7 +190,7 @@ namespace Groomy
         }
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
-            var email = GetFieldFromSelection("Email", dataGridView1);
+            var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
             var customerID = Helpers.GenerateSHA256Hash(email);
 
             if (!string.IsNullOrEmpty(email))
@@ -287,7 +262,7 @@ namespace Groomy
         {
             makeAppointmentIDInvisible();
             clearAppointmentForms();
-            activatePanel(apptCreEdit);
+            Helpers.activatePanel(apptCreEdit, panelWH, panelLoc);
         }
         private void btnSaveAppointment_Click(object sender, EventArgs e)
         {
@@ -323,12 +298,12 @@ namespace Groomy
                 }
 
                 loadAppointmentData();
-                activatePanel(apptPanel);
+                Helpers.activatePanel(apptPanel, panelWH, panelLoc);
             }
         }
         private void btnEditAppointment_Click(object sender, EventArgs e)
         {
-            var appointmentID = GetFieldFromSelection("AppointmentID", apptView);
+            var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", apptView);
 
             var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID);
             var noteID = ms.dbrs.GetNotesFromAppointmentID(appointmentID);
@@ -352,7 +327,7 @@ namespace Groomy
             txtApptNotes.Text = editedNotes["Payload"].ToString();
 
             makeAppointmentIDVisible();
-            activatePanel(apptCreEdit);
+            Helpers.activatePanel(apptCreEdit, panelWH, panelLoc);
         }
 
         private void makeAppointmentIDVisible()
@@ -366,11 +341,11 @@ namespace Groomy
         private void label1_Click(object sender, EventArgs e)
         {
             loadAppointmentData();
-            activatePanel(apptPanel);
+            Helpers.activatePanel(apptPanel, panelWH, panelLoc);
         }
         private void apptBack_Click(object sender, EventArgs e)
         {
-            activatePanel(apptPanel);
+            Helpers.activatePanel(apptPanel, panelWH, panelLoc);
         }
         private void label1_Click_1(object sender, EventArgs e)
         {
@@ -378,7 +353,7 @@ namespace Groomy
         }
         private void apptDel_Click(object sender, EventArgs e)
         {
-            var appointmentID = GetFieldFromSelection("AppointmentID", apptView);
+            var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", apptView);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
                 ms.aDBS.SoftDeleteAppointment(appointmentID);
@@ -390,12 +365,12 @@ namespace Groomy
 
         private void btnCustomerView_Click_1(object sender, EventArgs e)
         {
-            var email = GetFieldFromSelection("Email", dataGridView1);
+            var email = Helpers.GetFieldFromSelection("Email", dataGridView1);
             if (!string.IsNullOrEmpty(email))
             {
                 var customerID = ms.cDBS.GetCustomerIDByEmail(email);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
-                Form customerView = new CustomerView(customerData);
+                Form customerView = new CustomerView(customerData, this);
                 customerView.Show();
             }
             else

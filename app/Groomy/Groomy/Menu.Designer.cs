@@ -61,9 +61,9 @@
             label9 = new Label();
             panelWelcome = new Panel();
             panelCustomers = new Panel();
+            btnCustomerView = new Button();
             dataGridView1 = new DataGridView();
             btnDelete = new Button();
-            btnEdit = new Button();
             btnNew = new Button();
             lblGroomyCustomers = new Label();
             panelNewCustomer = new Panel();
@@ -165,7 +165,7 @@
             apptCreEdit.Controls.Add(apptSave);
             apptCreEdit.Controls.Add(apptBack);
             apptCreEdit.Controls.Add(label3);
-            apptCreEdit.Location = new Point(792, 21);
+            apptCreEdit.Location = new Point(1281, 577);
             apptCreEdit.Name = "apptCreEdit";
             apptCreEdit.Size = new Size(528, 550);
             apptCreEdit.TabIndex = 43;
@@ -351,7 +351,7 @@
             apptPanel.Controls.Add(apptEdit);
             apptPanel.Controls.Add(apptNew);
             apptPanel.Controls.Add(label2);
-            apptPanel.Location = new Point(226, 12);
+            apptPanel.Location = new Point(1281, 18);
             apptPanel.Name = "apptPanel";
             apptPanel.Size = new Size(521, 553);
             apptPanel.TabIndex = 38;
@@ -434,15 +434,27 @@
             // 
             // panelCustomers
             // 
+            panelCustomers.Controls.Add(btnCustomerView);
             panelCustomers.Controls.Add(dataGridView1);
             panelCustomers.Controls.Add(btnDelete);
-            panelCustomers.Controls.Add(btnEdit);
             panelCustomers.Controls.Add(btnNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
-            panelCustomers.Location = new Point(821, 21);
+            panelCustomers.Location = new Point(755, 18);
             panelCustomers.Name = "panelCustomers";
             panelCustomers.Size = new Size(520, 553);
             panelCustomers.TabIndex = 19;
+            // 
+            // btnCustomerView
+            // 
+            btnCustomerView.BackColor = Color.FromArgb(21, 96, 130);
+            btnCustomerView.ForeColor = Color.White;
+            btnCustomerView.Location = new Point(207, 83);
+            btnCustomerView.Name = "btnCustomerView";
+            btnCustomerView.Size = new Size(103, 23);
+            btnCustomerView.TabIndex = 38;
+            btnCustomerView.Text = "View Customer";
+            btnCustomerView.UseVisualStyleBackColor = false;
+            btnCustomerView.Click += btnCustomerView_Click_1;
             // 
             // dataGridView1
             // 
@@ -456,7 +468,7 @@
             // 
             btnDelete.BackColor = Color.FromArgb(21, 96, 130);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(320, 87);
+            btnDelete.Location = new Point(316, 83);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(103, 23);
             btnDelete.TabIndex = 35;
@@ -464,23 +476,11 @@
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDeleteCustomer_Click;
             // 
-            // btnEdit
-            // 
-            btnEdit.BackColor = Color.FromArgb(21, 96, 130);
-            btnEdit.ForeColor = Color.White;
-            btnEdit.Location = new Point(211, 87);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(103, 23);
-            btnEdit.TabIndex = 34;
-            btnEdit.Text = "Edit Customer";
-            btnEdit.UseVisualStyleBackColor = false;
-            btnEdit.Click += btnCustomerEdit_Click;
-            // 
             // btnNew
             // 
             btnNew.BackColor = Color.FromArgb(21, 96, 130);
             btnNew.ForeColor = Color.White;
-            btnNew.Location = new Point(102, 87);
+            btnNew.Location = new Point(98, 83);
             btnNew.Name = "btnNew";
             btnNew.Size = new Size(103, 23);
             btnNew.TabIndex = 22;
@@ -559,7 +559,7 @@
             // 
             btnBack.BackColor = Color.FromArgb(21, 96, 130);
             btnBack.ForeColor = Color.White;
-            btnBack.Location = new Point(157, 74);
+            btnBack.Location = new Point(157, 72);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(103, 23);
             btnBack.TabIndex = 52;
@@ -681,7 +681,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1416, 565);
+            ClientSize = new Size(1924, 1061);
             Controls.Add(apptPanel);
             Controls.Add(apptCreEdit);
             Controls.Add(panelCustomers);
@@ -689,9 +689,10 @@
             Controls.Add(panelWelcome);
             Controls.Add(panel1);
             MaximizeBox = false;
-            MaximumSize = new Size(2000, 604);
+            MaximumSize = new Size(9999, 9999);
             MinimumSize = new Size(100, 604);
             Name = "Menu";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Groomy";
             Load += Menu_Load;
             panel1.ResumeLayout(false);
@@ -721,7 +722,6 @@
         private Button btnNew;
         private Label lblGroomyCustomers;
         private Button btnDelete;
-        private Button btnEdit;
         private Panel panelNewCustomer;
         private TextBox txtCustomerNotes;
         private Label lblNotes;
@@ -770,5 +770,6 @@
         private Label lblAppointmentID;
         private Label fieldCustomerID;
         private Label lblCustomerID;
+        private Button btnCustomerView;
     }
 }
