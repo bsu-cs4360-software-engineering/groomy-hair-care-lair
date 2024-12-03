@@ -1,4 +1,4 @@
-﻿namespace Groomy.Tests
+﻿namespace GroomyTests.Users
 {
     [TestClass()]
     public class UserTests

@@ -9,7 +9,7 @@ using Groomy.Utilities;
 using Groomy.Users;
 using Moq;
 
-namespace Groomy.Customers.Tests
+namespace GroomyTests.Customers
 {
     [TestClass()]
     public class CustomerDBServiceTests
@@ -31,10 +31,10 @@ namespace Groomy.Customers.Tests
             var dbm = new DatabaseManager(mockFileService.Object);
             var userAuth = new UserAuth();
             //create new user
-            var currentUser = new Users.User("testFirst", "testLast", "testEmail", "testPassword");
+            var currentUser = new User("testFirst", "testLast", "testEmail", "testPassword");
             //get expected userID and user file path
             var expectedUserID = currentUser.GetKey();
-            var expectedUserFilePath = Users.User.FilePaths["UserData"];
+            var expectedUserFilePath = User.FilePaths["UserData"];
             //set current userAuth user to new user
             userAuth.setUser(currentUser);
             //create new customerDBService
