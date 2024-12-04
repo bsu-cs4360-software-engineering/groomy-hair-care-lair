@@ -52,8 +52,8 @@ namespace Groomy
             {
                 if (IsCorrectPassword(userID, hashedPassword))
                 {
-                    var userData = dbM.LoadJsonFromDB(userID, User.FilePaths["UserData"]);
-                    var passwordData = dbM.LoadJsonFromDB(userID, User.FilePaths["PasswordData"]);
+                    var userData = dbM.ReadObjectFromDB(userID, User.FilePaths["UserData"]);
+                    var passwordData = dbM.ReadObjectFromDB(userID, User.FilePaths["PasswordData"]);
                     User user = new User().createWithHashedPassword(userData["FirstName"].ToString(), userData["LastName"].ToString(), userData["Email"].ToString(), hashedPassword);
                     UserAuth.GetInstance().setUser(user);
 

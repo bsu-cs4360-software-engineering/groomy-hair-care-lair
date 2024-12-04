@@ -28,20 +28,20 @@ namespace Groomy.Users
         }
         public void CreateUser(User user)
         {
-            dbManager.AddObjectsToDB(user);
+            dbManager.CreateObjectInDB(user);
         }
         public Dictionary<string, string> ReadUserData(string userID)
         {
-            return dbManager.LoadJsonFromDB(userID, User.FilePaths["UserData"]);
+            return dbManager.ReadObjectFromDB(userID, User.FilePaths["UserData"]);
         }
         public Dictionary<string, string> ReadPasswordData(string userID)
         {
-            return dbManager.LoadJsonFromDB(userID, User.FilePaths["PasswordData"]);
+            return dbManager.ReadObjectFromDB(userID, User.FilePaths["PasswordData"]);
         }
         public void DeleteUser(string userID)
         {
-            dbManager.RemoveObjectFromDB(userID, User.FilePaths["UserData"]);
-            dbManager.RemoveObjectFromDB(userID, User.FilePaths["PasswordData"]);
+            dbManager.DeleteObjectFromDB(userID, User.FilePaths["UserData"]);
+            dbManager.DeleteObjectFromDB(userID, User.FilePaths["PasswordData"]);
         }
     }
 }

@@ -57,123 +57,6 @@ namespace Groomy.Utilities
             }
             return _instance;
         }
-
-        private List<Dictionary<string, string>> LoadRelationships(string filePath)
-        {
-            try
-            {
-                if (!_fileService.Exists(filePath))
-                {
-                    return new List<Dictionary<string, string>>();
-                }
-
-                string JsonList = _fileService.ReadAllText(filePath);
-                List<Dictionary<string, string>> serializedList = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(JsonList);
-                return serializedList;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error occurred while loading database: {ex.Message}");
-                return new List<Dictionary<string, string>>();
-            }
-        }
-        private void SaveRelationships(List<Dictionary<string, string>> relationships, string filePath)
-        {
-            try
-            {
-                string json = JsonSerializer.Serialize(relationships, new JsonSerializerOptions { WriteIndented = true });
-                _fileService.WriteAllText(filePath, json);
-                Debug.WriteLine($"Data saved to {filePath} successfully.");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
-            }
-        }
-        public List<Dictionary<string, string>> GetRelationshipsByID(string id, string filePath)
-        {
-            var relationships = LoadRelationships(filePath);
-            var matchingRelationships = new List<Dictionary<string, string>>();
-            foreach (var relationship in relationships)
-            {
-                if (relationship.ContainsValue(id) && !relationship.ContainsKey(isDeletedKey))
-                {
-                    matchingRelationships.Add(relationship);
-                }
-            }
-            return matchingRelationships;
-        }
-        public void AddRelationshipToDB(IRelationship relationship)
-        {
-            var relationshipFilePath = relationship.GetFilePath();
-            var previousRelationshipData = LoadRelationships(relationshipFilePath);
-            Dictionary<string, string> IDs = relationship.GetIDs();
-
-            // Check if the relationship already exists to avoid duplicates
-            if (!previousRelationshipData.Any(r => r.SequenceEqual(IDs)))
-            {
-                previousRelationshipData.Add(IDs);
-                SaveRelationships(previousRelationshipData, relationshipFilePath);
-            }
-        }
-        public void UpdateRelationshipInDB(IRelationship relationship)
-        {
-            var relationshipFilePath = relationship.GetFilePath();
-            var allRelationshipData = LoadRelationships(relationshipFilePath);
-            Dictionary<string, string> IDs = relationship.GetIDs();
-
-            if (IDs.Count < 2)
-            {
-                throw new ArgumentException("IDs dictionary must contain at least two values.");
-            }
-
-            var id_to_modify = IDs.ElementAt(0).Value;
-            var id_to_keep = IDs.ElementAt(1).Value;
-
-            // Find the relationship item containing the value id_to_keep
-            var relationshipToModify = allRelationshipData.FirstOrDefault(r => r.ContainsValue(id_to_keep));
-
-            if (relationshipToModify != null)
-            {
-                foreach (var key in relationshipToModify.Keys.ToList())
-                {
-                    if (relationshipToModify[key] != id_to_keep)
-                    {
-                        relationshipToModify[key] = id_to_modify;
-                    }
-                }
-                SaveRelationships(allRelationshipData, relationshipFilePath);
-            }
-        }
-        public void DeleteRelationshipFromDB(IRelationship relationship)
-        {
-            var relationshipFilePath = relationship.GetFilePath();
-            var previousRelationshipData = LoadRelationships(relationshipFilePath);
-            Dictionary<string, string> IDs = relationship.GetIDs();
-
-            // Find the relationship to remove
-            var relationshipToRemove = previousRelationshipData.FirstOrDefault(r => r.SequenceEqual(IDs));
-            if (relationshipToRemove != null)
-            {
-                previousRelationshipData.Remove(relationshipToRemove);
-                SaveRelationships(previousRelationshipData, relationshipFilePath);
-            }
-        }
-        public void SoftDeleteRelationshipFromDB(IRelationship relationship)
-        {
-            var relationshipFilePath = relationship.GetFilePath();
-            var previousRelationshipData = LoadRelationships(relationshipFilePath);
-            Dictionary<string, string> IDs = relationship.GetIDs();
-
-            // Find the relationship to soft delete
-            var relationshipToSoftDelete = previousRelationshipData.FirstOrDefault(r => r.SequenceEqual(IDs));
-            if (relationshipToSoftDelete != null)
-            {
-                relationshipToSoftDelete[isDeletedKey] = "true";
-                SaveRelationships(previousRelationshipData, relationshipFilePath);
-            }
-        }
-
         private List<Dictionary<string, string>> LoadDatabase(string filePath)
         {
             try
@@ -206,18 +89,6 @@ namespace Groomy.Utilities
                 Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
             }
         }
-        public Dictionary<string, string> LoadJsonFromDB(string ID, string filePath)
-        {
-            var database = LoadDatabase(filePath);
-            foreach (var item in database)
-            {
-                if (item.ContainsValue(ID) && !item.ContainsKey(isDeletedKey))
-                {
-                    return item;
-                }
-            }
-            return null;
-        }
         public List<Dictionary<string, string>> LoadJsonsFromDB(string filePath)
         {
             var database = LoadDatabase(filePath);
@@ -231,7 +102,7 @@ namespace Groomy.Utilities
             }
             return jsons;
         }
-        public void AddObjectsToDB(IGenericObject genericObject)
+        public void CreateObjectInDB(IGenericObject genericObject)
         {
             var objectKey = genericObject.GetKey();
             var objectFields = genericObject.GetFields();
@@ -253,7 +124,19 @@ namespace Groomy.Utilities
                 SaveDatabase(database, filePath);
             }
         }
-        internal void UpdateObjectInDB(string objectID, Dictionary<string, string> data, string filePath)
+        public Dictionary<string, string> ReadObjectFromDB(string ID, string filePath)
+        {
+            var database = LoadDatabase(filePath);
+            foreach (var item in database)
+            {
+                if (item.ContainsValue(ID) && !item.ContainsKey(isDeletedKey))
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+        public void UpdateObjectInDB(string objectID, Dictionary<string, string> data, string filePath)
         {
             var database = LoadDatabase(filePath);
             foreach (var item in database)
@@ -269,7 +152,7 @@ namespace Groomy.Utilities
                 }
             }
         }
-        public void RemoveObjectFromDB(string key, string filePath)
+        public void DeleteObjectFromDB(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
             foreach (var item in database)
@@ -296,7 +179,6 @@ namespace Groomy.Utilities
                 }
             }
         }
-
         public bool KeyExists(string key, string filePath)
         {
             var database = LoadDatabase(filePath);
@@ -309,7 +191,122 @@ namespace Groomy.Utilities
             }
             return false;
         }
-        public List<Dictionary<string, string>> GetJsonsByKeyValue(string key, string value, string filePath)
+        private List<Dictionary<string, string>> LoadRelationships(string filePath)
+        {
+            try
+            {
+                if (!_fileService.Exists(filePath))
+                {
+                    return new List<Dictionary<string, string>>();
+                }
+
+                string JsonList = _fileService.ReadAllText(filePath);
+                List<Dictionary<string, string>> serializedList = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(JsonList);
+                return serializedList;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error occurred while loading database: {ex.Message}");
+                return new List<Dictionary<string, string>>();
+            }
+        }
+        private void SaveRelationships(List<Dictionary<string, string>> relationships, string filePath)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(relationships, new JsonSerializerOptions { WriteIndented = true });
+                _fileService.WriteAllText(filePath, json);
+                Debug.WriteLine($"Data saved to {filePath} successfully.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error occurred while saving database: {ex.Message}");
+            }
+        }
+        public void CreateRelationshipEntry(IRelationship relationship)
+        {
+            var relationshipFilePath = relationship.GetFilePath();
+            var previousRelationshipData = LoadRelationships(relationshipFilePath);
+            Dictionary<string, string> IDs = relationship.GetIDs();
+
+            // Check if the relationship already exists to avoid duplicates
+            if (!previousRelationshipData.Any(r => r.SequenceEqual(IDs)))
+            {
+                previousRelationshipData.Add(IDs);
+                SaveRelationships(previousRelationshipData, relationshipFilePath);
+            }
+        }
+        public List<Dictionary<string, string>> ReadRelationshipEntry(string id, string filePath)
+        {
+            var relationships = LoadRelationships(filePath);
+            var matchingRelationships = new List<Dictionary<string, string>>();
+            foreach (var relationship in relationships)
+            {
+                if (relationship.ContainsValue(id) && !relationship.ContainsKey(isDeletedKey))
+                {
+                    matchingRelationships.Add(relationship);
+                }
+            }
+            return matchingRelationships;
+        }
+        public void UpdateRelationshipEntry(IRelationship relationship)
+        {
+            var relationshipFilePath = relationship.GetFilePath();
+            var allRelationshipData = LoadRelationships(relationshipFilePath);
+            Dictionary<string, string> IDs = relationship.GetIDs();
+
+            if (IDs.Count < 2)
+            {
+                throw new ArgumentException("IDs dictionary must contain at least two values.");
+            }
+
+            var id_to_modify = IDs.ElementAt(0).Value;
+            var id_to_keep = IDs.ElementAt(1).Value;
+
+            // Find the relationship item containing the value id_to_keep
+            var relationshipToModify = allRelationshipData.FirstOrDefault(r => r.ContainsValue(id_to_keep));
+
+            if (relationshipToModify != null)
+            {
+                foreach (var key in relationshipToModify.Keys.ToList())
+                {
+                    if (relationshipToModify[key] != id_to_keep)
+                    {
+                        relationshipToModify[key] = id_to_modify;
+                    }
+                }
+                SaveRelationships(allRelationshipData, relationshipFilePath);
+            }
+        }
+        public void DeleteRelationshipEntry(IRelationship relationship)
+        {
+            var relationshipFilePath = relationship.GetFilePath();
+            var previousRelationshipData = LoadRelationships(relationshipFilePath);
+            Dictionary<string, string> IDs = relationship.GetIDs();
+
+            // Find the relationship to remove
+            var relationshipToRemove = previousRelationshipData.FirstOrDefault(r => r.SequenceEqual(IDs));
+            if (relationshipToRemove != null)
+            {
+                previousRelationshipData.Remove(relationshipToRemove);
+                SaveRelationships(previousRelationshipData, relationshipFilePath);
+            }
+        }
+        public void SoftDeleteRelationshipEntry(IRelationship relationship)
+        {
+            var relationshipFilePath = relationship.GetFilePath();
+            var previousRelationshipData = LoadRelationships(relationshipFilePath);
+            Dictionary<string, string> IDs = relationship.GetIDs();
+
+            // Find the relationship to soft delete
+            var relationshipToSoftDelete = previousRelationshipData.FirstOrDefault(r => r.SequenceEqual(IDs));
+            if (relationshipToSoftDelete != null)
+            {
+                relationshipToSoftDelete[isDeletedKey] = "true";
+                SaveRelationships(previousRelationshipData, relationshipFilePath);
+            }
+        }
+        public List<Dictionary<string, string>> GetObjectsByKeyValue(string key, string value, string filePath)
         {
             var Jsons = new List<Dictionary<string, string>>();
             var database = LoadDatabase(filePath);
@@ -335,50 +332,6 @@ namespace Groomy.Utilities
             }
 
             return Jsons;
-        }
-        public List<string> GetValuesFromJsons(string key, List<Dictionary<string, string>> jsons)
-        {
-            var items = new List<string>();
-            foreach (var item in jsons)
-            {
-                if (item.ContainsKey(key))
-                {
-                    items.Add(item[key]);
-                }
-            }
-            return items;
-        }
-        public DataTable GetDataTableSpecificKeys(string filePath, List<string> keys)
-        {
-            DataTable dataTable = new DataTable();
-
-            var data = LoadDatabase(filePath);
-
-            if (data.Count == 0)
-                return dataTable;
-
-            // Add columns
-            foreach (var key in keys)
-            {
-                dataTable.Columns.Add(key);
-            }
-
-            // Add rows
-            foreach (var item in data)
-            {
-                if (item.ContainsKey(isDeletedKey))
-                {
-                    continue;
-                }
-                DataRow row = dataTable.NewRow();
-                foreach (var key in keys)
-                {
-                    row[key] = item[key];
-                }
-                dataTable.Rows.Add(row);
-            }
-
-            return dataTable;
         }
     }
 }

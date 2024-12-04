@@ -7,7 +7,7 @@ using Groomy.Utilities;
 
 namespace Groomy.Customers
 {
-    internal class CustomerDBService
+    public class CustomerDBService
     {
         private DatabaseManager dbManager;
         private UserAuth userAuth;
@@ -19,14 +19,20 @@ namespace Groomy.Customers
             dbManager = ms.dbm;  
             userAuth = ms.ua;
         }
+        public CustomerDBService(DatabaseManager dbManager, UserAuth ua)
+        {
+            this.dbManager = dbManager;
+            userAuth = ms.ua;
+        }
+
         public void CreateCustomer(Customer customer)
         {
-            dbManager.AddObjectsToDB(customer);
-            dbManager.AddRelationshipToDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customer.GetKey()));
+            dbManager.CreateObjectInDB(customer);
+            dbManager.CreateRelationshipEntry(new Relationships.User_Customer_Relationship(userAuth.getID(), customer.GetKey()));
         }
         public Dictionary<string, string> ReadCustomer(string customerID)
         {
-            return dbManager.LoadJsonFromDB(customerID, Customer.FilePaths["CustomerData"]);
+            return dbManager.ReadObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
         }
         public void UpdateCustomerData(Customer customer)
         {
@@ -35,18 +41,18 @@ namespace Groomy.Customers
             //update customer
             dbManager.UpdateObjectInDB(customerID, customerData, Customer.FilePaths["CustomerData"]);
             //update relationship
-            dbManager.UpdateRelationshipInDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customerID));
+            dbManager.UpdateRelationshipEntry(new Relationships.User_Customer_Relationship(userAuth.getID(), customerID));
         }
         public void DeleteCustomer(string customerID)
         {
-            dbManager.RemoveObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
-            dbManager.DeleteRelationshipFromDB(new Relationships.User_Customer_Relationship(userAuth.getID(), customerID));
+            dbManager.DeleteObjectFromDB(customerID, Customer.FilePaths["CustomerData"]);
+            dbManager.DeleteRelationshipEntry(new Relationships.User_Customer_Relationship(userAuth.getID(), customerID));
         }
         public void SoftDeleteCustomer(string customerID)
         {
             dbManager.SoftDeleteObjectInDB(customerID, Customer.FilePaths["CustomerData"]);
             var relationship = new Relationships.User_Customer_Relationship(userAuth.getID(), customerID);
-            dbManager.SoftDeleteRelationshipFromDB(relationship);
+            dbManager.SoftDeleteRelationshipEntry(relationship);
         }
         public List<Dictionary<string, string>> GetCustomers()
         {
@@ -62,21 +68,21 @@ namespace Groomy.Customers
         }
         public string GetCustomerIDByEmail(string email)
         {
-            var customers = dbManager.GetJsonsByKeyValue("Email", email, Customer.FilePaths["CustomerData"]);
+            var customers = dbManager.GetObjectsByKeyValue("Email", email, Customer.FilePaths["CustomerData"]);
 
             if (customers == null || customers.Count == 0)
             {
                 return null;
             }
 
-            var customerIDs = dbManager.GetValuesFromJsons("CustomerID", customers);
+            var customerIDs = Helpers.ExtractValuesFromJson("CustomerID", customers);
 
             return customerIDs?.FirstOrDefault();
         }
         public string GetCustomerIDByFirstLast((string, string) name)
         {
-            var customers = dbManager.GetJsonsByKeyValue("FirstName", name.Item1, Customer.FilePaths["CustomerData"]);
-            var customerIDs = dbManager.GetValuesFromJsons("CustomerID", customers);
+            var customers = dbManager.GetObjectsByKeyValue("FirstName", name.Item1, Customer.FilePaths["CustomerData"]);
+            var customerIDs = Helpers.ExtractValuesFromJson("CustomerID", customers);
 
             foreach (var customerID in customerIDs)
             {

@@ -1,6 +1,6 @@
 ﻿namespace Groomy.Users
 {
-    internal class UserAuth
+    public class UserAuth
     {
         private static readonly object _lock = new object(); // Lock for thread safety
         private static UserAuth _instance;

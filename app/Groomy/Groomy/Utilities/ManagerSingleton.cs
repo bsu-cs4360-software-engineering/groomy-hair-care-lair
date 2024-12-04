@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Groomy.Utilities
 {
-    internal class ManagerSingleton
+    public class ManagerSingleton
     {
         private static ManagerSingleton instance;
         public FileService fs;
@@ -23,7 +23,7 @@ namespace Groomy.Utilities
         public NotesDBService nDBS;
         public ServiceDBService sDBS;
 
-        private ManagerSingleton()
+        public ManagerSingleton()
         {
             fs = new FileService();
             dbm = DatabaseManager.GetInstance(fs);

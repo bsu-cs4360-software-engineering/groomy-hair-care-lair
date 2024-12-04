@@ -6,7 +6,7 @@
         public string GetKey();
         public Dictionary<string, string> GetDBFilePaths();
     }
-    internal class Customer : IGenericObject
+    public class Customer : IGenericObject
     {
         private string firstName;
         private string lastName;

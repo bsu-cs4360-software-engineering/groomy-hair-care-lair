@@ -2,7 +2,7 @@
 
 namespace Groomy.Appointments
 {
-    internal class Appointment : IGenericObject
+    public class Appointment : IGenericObject
     {
         private string title;
         private string description;

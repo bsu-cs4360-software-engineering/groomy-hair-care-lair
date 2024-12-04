@@ -112,4 +112,16 @@ public class Helpers
         }
         return val;
     }
+    public static List<string> ExtractValuesFromJson(string key, List<Dictionary<string, string>> jsons)
+    {
+        var items = new List<string>();
+        foreach (var item in jsons)
+        {
+            if (item.ContainsKey(key))
+            {
+                items.Add(item[key]);
+            }
+        }
+        return items;
+    }
 }

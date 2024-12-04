@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Groomy.Services
 {
-    internal class Service : IGenericObject
+    public class Service : IGenericObject
     {
         public string serviceID;
         public string serviceName;

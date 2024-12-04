@@ -1,10 +1,9 @@
 ﻿namespace Groomy.Tests
 {
-    /*
     [TestClass()]
-    /*
     public class UserTests
     {
+        /*
         [TestMethod()]
         public void User_is_User()
         {
@@ -13,12 +12,11 @@
             string setLast = "last";
             string setEmail = "email";
             string setPassword = "password";
-            var database = UserDatabase.Instance(new FileService());
 
-            User newUser = new User(setFirst, setLast, setEmail, setPassword, database);
+            var newUser = new Users.User(setFirst, setLast, setEmail, setPassword);
 
             // Assert
-            Assert.IsInstanceOfType(newUser, typeof(User));
+            Assert.IsInstanceOfType(newUser, typeof(Users.User));
         }
         [TestMethod()]
         public void User_SetProperties()
@@ -28,9 +26,9 @@
             string setLast = "last";
             string setEmail = "email";
             string setPassword = "password";
-            var database = UserDatabase.Instance(new FileService());
+            string hashedPassword = Helpers.GenerateSHA256Hash(setPassword);
 
-            User newUser = new User(setFirst, setLast, setEmail, setPassword, database);
+            var newUser = new Users.User(setFirst, setLast, setEmail, setPassword);
 
             // Assert
             Assert.AreEqual(setFirst, newUser.FirstName);
@@ -40,7 +38,6 @@
             Assert.AreEqual(Helpers.GenerateSHA256Hash(setPassword), newUser.HashedPassword);
             Assert.AreEqual(database, newUser.Database);
         }
+        */
     }
-    */
-
 }

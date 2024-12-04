@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Groomy.Notes
 {
-    internal class Note : IGenericObject
+    public class Note : IGenericObject
     {
         public string noteID;
         public string title;

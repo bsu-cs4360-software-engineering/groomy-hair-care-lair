@@ -4,7 +4,7 @@ using Groomy.Utilities;
 
 namespace Groomy.Appointments
 {
-    internal class AppointmentDBService
+    public class AppointmentDBService
     {
         ManagerSingleton ms;
 
@@ -14,12 +14,12 @@ namespace Groomy.Appointments
         }
         public void CreateAppointment(Appointment appointment, string customerID)
         {
-            ms.dbm.AddObjectsToDB(appointment);
-            ms.dbm.AddRelationshipToDB(new Relationships.Customer_Appointment_Relationship(customerID, appointment.GetKey()));
+            ms.dbm.CreateObjectInDB(appointment);
+            ms.dbm.CreateRelationshipEntry(new Relationships.Customer_Appointment_Relationship(customerID, appointment.GetKey()));
         }
         public Dictionary<string, string> ReadAppointmentData(string appointmentID)
         {
-            return ms.dbm.LoadJsonFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            return ms.dbm.ReadObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
         }
         public void UpdateAppointmentData(Appointment appointment, string customerID)
         {
@@ -29,17 +29,17 @@ namespace Groomy.Appointments
             //update appointment
             ms.dbm.UpdateObjectInDB(appointmentID, appointmentData, Appointment.FilePaths["AppointmentData"]);
             //update relationship
-            ms.dbm.UpdateRelationshipInDB(new Relationships.Customer_Appointment_Relationship(customerID, appointmentID));
+            ms.dbm.UpdateRelationshipEntry(new Relationships.Customer_Appointment_Relationship(customerID, appointmentID));
         }
         public void DeleteAppointment(string appointmentID)
         {
-            ms.dbm.RemoveObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            ms.dbm.DeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            ms.dbm.DeleteObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
+            ms.dbm.DeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
         public void SoftDeleteAppointment(string appointmentID)
         {
             ms.dbm.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            ms.dbm.SoftDeleteRelationshipFromDB(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            ms.dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
 
         public List<Dictionary<string, string>> GetAppointments()
