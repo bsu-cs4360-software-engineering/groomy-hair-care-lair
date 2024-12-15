@@ -123,7 +123,7 @@ namespace Groomy
             var serviceID = Helpers.GetFieldFromSelection("ServiceID", dataServices);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this service?"))
             {
-                var noteIDs = ms.dbrs.GetNotesIDFromServiceID(serviceID);
+                var noteIDs = ms.dbrs.GetNoteIDsFromServiceID(serviceID);
                 foreach (var noteID in noteIDs)
                 {
                     ms.nDBS.SoftDeleteServiceNotes(noteID);

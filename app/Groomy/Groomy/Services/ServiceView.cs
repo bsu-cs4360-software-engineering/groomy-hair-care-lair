@@ -46,7 +46,7 @@ namespace Groomy.Services
         private void loadServiceNotes()
         {
             this.serviceNotes = new List<Dictionary<string, string>>();
-            var serviceNotesIDs = ms.dbrs.GetNotesIDFromServiceID(fieldServiceID.Text);
+            var serviceNotesIDs = ms.dbrs.GetNoteIDsFromServiceID(fieldServiceID.Text);
 
             foreach (var noteID in serviceNotesIDs)
             {
