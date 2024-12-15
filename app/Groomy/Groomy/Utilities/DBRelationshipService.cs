@@ -85,7 +85,7 @@ namespace Groomy.Utilities
             {
                 noteIDs.Add(relationship["noteID"]);
             }
-            return noteIDs;
+            return noteIDs; 
         }
         public string GetUserIDFromCustomerID(string customerID)
         {
@@ -172,20 +172,45 @@ namespace Groomy.Utilities
             var detail_invoice_relationships = dbm.ReadRelationshipEntry(detailID, "invoices_details.json");
             return detail_invoice_relationships[0]["invoiceID"];
         }
-        public List<string> GetForeignIDsFromPrimaryID(string primaryID, string foreignType, string relationshipPath)
+        public List<string> GetForeignIDsFromPrimaryID(string primaryID, string relationshipPath)
         {
+            //each primaryID can have multiple foreign IDs
             var object_relationships = dbm.ReadRelationshipEntry(primaryID, relationshipPath);
+
             var foreignIDs = new List<string>();
-            foreach (var relationship in object_relationships)
+
+            //find the key that is not the primaryID, should be the foreign ID
+            foreach (var relationship in object_relationships) 
             {
-                foreignIDs.Add(relationship[foreignType]);
+                foreach (var key in relationship.Keys)
+                {
+                    if (relationship[key] != primaryID)
+                    {
+                        //add the foreign ID to the list
+                        foreignIDs.Add(relationship[key]);
+                    }
+                }
             }
+            //return the list of foreign IDs
             return foreignIDs;
         }
-        public string GetPrimaryIDFromForeignID(string foreignID, string primaryType, string relationshipPath)
+        public string GetPrimaryIDFromForeignID(string foreignID, string relationshipPath)
         {
+            //each foreignID should have only one primary ID
             var object_relationships = dbm.ReadRelationshipEntry(foreignID, relationshipPath);
-            return object_relationships[0][primaryType];
+            var relationship = object_relationships[0];
+
+            //find the key that is not the foreignID, should be the primary ID
+            foreach (var key in relationship.Keys)
+            {
+                if (relationship[key] != foreignID)
+                {
+                    //return the primary ID
+                    return relationship[key];
+                }
+            }
+
+            throw new Exception("Primary ID not found in the relationship entry.");
         }
     }
 }
