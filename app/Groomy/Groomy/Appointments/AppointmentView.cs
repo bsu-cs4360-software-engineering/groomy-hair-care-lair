@@ -46,7 +46,9 @@ namespace Groomy.Appointments
             } 
             else
             {
-                var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
+                //var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
+                var customerID = ms.dbrs.GetPrimaryIDFromForeignID(fieldAppointmentID.Text, "customers_appointments.json");
+
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 var customerName = (customerData["FirstName"], customerData["LastName"]);
                 selectCustomerByName(customerName);
@@ -56,7 +58,8 @@ namespace Groomy.Appointments
         private void loadAppointmentNotes()
         {
             this.appointmentNotes = new List<Dictionary<string, string>>();
-            var appointmentNotesIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentData["AppointmentID"]);
+            //var appointmentNotesIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentData["AppointmentID"]);
+            var appointmentNotesIDs = ms.dbrs.GetForeignIDsFromPrimaryID(appointmentData["AppointmentID"], "appointments_notes.json");
 
             foreach (var noteID in appointmentNotesIDs)
             {
@@ -95,7 +98,8 @@ namespace Groomy.Appointments
                     else
                     {
                         var editedAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeAppointmentStart.Value, timeAppointmentEnd.Value, txtLocation.Text, fieldAppointmentID.Text);
-                        var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
+                        //var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
+                        var customerID = ms.dbrs.GetPrimaryIDFromForeignID(fieldAppointmentID.Text, "customers_appointments.json");
                         ms.aDBS.UpdateAppointmentData(editedAppointment, customerID);
                     }
                     setAppointmentEditMode(false);
