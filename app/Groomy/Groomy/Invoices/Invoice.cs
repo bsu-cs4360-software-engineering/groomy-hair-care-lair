@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Groomy.Invoices
 {
-    internal class Invoice : IGenericObject 
+    public class Invoice : IGenericObject 
     {
         public string invoiceID;
         public string customerID;

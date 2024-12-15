@@ -27,7 +27,18 @@
             }
             return serviceIDs;
         }
-        public List<string> GetAppointmentsFromCustomerID(string customerID)
+
+        public List<string> GetInvoiceIDs()
+        {
+            var invoiceIDs = new List<string>();
+            var invoiceDB = ms.dbm.LoadJsonsFromDB("invoices.json");
+            foreach (var invoice in invoiceDB)
+            {
+                invoiceIDs.Add(invoice["InvoiceID"]);
+            }
+            return invoiceIDs;
+        }
+            public List<string> GetAppointmentsFromCustomerID(string customerID)
         {
             var customer_appointment_relationships = ms.dbm.ReadRelationshipEntry(customerID, "customers_appointments.json");
             var appointmentIDs = new List<string>();
