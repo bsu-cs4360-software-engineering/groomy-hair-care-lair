@@ -41,12 +41,14 @@ namespace Groomy.Appointments
         public void DeleteAppointment(string appointmentID)
         {
             dbm.DeleteObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            dbm.DeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            //dbm.DeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            dbm.DeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetPrimaryIDFromForeignID(appointmentID, "customers_appointments.json"), appointmentID));
         }
         public void SoftDeleteAppointment(string appointmentID)
         {
             dbm.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            //dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetPrimaryIDFromForeignID(appointmentID, "customers_appointments.json"), appointmentID));
         }
 
         public List<Dictionary<string, string>> GetAppointments()
@@ -55,7 +57,8 @@ namespace Groomy.Appointments
             var customerIDs = dbrs.GetCustomerIDs();
             foreach (var customerID in customerIDs)
             {
-                var customerAppointmentIDs = dbrs.GetAppointmentIDsFromCustomerID(customerID);
+                //var customerAppointmentIDs = dbrs.GetAppointmentIDsFromCustomerID(customerID);
+                var customerAppointmentIDs = dbrs.GetForeignIDsFromPrimaryID(customerID, "customers_appointments.json");
                 foreach (var appointmentID in customerAppointmentIDs)
                 {
                     appointments.Add(ReadAppointmentData(appointmentID));
