@@ -56,7 +56,7 @@ namespace Groomy.Appointments
         private void loadAppointmentNotes()
         {
             this.appointmentNotes = new List<Dictionary<string, string>>();
-            var appointmentNotesIDs = ms.dbrs.GetNotesIDFromAppointmentID(appointmentData["AppointmentID"]);
+            var appointmentNotesIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentData["AppointmentID"]);
 
             foreach (var noteID in appointmentNotesIDs)
             {

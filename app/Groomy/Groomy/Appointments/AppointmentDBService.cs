@@ -55,7 +55,7 @@ namespace Groomy.Appointments
             var customerIDs = dbrs.GetCustomerIDs();
             foreach (var customerID in customerIDs)
             {
-                var customerAppointmentIDs = dbrs.GetAppointmentsFromCustomerID(customerID);
+                var customerAppointmentIDs = dbrs.GetAppointmentIDsFromCustomerID(customerID);
                 foreach (var appointmentID in customerAppointmentIDs)
                 {
                     appointments.Add(ReadAppointmentData(appointmentID));

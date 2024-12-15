@@ -74,27 +74,27 @@ namespace Groomy.Notes
         public void DeleteCustomerNotes(string noteID)
         {
             dbm.DeleteObjectFromDB(noteID, Note.FilePaths["NotesData"]);
-            dbm.DeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetCustomerIDFromNotesID(noteID), noteID));
+            dbm.DeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetCustomerIDFromNoteID(noteID), noteID));
         }
         public void DeleteAppointmentNotes(string noteID)
         {
             dbm.DeleteObjectFromDB(noteID, Note.FilePaths["NotesData"]);
-            dbm.DeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetAppointmentIDFromNotesID(noteID), noteID));
+            dbm.DeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetAppointmentIDFromNoteID(noteID), noteID));
         }
         public void SoftDeleteCustomerNotes(string noteId)
         {
             dbm.SoftDeleteObjectInDB(noteId, Note.FilePaths["NotesData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetCustomerIDFromNotesID(noteId), noteId));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetCustomerIDFromNoteID(noteId), noteId));
         }
         public void SoftDeleteAppointmentNotes(string noteID)
         {
             dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetAppointmentIDFromNotesID(noteID), noteID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetAppointmentIDFromNoteID(noteID), noteID));
         }
         public void SoftDeleteServiceNotes(string noteID)
         {
             dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.ServiceNotesRelationship(dbrs.GetServiceIDFromNotesID(noteID), noteID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.ServiceNotesRelationship(dbrs.GetServiceIDFromNoteID(noteID), noteID));
         }
     }
 }

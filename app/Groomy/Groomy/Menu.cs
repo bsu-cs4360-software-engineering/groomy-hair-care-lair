@@ -107,7 +107,7 @@ namespace Groomy
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
-                var noteIDs = ms.dbrs.GetNotesIDFromAppointmentID(appointmentID);
+                var noteIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentID);
                 foreach (var noteID in noteIDs)
                 {
                     ms.nDBS.SoftDeleteAppointmentNotes(noteID);
@@ -138,7 +138,7 @@ namespace Groomy
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
-                var noteIDs = ms.dbrs.GetNotesIDFromAppointmentID(appointmentID);
+                var noteIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentID);
                 foreach (var noteID in noteIDs)
                 {
                     ms.nDBS.SoftDeleteAppointmentNotes(noteID);
