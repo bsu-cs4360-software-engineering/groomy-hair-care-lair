@@ -19,6 +19,8 @@ namespace Groomy.Appointments
             this.dbrs = dbrs;
         }
 
+        string ca_rp = "customers_appointments.json";
+
         public void CreateAppointment(Appointment appointment, string customerID)
         {
             dbm.CreateObjectInDB(appointment);
@@ -58,7 +60,7 @@ namespace Groomy.Appointments
             foreach (var customerID in customerIDs)
             {
                 //var customerAppointmentIDs = dbrs.GetAppointmentIDsFromCustomerID(customerID);
-                var customerAppointmentIDs = dbrs.GetForeignIDsFromPrimaryID(customerID, "customers_appointments.json");
+                var customerAppointmentIDs = dbrs.GetForeignIDsFromPrimaryID(customerID, ca_rp);
                 foreach (var appointmentID in customerAppointmentIDs)
                 {
                     appointments.Add(ReadAppointmentData(appointmentID));
