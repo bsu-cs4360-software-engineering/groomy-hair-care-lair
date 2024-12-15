@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Groomy.Relationships
+namespace Groomy.Relationships.Notes
 {
     internal class CustomerNotesRelationship : IRelationship
     {
