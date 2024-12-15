@@ -53,7 +53,8 @@ namespace Groomy.Customers
         public void loadCustomerNotes()
         {
             this.customerNotes = new List<Dictionary<string, string>>();
-            var customerNotesIDs = ms.dbrs.GetNotesIDFromCustomerID(customerData["CustomerID"]);
+            //var customerNotesIDs = ms.dbrs.GetNotesIDFromCustomerID(customerData["CustomerID"]);
+            var customerNotesIDs = ms.dbrs.GetForeignIDsFromPrimaryID(customerData["CustomerID"], "customers_notes.json");
 
             foreach (var noteID in customerNotesIDs)
             {
