@@ -11,6 +11,9 @@ namespace Groomy.Invoices
     {
         private DatabaseManager dbm;
         private DBRelationshipService dbrs;
+
+        string ci_fp = "customers_invoices.json";
+        string id_fp = "invoices_details.json";
         public InvoiceDBService(ManagerSingleton ms)
         {
             this.dbm = ms.dbm;
@@ -42,12 +45,14 @@ namespace Groomy.Invoices
         public void DeleteInvoice(string invoiceID)
         {
             dbm.DeleteObjectFromDB(invoiceID, Invoice.FilePaths["InvoiceData"]);
-            dbm.DeleteRelationshipEntry(new Relationships.Customer_Invoice_Relationship(dbrs.GetCustomerIDFromInvoiceID(invoiceID), invoiceID));
+            //dbm.DeleteRelationshipEntry(new Relationships.Customer_Invoice_Relationship(dbrs.GetCustomerIDFromInvoiceID(invoiceID), invoiceID));
+            dbm.DeleteRelationshipEntry(new Relationships.Customer_Invoice_Relationship(dbrs.GetPrimaryIDFromForeignID(invoiceID, ci_fp), invoiceID));
         }
         public void SoftDeleteInvoice(string invoiceID)
         {
             dbm.SoftDeleteObjectInDB(invoiceID, Invoice.FilePaths["InvoiceData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Invoice_Relationship(dbrs.GetCustomerIDFromInvoiceID(invoiceID), invoiceID));
+            //dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Invoice_Relationship(dbrs.GetCustomerIDFromInvoiceID(invoiceID), invoiceID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Invoice_Relationship(dbrs.GetPrimaryIDFromForeignID(invoiceID, ci_fp), invoiceID));
         }
 
         public void CreateDetail(InvoiceDetail detail, string invoiceID)
@@ -71,12 +76,14 @@ namespace Groomy.Invoices
         public void DeleteDetail(string detailID)
         {
             dbm.DeleteObjectFromDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
-            dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
+            //dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
+            dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, "customers_notes.json"), detailID));
         }
         public void SoftDeleteDetail(string detailID)
         {
             dbm.SoftDeleteObjectInDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
+            //dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, "customers_notes.json"), detailID));
         }
         public List<Dictionary<string, string>> GetInvoices()
         {
@@ -91,7 +98,8 @@ namespace Groomy.Invoices
         public List<Dictionary<string, string>> GetDetails(string invoiceID)
         {
             var details = new List<Dictionary<string, string>>();
-            var detailIDs = dbrs.GetDetailIDsFromInvoiceID(invoiceID);
+            //var detailIDs = dbrs.GetDetailIDsFromInvoiceID(invoiceID);
+            var detailIDs = dbrs.GetForeignIDsFromPrimaryID(invoiceID, id_fp);
             foreach (var detailID in detailIDs)
             {
                 details.Add(ReadDetailData(detailID));
