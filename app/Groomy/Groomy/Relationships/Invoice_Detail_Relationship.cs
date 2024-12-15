@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Groomy.Relationships.Notes
+namespace Groomy.Relationships
 {
-    internal class Invoice_Detail_Relationship
+    internal class Invoice_Detail_Relationship : IRelationship
     {
         string invoiceID;
         string detailID;

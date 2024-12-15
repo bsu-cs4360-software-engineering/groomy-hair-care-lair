@@ -55,7 +55,7 @@ namespace Groomy.Invoices
             return FilePaths;
         }
 }
-    internal class InvoiceDetail: IGenericObject
+    public class InvoiceDetail: IGenericObject
     {
         public string detailID;
         public string serviceID;

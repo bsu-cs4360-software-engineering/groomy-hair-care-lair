@@ -12,6 +12,11 @@ namespace Groomy.Utilities
             this.dbm = ms.dbm;
             this.ua = ms.ua;
         }
+        public DBRelationshipService(DatabaseManager dbm, UserAuth ua)
+        {
+            this.dbm = dbm;
+            this.ua = ua;
+        }
         public List<string> GetCustomerIDs()
         {
             var user_customer_relationships = dbm.ReadRelationshipEntry(ua.getID(), "users_customers.json");
@@ -22,7 +27,6 @@ namespace Groomy.Utilities
             }
             return customerIDs;
         }
-
 
         public List<string> GetInvoiceIDs()
         {
@@ -111,6 +115,16 @@ namespace Groomy.Utilities
             }
             return noteIDs;
         }
+        public List<string> GetDetailIDsFromInvoiceID(string invoiceID)
+        {
+            var invoice_detail_relationships = dbm.ReadRelationshipEntry(invoiceID, "invoices_details.json");
+            var detailIDs = new List<string>();
+            foreach (var relationship in invoice_detail_relationships)
+            {
+                detailIDs.Add(relationship["detailID"]);
+            }
+            return detailIDs;
+        }
         public List<string> GetNoteIDsFromInvoiceID(string invoiceID)
         {
             var invoice_notes_relationships = dbm.ReadRelationshipEntry(invoiceID, "invoices_notes.json");
@@ -126,6 +140,7 @@ namespace Groomy.Utilities
             var invoice_customer_relationships = dbm.ReadRelationshipEntry(invoiceID, "customers_invoices.json");
             return invoice_customer_relationships[0]["customerID"];
         }
+
         public string GetCustomerIDFromNoteID(string noteID)
         {
             var customer_notes_relationships = dbm.ReadRelationshipEntry(noteID, "customers_notes.json");
@@ -149,6 +164,11 @@ namespace Groomy.Utilities
         {
             var invoice_notes_relationships = dbm.ReadRelationshipEntry(noteID, "invoices_notes.json");
             return invoice_notes_relationships[0]["invoiceID"];
+        }
+        public string GetInvoiceIDFromDetailID(string detailID)
+        {
+            var detail_invoice_relationships = dbm.ReadRelationshipEntry(detailID, "invoices_details.json");
+            return detail_invoice_relationships[0]["invoiceID"];
         }
     }
 }

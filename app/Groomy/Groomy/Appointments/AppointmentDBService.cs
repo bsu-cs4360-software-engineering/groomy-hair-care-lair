@@ -41,12 +41,12 @@ namespace Groomy.Appointments
         public void DeleteAppointment(string appointmentID)
         {
             dbm.DeleteObjectFromDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            dbm.DeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            dbm.DeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
         public void SoftDeleteAppointment(string appointmentID)
         {
             dbm.SoftDeleteObjectInDB(appointmentID, Appointment.FilePaths["AppointmentData"]);
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(ms.dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Customer_Appointment_Relationship(dbrs.GetCustomerIDFromAppointmentID(appointmentID), appointmentID));
         }
 
         public List<Dictionary<string, string>> GetAppointments()
