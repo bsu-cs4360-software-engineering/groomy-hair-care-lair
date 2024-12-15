@@ -22,7 +22,7 @@ namespace Groomy.Customers
         {
             this.dbm = dbManager;
             this.ua = ua;
-            this.dbrs = dbrs
+            this.dbrs = dbrs;
         }
 
         public void CreateCustomer(Customer customer)
