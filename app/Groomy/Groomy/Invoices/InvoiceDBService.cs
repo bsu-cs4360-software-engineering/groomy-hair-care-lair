@@ -77,13 +77,13 @@ namespace Groomy.Invoices
         {
             dbm.DeleteObjectFromDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
             //dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
-            dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, "customers_notes.json"), detailID));
+            dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, id_fp), detailID));
         }
         public void SoftDeleteDetail(string detailID)
         {
             dbm.SoftDeleteObjectInDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
             //dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
-            dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, "customers_notes.json"), detailID));
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, id_fp), detailID));
         }
         public List<Dictionary<string, string>> GetInvoices()
         {
