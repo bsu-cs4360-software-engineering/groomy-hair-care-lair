@@ -19,9 +19,12 @@ namespace Groomy.Utilities
             this.dbm = dbm;
             this.ua = ua;
         }
+
+        string uc_rp = "users_customers.json";
+        string ci_rp = "customers_invoices.json";
         public List<string> GetCustomerIDs()
         {
-            var user_customer_relationships = dbm.ReadRelationshipEntry(ua.getID(), "users_customers.json");
+            var user_customer_relationships = dbm.ReadRelationshipEntry(ua.getID(), uc_rp);
             var customerIDs = new List<string>();
             foreach (var relationship in user_customer_relationships)
             {
@@ -36,7 +39,7 @@ namespace Groomy.Utilities
             var invoiceIDs = new List<string>();
             foreach (var customerID in customerIDs)
             {
-                var customer_invoice_relationships = dbm.ReadRelationshipEntry(customerID, "customers_invoices.json");
+                var customer_invoice_relationships = dbm.ReadRelationshipEntry(customerID, ci_rp);
                 foreach (var relationship in customer_invoice_relationships)
                 {
                     invoiceIDs.Add(relationship["invoiceID"]);
