@@ -1,4 +1,6 @@
-﻿using Groomy.Users;
+﻿using Groomy.Customers;
+using Groomy.Relationships;
+using Groomy.Users;
 
 namespace Groomy.Utilities
 {
@@ -169,6 +171,21 @@ namespace Groomy.Utilities
         {
             var detail_invoice_relationships = dbm.ReadRelationshipEntry(detailID, "invoices_details.json");
             return detail_invoice_relationships[0]["invoiceID"];
+        }
+        public List<string> GetForeignIDsFromPrimaryID(string primaryID, string foreignType, string relationshipPath)
+        {
+            var object_relationships = dbm.ReadRelationshipEntry(primaryID, relationshipPath);
+            var foreignIDs = new List<string>();
+            foreach (var relationship in object_relationships)
+            {
+                foreignIDs.Add(relationship[foreignType]);
+            }
+            return foreignIDs;
+        }
+        public string GetPrimaryIDFromForeignID(string foreignID, string primaryType, string relationshipPath)
+        {
+            var object_relationships = dbm.ReadRelationshipEntry(foreignID, relationshipPath);
+            return object_relationships[0][primaryType];
         }
     }
 }
