@@ -88,7 +88,8 @@ namespace Groomy
             {
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this customer?"))
                 {
-                    var noteIDs = ms.dbrs.GetNotesIDFromCustomerID(customerID);
+                    //var noteIDs = ms.dbrs.GetNotesIDFromCustomerID(customerID);
+                    var noteIDs = ms.dbrs.GetForeignIDsFromPrimaryID(customerID, "customers_notes.json");
                     foreach (var noteID in noteIDs)
                     {
                         ms.nDBS.SoftDeleteCustomerNotes(noteID);
@@ -107,7 +108,8 @@ namespace Groomy
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
-                var noteIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentID);
+                //var noteIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentID);
+                var noteIDs = ms.dbrs.GetForeignIDsFromPrimaryID(appointmentID, "appointments_notes.json");
                 foreach (var noteID in noteIDs)
                 {
                     ms.nDBS.SoftDeleteAppointmentNotes(noteID);
@@ -123,7 +125,8 @@ namespace Groomy
             var serviceID = Helpers.GetFieldFromSelection("ServiceID", dataServices);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this service?"))
             {
-                var noteIDs = ms.dbrs.GetNoteIDsFromServiceID(serviceID);
+                //var noteIDs = ms.dbrs.GetNoteIDsFromServiceID(serviceID);
+                var noteIDs = ms.dbrs.GetForeignIDsFromPrimaryID(serviceID, "services_notes.json");
                 foreach (var noteID in noteIDs)
                 {
                     ms.nDBS.SoftDeleteServiceNotes(noteID);
@@ -138,7 +141,8 @@ namespace Groomy
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
             if (Helpers.messageBoxConfirm("Are you sure you want to delete this appointment?"))
             {
-                var noteIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentID);
+                //var noteIDs = ms.dbrs.GetNoteIDsFromAppointmentID(appointmentID);
+                var noteIDs = ms.dbrs.GetForeignIDsFromPrimaryID(appointmentID, "appointments_notes.json");
                 foreach (var noteID in noteIDs)
                 {
                     ms.nDBS.SoftDeleteAppointmentNotes(noteID);
