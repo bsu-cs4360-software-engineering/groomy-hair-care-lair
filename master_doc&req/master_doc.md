@@ -1,55 +1,83 @@
-# Master Document
+# Master Document  
+
+---
 
 ## 1. Functional Requirements
-- **User Account Management**
-  - Users can create an account.
-  - Users can log in/authenticate.
-  
-- **Customer Management**
-  - Users can create, read, update, and delete (CRUD) customer records.
 
-- **Appointment Management**
-  - Users can CRUD appointments.
+### User Account Management
+- Users can create an account.
+- Users can log in/authenticate.
 
-- **Notes Management**
-  - Users can CRUD notes.
+### Customer Management
+- Users can create, read, update, and delete (CRUD) customer records.
 
-- **Service Management**
-  - Users can CRUD services.
+### Appointment Management
+- Users can CRUD appointments.
 
-- **Invoice Management**
-  - Users can CRUD invoices.
+### Notes Management
+- Users can CRUD notes.
 
-- **Map Functionality**
-  - Users can see a map of the local area.
-  - The map shows a path from their current location to the next appointment.
+### Service Management
+- Users can CRUD services.
 
-- **Payment Processing**
-  - Users can "Take Payments" (no actual payment processor involved; this will be simulated).
+### Invoice Management
+- Users can CRUD invoices.
+
+### Map Functionality
+- Users can view a map of the local area.
+- The map displays the route from the user's current location to the next appointment.
+
+---
 
 ## 2. Non-Functional Requirements
-- The software will be GUI-based.
-- Unit testing will serve as the primary source of documentation.
-- The application can be either desktop-based or web-based, depending on the group; web-based groups will be responsible for their own hosting.
+- The software will feature a **graphical user interface (GUI)**.
+- Unit tests will serve as the primary documentation for the codebase.
+- The application will be **desktop-based only**.
+- No payment processing functionality will be implemented.
+
+---
 
 ## 3. Design Document
-- **Architecture:** Client-server based software.
-- **Design Patterns:** Following design patterns set forth by the client.
-- **Key Components:**
-  - The GUI, which users will interact with primarily.
-- **Data Storage:** Currently using a local JSON file (database details are still under consideration).
+
+### Architecture
+- The system follows a **client-server architecture**.
+
+### Design Patterns
+- Development will adhere to design patterns specified by the client.
+
+### Key Components
+- **Graphical User Interface (GUI)**: The primary interaction point for users.
+- **Data Storage**: Initially using a local JSON file; alternative database solutions are under consideration.
+
+---
 
 ## 4. System Standards / Conventions
-- **Programming Language:** C#.
-- **Database:** In development; specific database technology has not yet been decided.
-- **Directory Structure:** Under development; to be determined.
-- **Naming Conventions:** Camel case naming convention will be used for classes, methods, constants, variables, etc.
 
-## 5. Quick Start for Developers
-- As of now, no API has been implemented.
-- **Setup Steps:** 
-  - Developers should ensure they have the Visual Studio 2022 enviroment installed and configured.
-- **Common Commands/Workflows:**
-  - Developers should refer to unit tests for understanding functionality.
-- **Resources:**
-  - Additional documentation and resources will be provided as the project progresses.
+### Programming Language
+- The application will be developed in **C#**.
+
+### Database
+- Currently under development; final choice of database technology is pending.
+
+### Directory Structure
+The project uses the following directory structure:  
+
+```plaintext
+Groomy/
+├── Appointments/
+├── Customers/
+│   ├── Customer.cs
+│   ├── CustomerDBService.cs
+│   └── CustomerView.cs
+├── Notes/
+├── Relationships/
+├── Services/
+├── Users/
+├── Utilities/
+├── Login.cs
+├── Menu/
+│   ├── Menu.cs
+│   ├── Menu.Designer.cs
+│   └── Menu.resx
+├── NewUser.cs
+└── Program.cs
