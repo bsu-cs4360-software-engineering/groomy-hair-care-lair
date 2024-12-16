@@ -194,7 +194,7 @@ namespace Groomy.Appointments
             {
                 if (Helpers.messageBoxConfirm("Are you sure you want to delete this note?"))
                 {
-                    ms.nDBS.DeleteAppointmentNotes(noteToDelete);
+                    ms.nDBS.SoftDeleteAppointmentNotes(noteToDelete);
                     loadAppointmentNotes();
                 }
             }
