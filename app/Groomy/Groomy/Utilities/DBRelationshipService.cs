@@ -84,6 +84,10 @@ namespace Groomy.Utilities
         {
             //each foreignID should have only one primary ID
             var object_relationships = dbm.ReadRelationshipEntry(foreignID, relationshipPath);
+            if (object_relationships.Count == 0)
+            {
+                return null;
+            }
             var relationship = object_relationships[0];
 
             //find the key that is not the foreignID, should be the primary ID
