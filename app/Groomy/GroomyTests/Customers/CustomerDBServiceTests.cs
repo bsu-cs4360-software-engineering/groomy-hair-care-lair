@@ -406,19 +406,181 @@ namespace GroomyTests.Customers
         [TestMethod()]
         public void GetCustomersTest()
         {
-            Assert.Fail();
+
+            //Arrange
+            var mockFileService = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFileService.Object);
+            var mockUA = new Mock<IUserAuth>();
+            var dbrs = new DBRelationshipService(dbm, mockUA.Object);
+
+
+
+            var customerDBService = new CustomerDBService(dbm, mockUA.Object, dbrs);
+
+            var customer1First = "First1";
+            var customer1Last = "Last1";
+            var customer1Email = "Email1";
+            var customer1Phone = "Phone1";
+            var customer1Address = "Address1";
+            var testCustomerID1 = "customerID1";
+
+            var customer2First = "First2";
+            var customer2Last = "Last2";
+            var customer2Email = "Email2";
+            var customer2Phone = "Phone2";
+            var customer2Address = "Address2";
+            var testCustomerID2 = "customerID2";
+
+            var customerDBFilepath = "customers.json";
+
+            var initialCustomerDB = new List<Dictionary<string, string>> {
+                new Dictionary<string, string> {
+                    { "CustomerID", testCustomerID1 },
+                    { "FirstName", customer1First },
+                    { "LastName", customer1Last },
+                    { "Email", customer1Email },
+                    { "PhoneNumber", customer1Phone },
+                    { "Address", customer1Address }
+                },
+                new Dictionary<string, string> {
+                    { "CustomerID", testCustomerID2 },
+                    { "FirstName", customer2First },
+                    { "LastName", customer2Last },
+                    { "Email", customer2Email },
+                    { "PhoneNumber", customer2Phone },
+                    { "Address", customer2Address }
+                }
+            };
+
+            var testUserID = "userID";
+
+            var relationshipDBFilepath = "users_customers.json";
+            var relationshipDB = new List<Dictionary<string, string>> {
+                new Dictionary<string, string> {
+                    { "userID", testUserID },
+                    { "customerID", testCustomerID1 }
+                },
+                new Dictionary<string, string> {
+                    { "userID", testUserID },
+                    { "customerID", testCustomerID2 }
+                }
+            };
+
+            mockUA.Setup(ua => ua.getID()).Returns(testUserID);
+
+            mockFileService.Setup(fs => fs.ReadAllText(customerDBFilepath)).Returns(JsonSerializer.Serialize(initialCustomerDB));
+            mockFileService.Setup(fs => fs.Exists(customerDBFilepath)).Returns(true);
+
+            mockFileService.Setup(fs => fs.ReadAllText(relationshipDBFilepath)).Returns(JsonSerializer.Serialize(relationshipDB));
+            mockFileService.Setup(fs => fs.Exists(relationshipDBFilepath)).Returns(true);
+
+
+
+            //Act
+            var retrievedCustomers = customerDBService.GetCustomers();
+
+            //Assert
+            Assert.IsNotNull(retrievedCustomers);
+            Assert.AreEqual(2, retrievedCustomers.Count);
+
+            Assert.AreEqual(testCustomerID1, retrievedCustomers[0]["CustomerID"]);
+            Assert.AreEqual(customer1First, retrievedCustomers[0]["FirstName"]);
+            Assert.AreEqual(customer1Last, retrievedCustomers[0]["LastName"]);
+            Assert.AreEqual(customer1Email, retrievedCustomers[0]["Email"]);
+            Assert.AreEqual(customer1Phone, retrievedCustomers[0]["PhoneNumber"]);
+            Assert.AreEqual(customer1Address, retrievedCustomers[0]["Address"]);
+
+            Assert.AreEqual(testCustomerID2, retrievedCustomers[1]["CustomerID"]);
+            Assert.AreEqual(customer2First, retrievedCustomers[1]["FirstName"]);
+            Assert.AreEqual(customer2Last, retrievedCustomers[1]["LastName"]);
+            Assert.AreEqual(customer2Email, retrievedCustomers[1]["Email"]);
+            Assert.AreEqual(customer2Phone, retrievedCustomers[1]["PhoneNumber"]);
+            Assert.AreEqual(customer2Address, retrievedCustomers[1]["Address"]);
         }
 
         [TestMethod()]
         public void GetCustomerIDByEmailTest()
         {
-            Assert.Fail();
+            //Arrange
+            var mockFileService = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFileService.Object);
+            var ua = new UserAuth();
+            var dbrs = new DBRelationshipService(dbm, ua);
+
+            var customerDBService = new CustomerDBService(dbm, ua, dbrs);
+
+            var customerFirst = "First";
+            var customerLast = "Last";
+            var customerEmail = "Email";
+            var customerPhone = "Phone";
+            var customerAddress = "Address";
+            var testCustomerID = "customerID";
+
+            var customerDBFilepath = "customers.json";
+
+            var initialCustomerDB = new List<Dictionary<string, string>> {
+                new Dictionary<string, string> {
+                    { "CustomerID", testCustomerID },
+                    { "FirstName", customerFirst },
+                    { "LastName", customerLast },
+                    { "Email", customerEmail },
+                    { "PhoneNumber", customerPhone },
+                    { "Address", customerAddress }
+                }
+            };
+
+            mockFileService.Setup(fs => fs.ReadAllText(customerDBFilepath)).Returns(JsonSerializer.Serialize(initialCustomerDB));
+            mockFileService.Setup(fs => fs.Exists(customerDBFilepath)).Returns(true);
+
+            //Act
+            var retrievedCustomer = customerDBService.GetCustomerIDByEmail(customerEmail);
+
+            //Assert
+            Assert.IsNotNull(retrievedCustomer);
+            Assert.AreEqual(testCustomerID, retrievedCustomer);
         }
 
         [TestMethod()]
         public void GetCustomerIDByFirstLastTest()
         {
-            Assert.Fail();
+            //Arrange
+            var mockFileService = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFileService.Object);
+            var ua = new UserAuth();
+            var dbrs = new DBRelationshipService(dbm, ua);
+
+            var customerDBService = new CustomerDBService(dbm, ua, dbrs);
+
+            var customerFirst = "First";
+            var customerLast = "Last";
+            var customerEmail = "Email";
+            var customerPhone = "Phone";
+            var customerAddress = "Address";
+            var testCustomerID = "customerID";
+
+            var customerDBFilepath = "customers.json";
+
+            var initialCustomerDB = new List<Dictionary<string, string>> {
+                new Dictionary<string, string> {
+                    { "CustomerID", testCustomerID },
+                    { "FirstName", customerFirst },
+                    { "LastName", customerLast },
+                    { "Email", customerEmail },
+                    { "PhoneNumber", customerPhone },
+                    { "Address", customerAddress }
+                }
+            };
+
+            mockFileService.Setup(fs => fs.ReadAllText(customerDBFilepath)).Returns(JsonSerializer.Serialize(initialCustomerDB));
+            mockFileService.Setup(fs => fs.Exists(customerDBFilepath)).Returns(true);
+
+            var firstLast = (customerFirst, customerLast);
+            //Act
+            var retrievedCustomer = customerDBService.GetCustomerIDByFirstLast(firstLast);
+
+            //Assert
+            Assert.IsNotNull(retrievedCustomer);
+            Assert.AreEqual(testCustomerID, retrievedCustomer);
         }
     }
 }
