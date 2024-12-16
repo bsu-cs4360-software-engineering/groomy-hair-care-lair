@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnInvoices = new Label();
             btnServices = new Label();
             btnAppointment = new Label();
             btnCustomers = new Label();
@@ -53,6 +54,10 @@
             btnServiceDelete = new Button();
             btnServiceNew = new Button();
             lblServices = new Label();
+            panelInvoices = new Panel();
+            btnGenInv = new Button();
+            dataCusInvoice = new DataGridView();
+            label1 = new Label();
             panel1.SuspendLayout();
             apptPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataAppointments).BeginInit();
@@ -61,11 +66,14 @@
             ((System.ComponentModel.ISupportInitialize)dataCustomers).BeginInit();
             panelServices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).BeginInit();
+            panelInvoices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataCusInvoice).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(21, 96, 130);
+            panel1.Controls.Add(btnInvoices);
             panel1.Controls.Add(btnServices);
             panel1.Controls.Add(btnAppointment);
             panel1.Controls.Add(btnCustomers);
@@ -74,6 +82,19 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(221, 566);
             panel1.TabIndex = 17;
+            // 
+            // btnInvoices
+            // 
+            btnInvoices.BackColor = Color.FromArgb(29, 129, 175);
+            btnInvoices.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnInvoices.ForeColor = Color.White;
+            btnInvoices.Location = new Point(0, 382);
+            btnInvoices.Name = "btnInvoices";
+            btnInvoices.Size = new Size(216, 44);
+            btnInvoices.TabIndex = 24;
+            btnInvoices.Text = "Invoices";
+            btnInvoices.TextAlign = ContentAlignment.MiddleCenter;
+            btnInvoices.Click += btnInvoices_Click;
             // 
             // btnServices
             // 
@@ -139,11 +160,11 @@
             apptPanel.Size = new Size(521, 553);
             apptPanel.TabIndex = 38;
             // 
-            // apptView
+            // dataAppointments
             // 
             dataAppointments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataAppointments.Location = new Point(36, 128);
-            dataAppointments.Name = "apptView";
+            dataAppointments.Name = "dataAppointments";
             dataAppointments.Size = new Size(449, 377);
             dataAppointments.TabIndex = 42;
             // 
@@ -239,11 +260,11 @@
             btnCustomerView.UseVisualStyleBackColor = false;
             btnCustomerView.Click += btnCustomerView_Click;
             // 
-            // dataGridView1
+            // dataCustomers
             // 
             dataCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataCustomers.Location = new Point(33, 128);
-            dataCustomers.Name = "dataGridView1";
+            dataCustomers.Name = "dataCustomers";
             dataCustomers.Size = new Size(449, 377);
             dataCustomers.TabIndex = 37;
             // 
@@ -351,11 +372,54 @@
             lblServices.Text = "Groomy Services";
             lblServices.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // panelInvoices
+            // 
+            panelInvoices.Controls.Add(btnGenInv);
+            panelInvoices.Controls.Add(dataCusInvoice);
+            panelInvoices.Controls.Add(label1);
+            panelInvoices.Location = new Point(755, 577);
+            panelInvoices.Name = "panelInvoices";
+            panelInvoices.Size = new Size(520, 553);
+            panelInvoices.TabIndex = 40;
+            // 
+            // btnGenInv
+            // 
+            btnGenInv.BackColor = Color.FromArgb(21, 96, 130);
+            btnGenInv.ForeColor = Color.White;
+            btnGenInv.Location = new Point(33, 83);
+            btnGenInv.Name = "btnGenInv";
+            btnGenInv.Size = new Size(449, 23);
+            btnGenInv.TabIndex = 38;
+            btnGenInv.Text = "Generate Invoice From Customer";
+            btnGenInv.UseVisualStyleBackColor = false;
+            btnGenInv.Click += btnGenInv_Click;
+            // 
+            // dataCusInvoice
+            // 
+            dataCusInvoice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataCusInvoice.Location = new Point(33, 128);
+            dataCusInvoice.Name = "dataCusInvoice";
+            dataCusInvoice.Size = new Size(449, 377);
+            dataCusInvoice.TabIndex = 37;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            label1.ForeColor = Color.FromArgb(21, 96, 130);
+            label1.Location = new Point(83, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(312, 45);
+            label1.TabIndex = 21;
+            label1.Text = "Groomy Invoices";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1061);
+            Controls.Add(panelInvoices);
             Controls.Add(panelServices);
             Controls.Add(apptPanel);
             Controls.Add(panelCustomers);
@@ -379,6 +443,9 @@
             panelServices.ResumeLayout(false);
             panelServices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).EndInit();
+            panelInvoices.ResumeLayout(false);
+            panelInvoices.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataCusInvoice).EndInit();
             ResumeLayout(false);
         }
 
@@ -411,5 +478,10 @@
         private Button btnServiceDelete;
         private Button btnServiceNew;
         private Label lblServices;
+        private Panel panelInvoices;
+        private Button btnGenInv;
+        private DataGridView dataCusInvoice;
+        private Label label1;
+        private Label btnInvoices;
     }
 }

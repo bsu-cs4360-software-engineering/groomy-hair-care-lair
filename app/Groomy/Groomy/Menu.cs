@@ -183,6 +183,20 @@ namespace Groomy
                 dataCustomers.Columns["Address"].Visible = false;
             }
         }
+
+        private void loadInvoiceData()
+        {
+            var customers = ms.cDBS.GetCustomers();
+            dataCusInvoice.DataSource = Helpers.ConvertToDataTable(customers);
+            if (dataCusInvoice.Columns["CustomerID"] != null)
+            {
+                dataCusInvoice.Columns["CustomerID"].Visible = false;
+            }
+            if (dataCusInvoice.Columns["Address"] != null)
+            {
+                dataCusInvoice.Columns["Address"].Visible = false;
+            }
+        }
         private void btnAppointmentView_Click(object sender, EventArgs e)
         {
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
@@ -229,5 +243,25 @@ namespace Groomy
             }
         }
 
+        private void btnInvoices_Click(object sender, EventArgs e)
+        {
+            loadInvoiceData();
+            Helpers.activatePanel(panelInvoices, panelWH, panelLoc);
+        }
+
+        private void btnGenInv_Click(object sender, EventArgs e)
+        {
+            var customerID = Helpers.GetFieldFromSelection("CustomerID", dataCusInvoice);
+            if (!string.IsNullOrEmpty(customerID))
+            {
+                var customerData = ms.cDBS.ReadCustomer(customerID);
+                Form invoiceForm = new Groomy.Invoice.Invoice(customerData, this);
+                invoiceForm.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No customer selected. Please select a customer.");
+            }
+        }
     }
 }
