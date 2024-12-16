@@ -10,7 +10,7 @@ namespace Groomy.Customers
     public class CustomerDBService
     {
         private DatabaseManager dbm;
-        private UserAuth ua;
+        private IUserAuth ua;
         private DBRelationshipService dbrs;
         public CustomerDBService(ManagerSingleton ms)
         {
@@ -18,7 +18,7 @@ namespace Groomy.Customers
             this.ua = ms.ua;
             this.dbrs = ms.dbrs;
         }
-        public CustomerDBService(DatabaseManager dbManager, UserAuth ua, DBRelationshipService dbrs)
+        public CustomerDBService(DatabaseManager dbManager, IUserAuth ua, DBRelationshipService dbrs)
         {
             this.dbm = dbManager;
             this.ua = ua;
