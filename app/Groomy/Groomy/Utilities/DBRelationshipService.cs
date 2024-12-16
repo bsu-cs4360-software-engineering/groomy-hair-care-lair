@@ -7,14 +7,14 @@ namespace Groomy.Utilities
     public class DBRelationshipService
     {
         DatabaseManager dbm;
-        UserAuth ua;
-
+        IUserAuth ua;
+        
         public DBRelationshipService(ManagerSingleton ms)
         {
             this.dbm = ms.dbm;
             this.ua = ms.ua;
         }
-        public DBRelationshipService(DatabaseManager dbm, UserAuth ua)
+        public DBRelationshipService(DatabaseManager dbm, IUserAuth ua)
         {
             this.dbm = dbm;
             this.ua = ua;

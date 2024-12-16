@@ -2,6 +2,7 @@
 using Groomy.Relationships;
 using Groomy.Utilities;
 using Moq;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace GroomyTests.Utilities
@@ -16,12 +17,17 @@ namespace GroomyTests.Utilities
             DatabaseManager.ResetInstance();
         }
         [TestMethod()]
-        public void DBM_is_DBM()
+        public void DatabaseManagerManagerSingletonInitTest()
+        {
+            ManagerSingleton ms = new ManagerSingleton();
+            var DBM = new DatabaseManager(ms);
+            Assert.IsInstanceOfType(DBM, typeof(DatabaseManager));
+        }
+        public void DatabaseManagerTestDependancyInjectionTest()
         {
             var fs = new FileService();
             var DBM = new DatabaseManager(fs);
-            var objectType = typeof(DatabaseManager);
-            Assert.IsInstanceOfType(DBM, objectType);
+            Assert.IsInstanceOfType(DBM, typeof(DatabaseManager));
         }
         [TestMethod()]
         public void CreateObjectInDBTest()

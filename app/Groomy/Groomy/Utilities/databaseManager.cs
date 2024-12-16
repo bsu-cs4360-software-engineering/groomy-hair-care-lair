@@ -38,7 +38,10 @@ namespace Groomy.Utilities
         {
             _instance = null;
         }
-
+        public DatabaseManager(ManagerSingleton ms)
+        {
+            _fileService = ms.fs;
+        }
         public DatabaseManager(IFileService fileService)
         {
             _fileService = fileService;

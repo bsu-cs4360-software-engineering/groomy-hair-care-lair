@@ -30,6 +30,7 @@ namespace GroomyTests.Customers
             var mockFileService = new Mock<IFileService>();
             var dbm = new DatabaseManager(mockFileService.Object);
             var userAuth = new UserAuth();
+            var dbrs = new DBRelationshipService(dbm, userAuth);
             //create new user
             var currentUser = new User("testFirst", "testLast", "testEmail", "testPassword");
             //get expected userID and user file path
@@ -38,7 +39,7 @@ namespace GroomyTests.Customers
             //set current userAuth user to new user
             userAuth.setUser(currentUser);
             //create new customerDBService
-            var customerDBService = new CustomerDBService(dbm, userAuth);
+            var customerDBService = new CustomerDBService(dbm, userAuth, dbrs);
             //create new customer
             var newCustomer = new Customer("John", "Doe", "john.doe@example.com", "1234567890", "123 Main St");
             //get expected customer fields and customerID
