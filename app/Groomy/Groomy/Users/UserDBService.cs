@@ -2,7 +2,7 @@
 
 namespace Groomy.Users
 {
-    internal class UserDBService
+    public class UserDBService
     {
         private DatabaseManager dbm;
         public UserDBService(ManagerSingleton ms)
