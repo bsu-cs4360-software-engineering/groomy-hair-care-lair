@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Groomy.Relationships;
 using Groomy.Utilities;
 
 namespace Groomy.Notes
@@ -36,6 +37,16 @@ namespace Groomy.Notes
         {
             dbm.CreateObjectInDB(notes);
             dbm.CreateRelationshipEntry(new Relationships.Notes.ServiceNotesRelationship(serviceID, notes.GetKey()));
+        }
+        public void CreateInvoiceNotes(Note notes, string invoiceID)
+        {
+            dbm.CreateObjectInDB(notes);
+            dbm.CreateRelationshipEntry(new Relationships.Notes.InvoiceNotesRelationship(invoiceID, notes.GetKey()));
+        }
+        public void CreateNotes(Note notes, string primaryID, string relationshipPath)
+        {
+            dbm.CreateObjectInDB(notes);
+            dbm.CreateRelationshipEntry(new PrimaryForeignRelationship(primaryID, notes.GetKey(), relationshipPath));
         }
         public Dictionary<string, string> ReadNotesData(string noteID)
         {
@@ -71,35 +82,53 @@ namespace Groomy.Notes
             //update relationship
             dbm.UpdateRelationshipEntry(new Relationships.Notes.ServiceNotesRelationship(serviceID, noteID));
         }
-        public void DeleteCustomerNotes(string noteID)
+
+        public void UpdateInvoiceNotesData(Note notes, string invoiceID)
         {
-            dbm.DeleteObjectFromDB(noteID, Note.FilePaths["NotesData"]);
-            //dbm.DeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetCustomerIDFromNoteID(noteID), noteID));
-            dbm.DeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, "customers_notes.json"), noteID));
+            var noteID = notes.GetKey();
+            var notesData = notes.GetFields()["NotesData"];
+
+            //update notes
+            dbm.UpdateObjectInDB(noteID, notesData, Note.FilePaths["NotesData"]);
+            //update relationship
+            dbm.UpdateRelationshipEntry(new Relationships.Notes.InvoiceNotesRelationship(invoiceID, noteID));
         }
-        public void DeleteAppointmentNotes(string noteID)
+
+        public void UpdateNotesData(Note notes, string relationshipPath)
         {
-            dbm.DeleteObjectFromDB(noteID, Note.FilePaths["NotesData"]);
-            //dbm.DeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetAppointmentIDFromNoteID(noteID), noteID));
-            dbm.DeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, "appointments_notes.json"), noteID));
+            var noteID = notes.GetKey();
+            var notesData = notes.GetFields()["NotesData"];
+
+            //update notes
+            dbm.UpdateObjectInDB(noteID, notesData, Note.FilePaths["NotesData"]);
+            //update relationship
+            dbm.UpdateRelationshipEntry(new PrimaryForeignRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, relationshipPath), noteID, relationshipPath));
         }
         public void SoftDeleteCustomerNotes(string noteId)
         {
             dbm.SoftDeleteObjectInDB(noteId, Note.FilePaths["NotesData"]);
-            //dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetCustomerIDFromNoteID(noteId), noteId));
             dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.CustomerNotesRelationship(dbrs.GetPrimaryIDFromForeignID(noteId, "customers_notes.json"), noteId));
         }
         public void SoftDeleteAppointmentNotes(string noteID)
         {
             dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
-            // dbm.SoftDeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetAppointmentIDFromNoteID(noteID), noteID));
             dbm.SoftDeleteRelationshipEntry(new Relationships.AppointmentNotesRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, "appointments_notes.json"), noteID));
         }
         public void SoftDeleteServiceNotes(string noteID)
         {
             dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
-            //dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.ServiceNotesRelationship(dbrs.GetServiceIDFromNoteID(noteID), noteID));
             dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.ServiceNotesRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, "services_notes.json"), noteID));
+        }
+        public void SoftDeleteInvoiceNotes(string noteID)
+        {
+            dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
+            dbm.SoftDeleteRelationshipEntry(new Relationships.Notes.InvoiceNotesRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, "invoices_notes.json"), noteID));
+        }
+
+        public void SoftDeleteNote(string noteID, string relationshipPath)
+        {
+            dbm.SoftDeleteObjectInDB(noteID, Note.FilePaths["NotesData"]);
+            dbm.SoftDeleteRelationshipEntry(new PrimaryForeignRelationship(dbrs.GetPrimaryIDFromForeignID(noteID, relationshipPath), noteID, relationshipPath));
         }
     }
 }
