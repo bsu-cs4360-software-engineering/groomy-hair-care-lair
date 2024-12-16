@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Groomy.Utilities;
 using Moq;
-
 using System.Text.Json;
 
 namespace Groomy.Users.Tests
@@ -241,19 +240,145 @@ namespace Groomy.Users.Tests
         [TestMethod()]
         public void ReadUserDataTest()
         {
-            Assert.Fail();
+            var mockFS = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFS.Object);
+            var udbs = new UserDBService(dbm);
+
+            var testUserID = "testUserID";
+            var userFirst = "testFirst";
+            var userLast = "testLast";
+            var userEmail = "testEmail";
+            var userPassword = "testPassword";
+
+            var userDBFilepath = "users.json";
+            var userDB = new List<Dictionary<string, string>>
+            {
+                new Dictionary<string, string>
+                {
+                    {"UserID", testUserID},
+                    {"FirstName", userFirst},
+                    {"LastName", userLast},
+                    {"Email", userEmail}
+                }
+            };
+
+            mockFS.Setup(fs => fs.ReadAllText(userDBFilepath)).Returns(JsonSerializer.Serialize(userDB));
+            mockFS.Setup(fs => fs.Exists(userDBFilepath)).Returns(true);
+
+            //Act
+            var user = udbs.ReadUserData(testUserID);
+
+            //Assert
+            Assert.IsNotNull(user);
+            Assert.AreEqual(testUserID, user["UserID"]);
+            Assert.AreEqual(userFirst, user["FirstName"]);
+            Assert.AreEqual(userLast, user["LastName"]);
+            Assert.AreEqual(userEmail, user["Email"]);
         }
 
         [TestMethod()]
         public void ReadPasswordDataTest()
         {
-            Assert.Fail();
+            var mockFS = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFS.Object);
+            var udbs = new UserDBService(dbm);
+
+            var testUserID = "testUserID";
+            var userFirst = "testFirst";
+            var userLast = "testLast";
+            var userEmail = "testEmail";
+            var userPassword = "testPassword";
+
+            var passwordDBFilepath = "passwords.json";
+            var passwordDB = new List<Dictionary<string, string>>
+            {
+                new Dictionary<string, string>
+                {
+                    {"UserID", testUserID},
+                    {"Password", userPassword}
+                }
+            };
+
+            mockFS.Setup(fs => fs.ReadAllText(passwordDBFilepath)).Returns(JsonSerializer.Serialize(passwordDB));
+            mockFS.Setup(fs => fs.Exists(passwordDBFilepath)).Returns(true);
+
+            //Act
+            var password = udbs.ReadPasswordData(testUserID);
+
+            //Assert
+            Assert.IsNotNull(password);
+            Assert.AreEqual(testUserID, password["UserID"]);
+            Assert.AreEqual(userPassword, password["Password"]);
         }
 
         [TestMethod()]
         public void DeleteUserTest()
         {
-            Assert.Fail();
+            var mockFS = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFS.Object);
+            var udbs = new UserDBService(dbm);
+
+            var testUserID = "testUserID";
+            var userFirst = "testFirst";
+            var userLast = "testLast";
+            var userEmail = "testEmail";
+            var userPassword = "testPassword";
+
+            var userDBFilepath = "users.json";
+            var userDB = new List<Dictionary<string, string>>
+            {
+                new Dictionary<string, string>
+                {
+                    {"UserID", testUserID},
+                    {"FirstName", userFirst},
+                    {"LastName", userLast},
+                    {"Email", userEmail}
+                }
+            };
+            var passwordDBFilepath = "passwords.json";
+            var passwordDB = new List<Dictionary<string, string>>
+            {
+                new Dictionary<string, string>
+                {
+                    {"UserID", testUserID},
+                    {"Password", userPassword}
+                }
+            };
+
+            mockFS.Setup(fs => fs.ReadAllText(userDBFilepath)).Returns(JsonSerializer.Serialize(userDB));
+            mockFS.Setup(fs => fs.Exists(userDBFilepath)).Returns(true);
+
+            mockFS.Setup(fs => fs.ReadAllText(passwordDBFilepath)).Returns(JsonSerializer.Serialize(passwordDB));
+            mockFS.Setup(fs => fs.Exists(passwordDBFilepath)).Returns(true);
+
+            string retrievedUserDB = null;
+            mockFS.Setup(fs => fs.WriteAllText(userDBFilepath, It.IsAny<string>()))
+                .Callback<string, string>((path, content) =>
+                {
+                    retrievedUserDB = content;
+                });
+            string retrievedPasswordDB = null;
+            mockFS.Setup(fs => fs.WriteAllText(passwordDBFilepath, It.IsAny<string>()))
+                .Callback<string, string>((path, content) =>
+                {
+                    retrievedPasswordDB = content;
+                });
+
+            //Act
+            udbs.DeleteUser(testUserID);
+
+            //Assert
+            Assert.IsNotNull(retrievedUserDB);
+            //deserialize the retrievedUserDB
+            var dUserDB = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(retrievedUserDB);
+            Assert.IsNotNull(dUserDB);
+            Assert.AreEqual(0, dUserDB.Count);
+
+            //deserialize the retrievedPasswordDB
+            var dPasswordDB = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(retrievedPasswordDB);
+            Assert.IsNotNull(dPasswordDB);
+            Assert.AreEqual(0, dPasswordDB.Count);
+
         }
     }
 }
