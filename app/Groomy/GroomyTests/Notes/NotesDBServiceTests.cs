@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Groomy.Utilities;
+using Groomy.Users;
 
 namespace Groomy.Notes.Tests
 {
@@ -12,15 +14,22 @@ namespace Groomy.Notes.Tests
     public class NotesDBServiceTests
     {
         [TestMethod()]
-        public void NotesDBServiceTest()
+        public void NotesDBServieManagerSingleton()
         {
-            Assert.Fail();
+            var ms = new ManagerSingleton();
+            var ndbs = new NotesDBService(ms);
+            Assert.IsInstanceOfType(ndbs, typeof(NotesDBService));
         }
 
         [TestMethod()]
-        public void NotesDBServiceTest1()
+        public void NotesDBServiceDependancyInjection()
         {
-            Assert.Fail();
+            var fs = new FileService();
+            var dbm = new DatabaseManager(fs);
+            var ua = new UserAuth();
+            var dbrs = new DBRelationshipService(dbm, ua);
+            var ndbs = new NotesDBService(dbm, dbrs);
+            Assert.IsInstanceOfType(ndbs, typeof(NotesDBService));
         }
 
         [TestMethod()]

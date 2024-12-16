@@ -1,10 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Groomy.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Groomy.Users;
+using Groomy.Utilities;
 
 namespace Groomy.Services.Tests
 {
@@ -12,15 +7,21 @@ namespace Groomy.Services.Tests
     public class ServiceDBServiceTests
     {
         [TestMethod()]
-        public void ServiceDBServiceTest()
+        public void ServiceDBServiceManagerSingleton()
         {
-            Assert.Fail();
+            var ms = new ManagerSingleton();
+            var sdbs = new ServiceDBService(ms);
+            Assert.IsInstanceOfType(sdbs, typeof(ServiceDBService));
         }
 
         [TestMethod()]
-        public void ServiceDBServiceTest1()
+        public void ServiceDBServiceDependancyInjection()
         {
-            Assert.Fail();
+            var fs = new FileService();
+            var dbm = new DatabaseManager(fs);
+            var ua = new UserAuth();
+            var dbrs = new DBRelationshipService(dbm, ua);
+            var sdbs = new ServiceDBService(dbm, dbrs);
         }
 
         [TestMethod()]
