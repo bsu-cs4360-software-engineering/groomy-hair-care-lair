@@ -230,12 +230,16 @@ namespace Groomy.Utilities
         {
             var relationshipFilePath = relationship.GetFilePath();
             var previousRelationshipData = LoadRelationships(relationshipFilePath);
-            Dictionary<string, string> IDs = relationship.GetIDs();
+            Dictionary<string, string> newIDs = relationship.GetIDs();
 
             // Check if the relationship already exists to avoid duplicates
-            if (!previousRelationshipData.Any(r => r.SequenceEqual(IDs)))
+            bool exists = previousRelationshipData.Any(existingIDs =>
+                existingIDs.Count == newIDs.Count &&
+                !existingIDs.Except(newIDs).Any());
+
+            if (!exists)
             {
-                previousRelationshipData.Add(IDs);
+                previousRelationshipData.Add(newIDs);
                 SaveRelationships(previousRelationshipData, relationshipFilePath);
             }
         }
