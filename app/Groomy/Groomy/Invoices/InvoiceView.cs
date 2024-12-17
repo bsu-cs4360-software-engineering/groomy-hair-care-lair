@@ -459,7 +459,7 @@ namespace Groomy.Invoices
 
             if (detailService != null)
             {
-                txtServiceTotal.Text = calculateDetailTotal(detailData["DetailID"]).ToString();
+                txtServiceTotal.Text = calculateDetailTotal(detailData["DetailID"]).ToString("C");
             }
         }
         private void selectServiceByName(string serviceName)
@@ -474,6 +474,10 @@ namespace Groomy.Invoices
                     break;
                 }
             }
+        }
+        private float calculateDetailTotalFromQuantityAndServicePrice(int detailQuantity, float servicePrice)
+        {
+            return servicePrice * detailQuantity;
         }
         private float calculateDetailTotal(string detailID)
         {
@@ -501,11 +505,28 @@ namespace Groomy.Invoices
 
         private void setDetailTotal(object sender, EventArgs e)
         {
-            txtServiceTotal.Text = calculateDetailTotal(fieldDetailID.Text).ToString();
+            txtServiceTotal.Text = calculateDetailTotal(fieldDetailID.Text).ToString("C");
+        }
+        private void otfQuantity_TextChanged(object sender, EventArgs e)
+        {
+            var detailData = ms.iDBS.ReadDetailData(fieldDetailID.Text);
+            if (detailData != null)
+            {
+                var detailQuantity = 0;
+                if (!string.IsNullOrEmpty(txtQuantity.Text))
+                {
+                    detailQuantity = int.Parse(txtQuantity.Text);
+                }
+
+                var serviceID = detailData["ServiceID"];
+                var serviceData = ms.sDBS.ReadServiceData(serviceID);
+                var servicePrice = float.Parse(serviceData["ServicePrice"]);
+                txtServiceTotal.Text = calculateDetailTotalFromQuantityAndServicePrice(detailQuantity, servicePrice).ToString("C");
+            }
         }
         private void setInvoiceTotal()
         {
-            txtInvoiceTotal.Text = calculateInvoiceTotal(fieldInvoiceID.Text).ToString();
+            txtInvoiceTotal.Text = calculateInvoiceTotal(fieldInvoiceID.Text).ToString("C");
         }
     }
 }

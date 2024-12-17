@@ -571,8 +571,8 @@
             txtQuantity.ReadOnly = true;
             txtQuantity.Size = new Size(247, 23);
             txtQuantity.TabIndex = 120;
-            txtQuantity.TextChanged += setDetailTotal;
-            txtQuantity.Leave += setDetailTotal;
+            txtQuantity.TextChanged += otfQuantity_TextChanged;
+            txtQuantity.Leave += otfQuantity_TextChanged;
             // 
             // lblQuantity
             // 
