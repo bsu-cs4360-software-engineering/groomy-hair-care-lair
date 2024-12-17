@@ -79,6 +79,7 @@ namespace Groomy
             var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false);
             var invoiceData = newInvoice.GetFields()["InvoiceData"];
             Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+            invoiceView.Show();
         }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
@@ -148,6 +149,26 @@ namespace Groomy
             }
         }
 
+        private void btnInvoiceDelete_Click(object sender, EventArgs e)
+        {
+            var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
+            if (Helpers.messageBoxConfirm("Are you sure you want to delete this invoice?"))
+            {
+                //var detailIDs = ms.dbrs.GetDetailIDsFromInvoiceID(invoiceID);
+                var detailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_details.json");
+                foreach (var detailID in detailIDs)
+                {
+                    ms.iDBS.SoftDeleteDetail(detailID);
+                }
+                var noteIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_notes.json");
+                foreach (var noteID in noteIDs)
+                {
+                    ms.nDBS.SoftDeleteInvoiceNotes(noteID);
+                }
+                ms.iDBS.SoftDeleteInvoice(invoiceID);
+                loadInvoiceData();
+            }
+        }
         private void apptDel_Click(object sender, EventArgs e)
         {
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
@@ -162,7 +183,6 @@ namespace Groomy
                 ms.aDBS.SoftDeleteAppointment(appointmentID);
                 loadAppointmentData();
             }
-
         }
         private void loadAppointmentData()
         {
@@ -277,6 +297,21 @@ namespace Groomy
 
         }
 
+        private void btnInvoiceView_Click(object sender, EventArgs e)
+        {
+            var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
+            if (!string.IsNullOrEmpty(invoiceID))
+            {
+                var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
+                Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+                invoiceView.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No invoice selected. Please select an invoice.");
+            }
+
+        }
         private void btnCustomerView_Click(object sender, EventArgs e)
         {
             var customerID = Helpers.GetFieldFromSelection("CustomerID", dataCustomers);
@@ -306,5 +341,6 @@ namespace Groomy
                 Helpers.messageBoxError("No customer selected. Please select a customer.");
             }
         }
+
     }
 }

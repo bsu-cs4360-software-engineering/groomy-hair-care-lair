@@ -396,6 +396,7 @@
             btnInvoiceView.TabIndex = 41;
             btnInvoiceView.Text = "View Invoice";
             btnInvoiceView.UseVisualStyleBackColor = false;
+            btnInvoiceView.Click += btnInvoiceView_Click;
             // 
             // btnInvoiceDelete
             // 
@@ -407,6 +408,7 @@
             btnInvoiceDelete.TabIndex = 40;
             btnInvoiceDelete.Text = "Delete Invoice";
             btnInvoiceDelete.UseVisualStyleBackColor = false;
+            btnInvoiceDelete.Click += btnInvoiceDelete_Click;
             // 
             // btnInvoiceNew
             // 
