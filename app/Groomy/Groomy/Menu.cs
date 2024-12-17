@@ -1,5 +1,7 @@
 ﻿using Groomy.Appointments;
 using Groomy.Customers;
+using Groomy.Invoices;
+using Groomy.Services;
 using Groomy.Utilities;
 using System.Data;
 using System.Diagnostics;
@@ -55,30 +57,38 @@ namespace Groomy
         }
         private void btnCustomerNew_Click(object sender, EventArgs e)
         {
+            canClickSidebar(false);
             var newCustomer = new Customer("", "", "", "", "", "");
             var customerData = newCustomer.GetFields()["CustomerData"];
             Form customerView = new CustomerView(customerData, this);
+            customerView.FormClosed += (s, args) => canClickSidebar(true);
             customerView.Show();
         }
         private void btnNewAppointment_Click(object sender, EventArgs e)
         {
+            canClickSidebar(false);
             var newAppointment = new Appointments.Appointment("", "", DateTime.Now, DateTime.Now, "", "");
             var appointmentData = newAppointment.GetFields()["AppointmentData"];
             Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
+            appointmentView.FormClosed += (s, args) => canClickSidebar(true);
             appointmentView.Show();
         }
         private void btnServiceNew_Click(object sender, EventArgs e)
         {
+            canClickSidebar(false);
             var newService = new Services.Service("", "", "", "");
             var serviceData = newService.GetFields()["ServiceData"];
             Form serviceView = new Services.ServiceView(serviceData, this);
+            serviceView.FormClosed += (s, args) => canClickSidebar(true);
             serviceView.Show();
         }
         private void btnInvoiceNew_Click(object sender, EventArgs e)
         {
+            canClickSidebar(false);
             var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false, "");
             var invoiceData = newInvoice.GetFields()["InvoiceData"];
             Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+            invoiceView.FormClosed += (s, args) => canClickSidebar(true);
             invoiceView.Show();
         }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
@@ -272,8 +282,10 @@ namespace Groomy
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
             if (!string.IsNullOrEmpty(appointmentID))
             {
+                canClickSidebar(false);
                 var appointmentData = ms.aDBS.ReadAppointmentData(appointmentID);
                 Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
+                appointmentView.FormClosed += (s, args) => canClickSidebar(true);
                 appointmentView.Show();
             }
             else
@@ -287,8 +299,10 @@ namespace Groomy
             var serviceID = Helpers.GetFieldFromSelection("ServiceID", dataServices);
             if (!string.IsNullOrEmpty(serviceID))
             {
+                canClickSidebar(false);
                 var serviceData = ms.sDBS.ReadServiceData(serviceID);
                 Form serviceView = new Services.ServiceView(serviceData, this);
+                serviceView.FormClosed += (s, args) => canClickSidebar(true);
                 serviceView.Show();
             }
             else
@@ -303,8 +317,10 @@ namespace Groomy
             var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
             if (!string.IsNullOrEmpty(invoiceID))
             {
+                canClickSidebar(false);
                 var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
                 Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+                invoiceView.FormClosed += (s, args) => canClickSidebar(true);
                 invoiceView.Show();
             }
             else
@@ -318,8 +334,10 @@ namespace Groomy
             var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
             if (!string.IsNullOrEmpty(invoiceID))
             {
+                canClickSidebar(false);
                 var invoicePrice = Helpers.GetFieldFromSelection("Total", dataInvoices);
                 Form invoicePrint = new Invoices.InvoicePrint(invoiceID, invoicePrice);
+                invoicePrint.FormClosed += (s, args) => canClickSidebar(true);
                 invoicePrint.Show();
             }
             else
@@ -332,8 +350,10 @@ namespace Groomy
             var customerID = Helpers.GetFieldFromSelection("CustomerID", dataCustomers);
             if (!string.IsNullOrEmpty(customerID))
             {
+                canClickSidebar(false);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 Form customerView = new CustomerView(customerData, this);
+                customerView.FormClosed += (s, args) => canClickSidebar(true);
                 customerView.Show();
             }
             else
@@ -347,14 +367,24 @@ namespace Groomy
             var customerID = Helpers.GetFieldFromSelection("CustomerID", dataInvoices);
             if (!string.IsNullOrEmpty(customerID))
             {
+                canClickSidebar(false);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 Form invoiceForm = new Groomy.Invoice.Invoice(customerData, this);
+                invoiceForm.FormClosed += (s, args) => canClickSidebar(true);
                 invoiceForm.Show();
             }
             else
             {
                 Helpers.messageBoxError("No customer selected. Please select a customer.");
             }
+        }
+        private void canClickSidebar(bool canClick)
+        {
+            btnWelcome.Enabled = canClick;
+            btnServices.Enabled = canClick;
+            btnCustomers.Enabled = canClick;
+            btnAppointment.Enabled = canClick;
+            btnInvoices.Enabled = canClick;
         }
     }
 }
