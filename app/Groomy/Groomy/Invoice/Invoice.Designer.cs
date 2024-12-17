@@ -30,13 +30,14 @@
         {
             lblGroomyCustomers = new Label();
             invRichText = new RichTextBox();
-            groupBox1 = new GroupBox();
+            serviceOfferedBox = new GroupBox();
+            btnSaveInv = new Button();
             btnPrint = new Button();
             btnGenInv = new Button();
             servicesTickBox = new CheckedListBox();
-            button1 = new Button();
             saveInv = new SaveFileDialog();
-            groupBox1.SuspendLayout();
+            isPaidTick = new CheckBox();
+            serviceOfferedBox.SuspendLayout();
             SuspendLayout();
             // 
             // lblGroomyCustomers
@@ -61,18 +62,29 @@
             invRichText.TabIndex = 73;
             invRichText.Text = "";
             // 
-            // groupBox1
+            // serviceOfferedBox
             // 
-            groupBox1.Controls.Add(button1);
-            groupBox1.Controls.Add(btnPrint);
-            groupBox1.Controls.Add(btnGenInv);
-            groupBox1.Controls.Add(servicesTickBox);
-            groupBox1.Location = new Point(12, 56);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(582, 386);
-            groupBox1.TabIndex = 74;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Services Offered";
+            serviceOfferedBox.Controls.Add(isPaidTick);
+            serviceOfferedBox.Controls.Add(btnSaveInv);
+            serviceOfferedBox.Controls.Add(btnPrint);
+            serviceOfferedBox.Controls.Add(btnGenInv);
+            serviceOfferedBox.Controls.Add(servicesTickBox);
+            serviceOfferedBox.Location = new Point(12, 56);
+            serviceOfferedBox.Name = "serviceOfferedBox";
+            serviceOfferedBox.Size = new Size(582, 386);
+            serviceOfferedBox.TabIndex = 74;
+            serviceOfferedBox.TabStop = false;
+            serviceOfferedBox.Text = "Services Offered";
+            // 
+            // btnSaveInv
+            // 
+            btnSaveInv.Enabled = false;
+            btnSaveInv.Location = new Point(6, 330);
+            btnSaveInv.Name = "btnSaveInv";
+            btnSaveInv.Size = new Size(570, 23);
+            btnSaveInv.TabIndex = 3;
+            btnSaveInv.Text = "Save Invoice";
+            btnSaveInv.UseVisualStyleBackColor = true;
             // 
             // btnPrint
             // 
@@ -99,30 +111,31 @@
             servicesTickBox.FormattingEnabled = true;
             servicesTickBox.Location = new Point(0, 22);
             servicesTickBox.Name = "servicesTickBox";
-            servicesTickBox.Size = new Size(576, 274);
+            servicesTickBox.Size = new Size(576, 238);
             servicesTickBox.TabIndex = 0;
             // 
-            // button1
+            // isPaidTick
             // 
-            button1.Enabled = false;
-            button1.Location = new Point(6, 330);
-            button1.Name = "button1";
-            button1.Size = new Size(570, 23);
-            button1.TabIndex = 3;
-            button1.Text = "Save Invoice";
-            button1.UseVisualStyleBackColor = true;
+            isPaidTick.AutoSize = true;
+            isPaidTick.Location = new Point(6, 266);
+            isPaidTick.Name = "isPaidTick";
+            isPaidTick.Size = new Size(101, 19);
+            isPaidTick.TabIndex = 4;
+            isPaidTick.Text = "Invoice is Paid";
+            isPaidTick.UseVisualStyleBackColor = true;
             // 
             // Invoice
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1233, 454);
-            Controls.Add(groupBox1);
+            Controls.Add(serviceOfferedBox);
             Controls.Add(invRichText);
             Controls.Add(lblGroomyCustomers);
             Name = "Invoice";
             Text = "Invoices";
-            groupBox1.ResumeLayout(false);
+            serviceOfferedBox.ResumeLayout(false);
+            serviceOfferedBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -131,11 +144,12 @@
 
         private Label lblGroomyCustomers;
         private RichTextBox invRichText;
-        private GroupBox groupBox1;
+        private GroupBox serviceOfferedBox;
         private Button btnPrint;
         private Button btnGenInv;
         private CheckedListBox servicesTickBox;
-        private Button button1;
+        private Button btnSaveInv;
         private SaveFileDialog saveInv;
+        private CheckBox isPaidTick;
     }
 }

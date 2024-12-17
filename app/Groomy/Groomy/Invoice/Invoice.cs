@@ -1,6 +1,7 @@
 ﻿using Groomy.Appointments;
 using Groomy.Relationships;
 using Groomy.Utilities;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -33,6 +34,8 @@ namespace Groomy.Invoice
         {
             this.Size = new Size(1249, 493);
             invRichText.Clear();
+            serviceOfferedBox.Name = $"Services Offered To: {customerData["FirstName"]}";
+
             var services = ms.sDBS.GetServices();
             servicesTickBox.Items.Clear();
             foreach (var service in services)
@@ -86,11 +89,46 @@ namespace Groomy.Invoice
         {
             // Enable the print and save button
             btnPrint.Enabled = true;
+            btnSaveInv.Enabled = true;
 
             invRichText.Clear();
-            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("INVOICE\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 14);
+            string currentDateTime = DateTime.Now.ToString("MMMM dd, yyyy HH:mm");
+            AppendFormattedText($"Date: {currentDateTime}\n", FontStyle.Bold | FontStyle.Bold, 12);
+            AppendFormattedText($"You Were Serviced By: ", FontStyle.Bold | FontStyle.Bold, 12);
+            // I need help implmenting this
+            // invRichText.AppendText($"{userData["FirstName"]} {userData["LastName"]}\n");
+
+            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 16);
+            AppendFormattedText("INVOICE\n", FontStyle.Bold | FontStyle.Underline, 16);
+            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 16);
+
+            invRichText.AppendText("\n========================================\n");
+
+            bool isInvPaid = isPaidTick.Checked;
+            bool hasDueDate = !isInvPaid; 
+            DateTime? dueDate = null;
+
+            if (!isInvPaid)
+            {
+                dueDate = DateTime.Now.AddDays(7);
+            }
+
+            if (isInvPaid)
+            {
+                AppendFormattedText("PAID\n", FontStyle.Bold, 14);
+            }
+            else
+            {
+                AppendFormattedText("UNPAID\n", FontStyle.Bold, 14);
+            }
+            if (hasDueDate && dueDate.HasValue)
+            {
+                AppendFormattedText("Invoice Due By: ", FontStyle.Bold, 14);
+                invRichText.AppendText($"{dueDate.Value.ToString("MMMM dd, yyyy")}\n");
+            }
+
+            invRichText.AppendText("\n========================================\n");
+
             AppendFormattedText("Customer Information:\n", FontStyle.Bold | FontStyle.Underline, 14);
             AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
             AppendFormattedText("Name: ", FontStyle.Bold, 10);
@@ -102,6 +140,7 @@ namespace Groomy.Invoice
             AppendFormattedText("Address: ", FontStyle.Bold, 10);
             invRichText.AppendText($"{customerData["Address"]}\n");
             invRichText.AppendText("\n");
+
             AppendFormattedText("Invoice Details:\n", FontStyle.Bold | FontStyle.Underline, 14);
             AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
             AppendFormattedText("Item\t\tPrice\t\tQty\t\tTotal\n", FontStyle.Bold, 10);
@@ -113,6 +152,7 @@ namespace Groomy.Invoice
             {
                 selectedServices.Add(checkedItem.ToString());
             }
+
             foreach (string serviceName in selectedServices)
             {
                 var serviceData = ms.sDBS.GetServices()
@@ -121,7 +161,7 @@ namespace Groomy.Invoice
                 {
                     string serviceId = serviceData["ServiceID"];
                     decimal price = decimal.Parse(serviceData["ServicePrice"]);
-                    decimal itemTotal = price * 1;
+                    decimal itemTotal = price * 1; // Assuming 1 item per service
                     totalAmount += itemTotal;
                     invRichText.AppendText($"{serviceName,-25}{price,-15:C}{1,-10}{itemTotal,-15:C}\n");
                 }
@@ -134,6 +174,7 @@ namespace Groomy.Invoice
             invRichText.AppendText("Thank you for your business!\n");
             invRichText.AppendText("========================================\n");
         }
+
 
 
     }
