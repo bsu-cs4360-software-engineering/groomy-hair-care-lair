@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             panelNotesInvoiceAll = new Panel();
-            btnNotesServiceDelete = new Button();
-            btnNotesServiceView = new Button();
-            btnNotesServiceNew = new Button();
+            btnNotesInvoiceDelete = new Button();
+            btnNotesInvoiceView = new Button();
+            btnNotesInvoiceNew = new Button();
             invoiceNotesDataGridView = new DataGridView();
             lblNotes = new Label();
             btnInvoiceEditSave = new Button();
@@ -86,9 +86,9 @@
             // 
             // panelNotesInvoiceAll
             // 
-            panelNotesInvoiceAll.Controls.Add(btnNotesServiceDelete);
-            panelNotesInvoiceAll.Controls.Add(btnNotesServiceView);
-            panelNotesInvoiceAll.Controls.Add(btnNotesServiceNew);
+            panelNotesInvoiceAll.Controls.Add(btnNotesInvoiceDelete);
+            panelNotesInvoiceAll.Controls.Add(btnNotesInvoiceView);
+            panelNotesInvoiceAll.Controls.Add(btnNotesInvoiceNew);
             panelNotesInvoiceAll.Controls.Add(invoiceNotesDataGridView);
             panelNotesInvoiceAll.Controls.Add(lblNotes);
             panelNotesInvoiceAll.Location = new Point(651, 93);
@@ -96,41 +96,41 @@
             panelNotesInvoiceAll.Size = new Size(319, 308);
             panelNotesInvoiceAll.TabIndex = 108;
             // 
-            // btnNotesServiceDelete
+            // btnNotesInvoiceDelete
             // 
-            btnNotesServiceDelete.BackColor = Color.FromArgb(21, 96, 130);
-            btnNotesServiceDelete.ForeColor = Color.White;
-            btnNotesServiceDelete.Location = new Point(211, 37);
-            btnNotesServiceDelete.Name = "btnNotesServiceDelete";
-            btnNotesServiceDelete.Size = new Size(87, 23);
-            btnNotesServiceDelete.TabIndex = 77;
-            btnNotesServiceDelete.Text = "Delete";
-            btnNotesServiceDelete.UseVisualStyleBackColor = false;
-            btnNotesServiceDelete.Click += btnNotesServiceDelete_Click;
+            btnNotesInvoiceDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnNotesInvoiceDelete.ForeColor = Color.White;
+            btnNotesInvoiceDelete.Location = new Point(211, 37);
+            btnNotesInvoiceDelete.Name = "btnNotesInvoiceDelete";
+            btnNotesInvoiceDelete.Size = new Size(87, 23);
+            btnNotesInvoiceDelete.TabIndex = 77;
+            btnNotesInvoiceDelete.Text = "Delete";
+            btnNotesInvoiceDelete.UseVisualStyleBackColor = false;
+            btnNotesInvoiceDelete.Click += btnNotesServiceDelete_Click;
             // 
-            // btnNotesServiceView
+            // btnNotesInvoiceView
             // 
-            btnNotesServiceView.BackColor = Color.FromArgb(21, 96, 130);
-            btnNotesServiceView.ForeColor = Color.White;
-            btnNotesServiceView.Location = new Point(118, 37);
-            btnNotesServiceView.Name = "btnNotesServiceView";
-            btnNotesServiceView.Size = new Size(87, 23);
-            btnNotesServiceView.TabIndex = 76;
-            btnNotesServiceView.Text = "View";
-            btnNotesServiceView.UseVisualStyleBackColor = false;
-            btnNotesServiceView.Click += btnNotesInvoiceView_Click;
+            btnNotesInvoiceView.BackColor = Color.FromArgb(21, 96, 130);
+            btnNotesInvoiceView.ForeColor = Color.White;
+            btnNotesInvoiceView.Location = new Point(118, 37);
+            btnNotesInvoiceView.Name = "btnNotesInvoiceView";
+            btnNotesInvoiceView.Size = new Size(87, 23);
+            btnNotesInvoiceView.TabIndex = 76;
+            btnNotesInvoiceView.Text = "View";
+            btnNotesInvoiceView.UseVisualStyleBackColor = false;
+            btnNotesInvoiceView.Click += btnNotesInvoiceView_Click;
             // 
-            // btnNotesServiceNew
+            // btnNotesInvoiceNew
             // 
-            btnNotesServiceNew.BackColor = Color.FromArgb(21, 96, 130);
-            btnNotesServiceNew.ForeColor = Color.White;
-            btnNotesServiceNew.Location = new Point(25, 37);
-            btnNotesServiceNew.Name = "btnNotesServiceNew";
-            btnNotesServiceNew.Size = new Size(87, 23);
-            btnNotesServiceNew.TabIndex = 74;
-            btnNotesServiceNew.Text = "New";
-            btnNotesServiceNew.UseVisualStyleBackColor = false;
-            btnNotesServiceNew.Click += btnNotesServiceNew_Click;
+            btnNotesInvoiceNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnNotesInvoiceNew.ForeColor = Color.White;
+            btnNotesInvoiceNew.Location = new Point(25, 37);
+            btnNotesInvoiceNew.Name = "btnNotesInvoiceNew";
+            btnNotesInvoiceNew.Size = new Size(87, 23);
+            btnNotesInvoiceNew.TabIndex = 74;
+            btnNotesInvoiceNew.Text = "New";
+            btnNotesInvoiceNew.UseVisualStyleBackColor = false;
+            btnNotesInvoiceNew.Click += btnNotesServiceNew_Click;
             // 
             // invoiceNotesDataGridView
             // 
@@ -532,6 +532,7 @@
             // 
             // panelServiceInvoiceNewEdit
             // 
+            panelServiceInvoiceNewEdit.Controls.Add(btnInvoiceServicesBack);
             panelServiceInvoiceNewEdit.Controls.Add(txtServiceTotal);
             panelServiceInvoiceNewEdit.Controls.Add(lblServiceTotal);
             panelServiceInvoiceNewEdit.Controls.Add(txtQuantity);
@@ -541,7 +542,6 @@
             panelServiceInvoiceNewEdit.Controls.Add(fieldDetailID);
             panelServiceInvoiceNewEdit.Controls.Add(lblDetailID);
             panelServiceInvoiceNewEdit.Controls.Add(btnInvoiceServiceEditSave);
-            panelServiceInvoiceNewEdit.Controls.Add(btnInvoiceServicesBack);
             panelServiceInvoiceNewEdit.Location = new Point(976, 93);
             panelServiceInvoiceNewEdit.Name = "panelServiceInvoiceNewEdit";
             panelServiceInvoiceNewEdit.Size = new Size(319, 308);
@@ -627,9 +627,9 @@
         private TextBox txtServicePrice;
         private Label lblServicePrice;
         private Panel panelNotesInvoiceAll;
-        private Button btnNotesServiceDelete;
-        private Button btnNotesServiceView;
-        private Button btnNotesServiceNew;
+        private Button btnNotesInvoiceDelete;
+        private Button btnNotesInvoiceView;
+        private Button btnNotesInvoiceNew;
         private DataGridView invoiceNotesDataGridView;
         private Label lblNotes;
         private Button btnInvoiceEditSave;

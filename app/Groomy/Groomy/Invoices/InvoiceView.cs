@@ -1,13 +1,5 @@
 ﻿using Groomy.Utilities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Groomy.Invoices
 {
@@ -37,7 +29,7 @@ namespace Groomy.Invoices
 
             setInvoiceEditMode(false);
             setDetailEditMode(false);
-            SetToggleNotesEditMode(false);
+            SetNotesEditMode(false);
 
             //Load invoice data
             this.timeInvoiceCreateDate.Value = DateTime.Parse(invoiceData["CreateDate"]);
@@ -104,6 +96,67 @@ namespace Groomy.Invoices
                 invoiceNotesDataGridView.Columns["Payload"].DisplayIndex = 2;
             }
         }
+        private void canPressInvoiceButtons(bool canPress)
+        {
+            btnInvoiceEditSave.Enabled = canPress;
+        }
+        private void canPressDetailsAllButtons(bool canPress)
+        {
+            btnNewInvoiceService.Enabled = canPress;
+            btnViewInvoiceService.Enabled = canPress;
+            btnDeleteInvoiceService.Enabled = canPress;
+
+            btnInvoiceServicesBack.Enabled = canPress;
+            btnInvoiceServiceEditSave.Enabled = canPress;
+        }
+        private void canPressNotesAllButtons(bool canPress)
+        {
+            btnNotesInvoiceNew.Enabled = canPress;
+            btnNotesInvoiceView.Enabled = canPress;
+            btnNotesInvoiceDelete.Enabled = canPress;
+
+            btnInvoiceNotesBack.Enabled = canPress;
+            btnInvoiceNotesEditSave.Enabled = canPress;
+        }
+        private void setInvoiceEditMode(bool isEditable)
+        {
+            comboCustomer.Enabled = isEditable;
+            timeInvoiceCreateDate.Enabled = isEditable;
+            timeInvoiceDueDate.Enabled = isEditable;
+            chkIsPaid.Enabled = isEditable;
+
+            // Disable/Enable the detail edit buttons
+            canPressDetailsAllButtons(!isEditable);
+
+            // Disable/Enable the notes edit buttons
+            canPressNotesAllButtons(!isEditable);
+        }
+        private void setDetailEditMode(bool isEditable)
+        {
+            btnInvoiceServicesBack.Enabled = !isEditable;
+            comboServices.Enabled = isEditable;
+            txtQuantity.ReadOnly = !isEditable;
+
+            // Disable/Enable the invoice edit buttons
+            canPressInvoiceButtons(!isEditable);
+
+            // Disable/Enable the notes edit buttons
+            canPressNotesAllButtons(!isEditable);
+        }
+
+
+        private void SetNotesEditMode(bool isEditable)
+        {
+            txtNotesInvoiceTitle.ReadOnly = !isEditable;
+            txtNotesInvoicePayload.ReadOnly = !isEditable;
+            timeNoteInvoiceCreateDate.Enabled = isEditable;
+
+            // Disable/Enable the invoice edit buttons
+            canPressInvoiceButtons(!isEditable);
+
+            // Disable/Enable the detail edit buttons
+            canPressDetailsAllButtons(!isEditable);
+        }
         private void btnInvoiceEditSave_Click(object sender, EventArgs e)
         {
             if (btnInvoiceEditSave.Text == "Edit")
@@ -133,13 +186,7 @@ namespace Groomy.Invoices
                 btnInvoiceEditSave.Text = "Edit";
             }
         }
-        private void setInvoiceEditMode(bool isEditable)
-        {
-            comboCustomer.Enabled = isEditable;
-            timeInvoiceCreateDate.Enabled = isEditable;
-            timeInvoiceDueDate.Enabled = isEditable;
-            chkIsPaid.Enabled = isEditable;
-        }
+        
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.parentForm.reloadData();
@@ -171,6 +218,7 @@ namespace Groomy.Invoices
         }
         private void btnInvoiceNotesBack_Click(object sender, EventArgs e)
         {
+            SetNotesEditMode(false);
             loadInvoiceNotes();
             Helpers.activatePanel(panelNotesInvoiceAll, panelSize, notesPanelLocation);
         }
@@ -178,7 +226,7 @@ namespace Groomy.Invoices
         {
             if (btnInvoiceNotesEditSave.Text == "Edit")
             {
-                SetToggleNotesEditMode(true);
+                SetNotesEditMode(true);
                 btnInvoiceNotesEditSave.Text = "Save";
             }
             else if (btnInvoiceNotesEditSave.Text == "Save")
@@ -195,16 +243,10 @@ namespace Groomy.Invoices
                 {
                     ms.nDBS.UpdateNotesData(editedNote, fieldInvoiceID.Text);
                 }
-                SetToggleNotesEditMode(false);
+                SetNotesEditMode(false);
                 btnInvoiceNotesEditSave.Text = "Edit";
                 loadInvoiceNotes();
             }
-        }
-        private void SetToggleNotesEditMode(bool isEditable)
-        {
-            txtNotesInvoiceTitle.ReadOnly = !isEditable;
-            txtNotesInvoicePayload.ReadOnly = !isEditable;
-            timeNoteInvoiceCreateDate.Enabled = isEditable;
         }
         private void setInvoiceNotesIdVisibility(bool isVisible)
         {
@@ -353,28 +395,41 @@ namespace Groomy.Invoices
         }
         private void loadInvoiceDetails()
         {
+            //include Service name from detail , quantity from detail
             this.invoiceDetails = new List<Dictionary<string, string>>();
+
+            var specialDetailData = new List<Dictionary<string,string>>();
+
             var invoiceDetailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceData["InvoiceID"], "invoices_details.json");
             foreach (var detailID in invoiceDetailIDs)
             {
-                invoiceDetails.Add(ms.iDBS.ReadDetailData(detailID));
+                var serviceID = ms.iDBS.ReadDetailData(detailID)["ServiceID"];
+                var serviceData = ms.sDBS.ReadServiceData(serviceID);
+                var detailData = ms.iDBS.ReadDetailData(detailID);
 
+                detailData["ServiceName"] = serviceData["ServiceName"];
+                detailData["Total"] = calculateDetailTotal(detailID).ToString("C2");
+                specialDetailData.Add(detailData);
             }
-            invoiceDetailsDatagridview.DataSource = Helpers.ConvertToDataTable(invoiceDetails);
+            invoiceDetailsDatagridview.DataSource = Helpers.ConvertToDataTable(specialDetailData);
             if (invoiceDetailsDatagridview.Columns.Count > 0)
             {
-                invoiceDetailsDatagridview.Columns["ServiceID"].DisplayIndex = 0;
+                invoiceDetailsDatagridview.Columns["DetailID"].Visible = false;
+                invoiceDetailsDatagridview.Columns["ServiceID"].Visible = false;
+
+                invoiceDetailsDatagridview.Columns["ServiceName"].DisplayIndex = 0;
                 invoiceDetailsDatagridview.Columns["Quantity"].DisplayIndex = 1;
+                invoiceDetailsDatagridview.Columns["Total"].DisplayIndex = 2;
+                invoiceDetailsDatagridview.Columns["Total"].DefaultCellStyle.Format = "C2";
+                invoiceDetailsDatagridview.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; // Optional: Align right
+
             }
         }
-        private void setDetailEditMode(bool isEditable)
-        {
-            comboServices.Enabled = isEditable;
-            txtQuantity.ReadOnly = !isEditable;
-        }
+        
         private void btnInvoiceServicesBack_Click(object sender, EventArgs e)
         {
             loadInvoiceDetails();
+            setDetailEditMode(false);
             Helpers.activatePanel(panelServicesInvoiceAll, panelSize, servicePanelLoc);
         }
 
