@@ -53,10 +53,11 @@ namespace Groomy.Invoice
             AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
 
             // Fetch and display appointments
-            var appointments = GetAppointmentsForCustomer(customerData["CustomerID"]);
-            if (appointments.Any())
+            //var appointments = GetAppointmentsForCustomer(customerData["CustomerID"]);
+            var appointmentIDs = ms.dbrs.GetForeignIDsFromPrimaryID(customerData["CustomerID"], "customers_appointments.json");
+            if (appointmentIDs.Any())
             {
-                foreach (var appointment in appointments)
+                foreach (var appointment in appointmentIDs)
                 {
                     var appointmentData = ms.aDBS.ReadAppointmentData(appointment);
                     var apptName = appointmentData["Description"];
