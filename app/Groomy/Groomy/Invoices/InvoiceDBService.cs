@@ -68,20 +68,20 @@ namespace Groomy.Invoices
         public void UpdateDetailData(InvoiceDetail detail, string invoiceID)
         {
             var detailID = detail.GetKey();
-            var detailData = detail.GetFields()["DetailData"];
+            var detailData = detail.GetFields()["InvoiceDetailData"];
 
-            dbm.UpdateObjectInDB(detailID, detailData, InvoiceDetail.FilePaths["DetailData"]);
+            dbm.UpdateObjectInDB(detailID, detailData, InvoiceDetail.FilePaths["InvoiceDetailData"]);
             dbm.UpdateRelationshipEntry(new Relationships.Invoice_Detail_Relationship(invoiceID, detailID));
         }
         public void DeleteDetail(string detailID)
         {
-            dbm.DeleteObjectFromDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
+            dbm.DeleteObjectFromDB(detailID, InvoiceDetail.FilePaths["InvoiceDetailData"]);
             //dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
             dbm.DeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, id_fp), detailID));
         }
         public void SoftDeleteDetail(string detailID)
         {
-            dbm.SoftDeleteObjectInDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
+            dbm.SoftDeleteObjectInDB(detailID, InvoiceDetail.FilePaths["InvoiceDetailData"]);
             //dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetInvoiceIDFromDetailID(detailID), detailID));
             dbm.SoftDeleteRelationshipEntry(new Relationships.Invoice_Detail_Relationship(dbrs.GetPrimaryIDFromForeignID(detailID, id_fp), detailID));
         }

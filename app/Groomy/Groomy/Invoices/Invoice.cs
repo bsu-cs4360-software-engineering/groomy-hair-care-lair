@@ -63,7 +63,7 @@ namespace Groomy.Invoices
 
         public static Dictionary<string, string> FilePaths = new Dictionary<string, string>
         {
-            { "InvoiceDetailData", "invoice_details.json" }
+            { "InvoiceDetailData", "details.json" }
         };
 
         public InvoiceDetail(string sID, int q, string dID)
