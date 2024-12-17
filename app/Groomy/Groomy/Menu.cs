@@ -61,7 +61,11 @@ namespace Groomy
             var newCustomer = new Customer("", "", "", "", "", "");
             var customerData = newCustomer.GetFields()["CustomerData"];
             Form customerView = new CustomerView(customerData, this);
-            customerView.FormClosed += (s, args) => canClickMenuButtons(true);
+            customerView.FormClosed += (s, args) =>
+            {
+                reloadData();
+                canClickMenuButtons(true);
+            };
             customerView.Show();
         }
         private void btnNewAppointment_Click(object sender, EventArgs e)
@@ -70,7 +74,11 @@ namespace Groomy
             var newAppointment = new Appointments.Appointment("", "", DateTime.Now, DateTime.Now, "", "");
             var appointmentData = newAppointment.GetFields()["AppointmentData"];
             Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
-            appointmentView.FormClosed += (s, args) => canClickMenuButtons(true);
+            appointmentView.FormClosed += (s, args) => 
+            { 
+                reloadData(); 
+                canClickMenuButtons(true); 
+            };
             appointmentView.Show();
         }
         private void btnServiceNew_Click(object sender, EventArgs e)
@@ -79,7 +87,11 @@ namespace Groomy
             var newService = new Services.Service("", "", "", "");
             var serviceData = newService.GetFields()["ServiceData"];
             Form serviceView = new Services.ServiceView(serviceData, this);
-            serviceView.FormClosed += (s, args) => canClickMenuButtons(true);
+            serviceView.FormClosed += (s, args) =>
+            {
+                reloadData();
+                canClickMenuButtons(true);
+            };
             serviceView.Show();
         }
         private void btnInvoiceNew_Click(object sender, EventArgs e)
@@ -88,7 +100,11 @@ namespace Groomy
             var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false, "");
             var invoiceData = newInvoice.GetFields()["InvoiceData"];
             Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
-            invoiceView.FormClosed += (s, args) => canClickMenuButtons(true);
+            invoiceView.FormClosed += (s, args) =>
+            {
+                reloadData();
+                canClickMenuButtons(true);
+            };
             invoiceView.Show();
         }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
@@ -285,7 +301,11 @@ namespace Groomy
                 canClickMenuButtons(false);
                 var appointmentData = ms.aDBS.ReadAppointmentData(appointmentID);
                 Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
-                appointmentView.FormClosed += (s, args) => canClickMenuButtons(true);
+                appointmentView.FormClosed += (s, args) =>
+                {
+                    reloadData();
+                    canClickMenuButtons(true);
+                };
                 appointmentView.Show();
             }
             else
@@ -302,7 +322,11 @@ namespace Groomy
                 canClickMenuButtons(false);
                 var serviceData = ms.sDBS.ReadServiceData(serviceID);
                 Form serviceView = new Services.ServiceView(serviceData, this);
-                serviceView.FormClosed += (s, args) => canClickMenuButtons(true);
+                serviceView.FormClosed += (s, args) =>
+                {
+                    reloadData();
+                    canClickMenuButtons(true);
+                };
                 serviceView.Show();
             }
             else
@@ -320,7 +344,11 @@ namespace Groomy
                 canClickMenuButtons(false);
                 var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
                 Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
-                invoiceView.FormClosed += (s, args) => canClickMenuButtons(true);
+                invoiceView.FormClosed += (s, args) =>
+                {
+                    reloadData();
+                    canClickMenuButtons(true);
+                };
                 invoiceView.Show();
             }
             else
@@ -337,7 +365,11 @@ namespace Groomy
                 canClickMenuButtons(false);
                 var invoicePrice = Helpers.GetFieldFromSelection("Total", dataInvoices);
                 Form invoicePrint = new Invoices.InvoicePrint(invoiceID, invoicePrice);
-                invoicePrint.FormClosed += (s, args) => canClickMenuButtons(true);
+                invoicePrint.FormClosed += (s, args) =>
+                {
+                    reloadData();
+                    canClickMenuButtons(true);
+                };
                 invoicePrint.Show();
             }
             else
@@ -353,7 +385,11 @@ namespace Groomy
                 canClickMenuButtons(false);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 Form customerView = new CustomerView(customerData, this);
-                customerView.FormClosed += (s, args) => canClickMenuButtons(true);
+                customerView.FormClosed += (s, args) => 
+                {
+                    reloadData();
+                    canClickMenuButtons(true);
+                };
                 customerView.Show();
             }
             else
@@ -370,7 +406,11 @@ namespace Groomy
                 canClickMenuButtons(false);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 Form invoiceForm = new Groomy.Invoice.Invoice(customerData, this);
-                invoiceForm.FormClosed += (s, args) => canClickMenuButtons(true);
+                invoiceForm.FormClosed += (s, args) =>
+                {
+                    reloadData();
+                    canClickMenuButtons(true);
+                };
                 invoiceForm.Show();
             }
             else
