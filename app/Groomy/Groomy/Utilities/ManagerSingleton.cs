@@ -1,5 +1,6 @@
 ﻿using Groomy.Appointments;
 using Groomy.Customers;
+using Groomy.Invoices;
 using Groomy.Notes;
 using Groomy.Services;
 using Groomy.Users;
@@ -18,10 +19,12 @@ namespace Groomy.Utilities
         public DatabaseManager dbm;
         public UserAuth ua;
         public DBRelationshipService dbrs;
+        public UserDBService uDBS;
         public CustomerDBService cDBS;
         public AppointmentDBService aDBS;
         public NotesDBService nDBS;
         public ServiceDBService sDBS;
+        public InvoiceDBService iDBS;
 
         public ManagerSingleton()
         {
@@ -29,10 +32,12 @@ namespace Groomy.Utilities
             dbm = DatabaseManager.GetInstance(fs);
             ua = UserAuth.GetInstance();
             dbrs = new DBRelationshipService(this);
+            uDBS = new UserDBService(this);
             cDBS = new CustomerDBService(this);
             aDBS = new AppointmentDBService(this);
             nDBS = new NotesDBService(this);
             sDBS = new ServiceDBService(this);
+            iDBS = new InvoiceDBService(this);
         }
 
         public static ManagerSingleton GetInstance()

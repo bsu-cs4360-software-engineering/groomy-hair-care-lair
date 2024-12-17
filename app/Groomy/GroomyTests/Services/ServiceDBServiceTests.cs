@@ -1,4 +1,6 @@
-﻿using Groomy.Users;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Groomy.Services;
+using Groomy.Users;
 using Groomy.Utilities;
 using Moq;
 using System.Text.Json;
@@ -320,6 +322,46 @@ namespace Groomy.Services.Tests
             Assert.AreEqual(service2Name, retrievedServices[1]["ServiceName"]);
             Assert.AreEqual(service2Description, retrievedServices[1]["ServiceDescription"]);
             Assert.AreEqual(service2Price, retrievedServices[1]["ServicePrice"]);
+
+        }
+
+        [TestMethod()]
+        public void GetServiceIDByNameTest()
+        {
+            //Arrange
+            var mockFS = new Mock<IFileService>();
+            var dbm = new DatabaseManager(mockFS.Object);
+            var ua = new UserAuth();
+            var dbrs = new DBRelationshipService(dbm, ua);
+            var sdbs = new ServiceDBService(dbm, dbrs);
+
+            var serviceName = "Test Service";
+            var serviceDescription = "This is a test service.";
+            var servicePrice = "10.00";
+            var serviceID = "TestService";
+
+            var serviceDBFilePath = "services.json";
+            var initialServiceDB = new List<Dictionary<string, string>>
+            {
+                new Dictionary<string, string>
+                {
+                    { "ServiceID", serviceID },
+                    { "ServiceName", serviceName },
+                    { "ServiceDescription", serviceDescription },
+                    { "ServicePrice", servicePrice }
+                }
+            };
+
+            mockFS.Setup(fs => fs.ReadAllText(serviceDBFilePath)).Returns(JsonSerializer.Serialize(initialServiceDB));
+            mockFS.Setup(fs => fs.Exists(serviceDBFilePath)).Returns(true);
+
+            //Act
+            var retrievedServiceID = sdbs.GetServiceIDByName(serviceName);
+
+            //Assert
+            Assert.IsNotNull(retrievedServiceID);
+            Assert.AreEqual(serviceID, retrievedServiceID);
+
 
         }
     }

@@ -95,6 +95,9 @@ namespace Groomy.Services
             txtServiceName.ReadOnly = !isEditable;
             txtServiceDescription.ReadOnly = !isEditable;
             txtServicePrice.ReadOnly = !isEditable;
+            /*
+            canPressServiceNotesbuttons (!isEditable);
+            */
         }
         private void btnBack_Click(object sender, EventArgs e)
         {
@@ -152,14 +155,35 @@ namespace Groomy.Services
                 loadServiceNotes();
             }
         }
+        /*
+        private void canPressServiceButtons(bool canPress)
+        {
+            btnServiceNotesEditSave.Enabled = canPress;
+        }
+        private void canPressServiceNotesbuttons(bool canPress)
+        {
+            btnServiceNotesEditSave.Enabled = canPress;
+            btnServiceNotesBack.Enabled = canPress;
+
+            btnNotesServiceDelete.Enabled = canPress;
+            btnNotesServiceView.Enabled = canPress;
+            btnNotesServiceNew.Enabled = canPress;
+        }
+        */
         private void SetToggleNotesEditMode(bool isEditable)
         {
             txtNotesServiceTitle.ReadOnly = !isEditable;
             txtNotesServicePayload.ReadOnly = !isEditable;
             timeNoteServiceCreateDate.Enabled = isEditable;
+
+            //canPressServiceButtons(!isEditable);
         }
         private void setServiceIDVisibility(bool isVisible)
         {
+            if (!isVisible)
+            {
+                btnServiceNotesEditSave.Text = "Edit";
+            }
             fieldServiceID.Visible = isVisible;
             lblServiceID.Visible = isVisible;
         }

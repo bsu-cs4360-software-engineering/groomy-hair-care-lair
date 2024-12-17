@@ -290,7 +290,7 @@
             lblNotesCustomerTitle.AutoSize = true;
             lblNotesCustomerTitle.Location = new Point(82, 85);
             lblNotesCustomerTitle.Name = "lblNotesCustomerTitle";
-            lblNotesCustomerTitle.Size = new Size(32, 15);
+            lblNotesCustomerTitle.Size = new Size(33, 15);
             lblNotesCustomerTitle.TabIndex = 59;
             lblNotesCustomerTitle.Text = "Title:";
             // 

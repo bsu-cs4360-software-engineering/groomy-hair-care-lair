@@ -1,5 +1,7 @@
 ﻿using Groomy.Appointments;
 using Groomy.Customers;
+using Groomy.Invoices;
+using Groomy.Services;
 using Groomy.Utilities;
 using System.Data;
 using System.Diagnostics;
@@ -41,6 +43,11 @@ namespace Groomy
             loadServiceData();
             Helpers.activatePanel(panelServices, panelWH, panelLoc);
         }
+        private void btnInvoices_Click(object sender, EventArgs e)
+        {
+            loadInvoiceData();
+            Helpers.activatePanel(panelInvoices, panelWH, panelLoc);
+        }
 
 
         private void btnAppointment_Click(object sender, EventArgs e)
@@ -50,24 +57,39 @@ namespace Groomy
         }
         private void btnCustomerNew_Click(object sender, EventArgs e)
         {
+            canClickMenuButtons(false);
             var newCustomer = new Customer("", "", "", "", "", "");
             var customerData = newCustomer.GetFields()["CustomerData"];
             Form customerView = new CustomerView(customerData, this);
+            customerView.FormClosed += (s, args) => canClickMenuButtons(true);
             customerView.Show();
         }
         private void btnNewAppointment_Click(object sender, EventArgs e)
         {
+            canClickMenuButtons(false);
             var newAppointment = new Appointments.Appointment("", "", DateTime.Now, DateTime.Now, "", "");
             var appointmentData = newAppointment.GetFields()["AppointmentData"];
             Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
+            appointmentView.FormClosed += (s, args) => canClickMenuButtons(true);
             appointmentView.Show();
         }
         private void btnServiceNew_Click(object sender, EventArgs e)
         {
+            canClickMenuButtons(false);
             var newService = new Services.Service("", "", "", "");
             var serviceData = newService.GetFields()["ServiceData"];
             Form serviceView = new Services.ServiceView(serviceData, this);
+            serviceView.FormClosed += (s, args) => canClickMenuButtons(true);
             serviceView.Show();
+        }
+        private void btnInvoiceNew_Click(object sender, EventArgs e)
+        {
+            canClickMenuButtons(false);
+            var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false, "");
+            var invoiceData = newInvoice.GetFields()["InvoiceData"];
+            Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+            invoiceView.FormClosed += (s, args) => canClickMenuButtons(true);
+            invoiceView.Show();
         }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
@@ -78,6 +100,7 @@ namespace Groomy
             loadAppointmentData();
             loadCustomerData();
             loadServiceData();
+            loadInvoiceData();
         }
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
@@ -136,6 +159,26 @@ namespace Groomy
             }
         }
 
+        private void btnInvoiceDelete_Click(object sender, EventArgs e)
+        {
+            var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
+            if (Helpers.messageBoxConfirm("Are you sure you want to delete this invoice?"))
+            {
+                //var detailIDs = ms.dbrs.GetDetailIDsFromInvoiceID(invoiceID);
+                var detailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_details.json");
+                foreach (var detailID in detailIDs)
+                {
+                    ms.iDBS.SoftDeleteDetail(detailID);
+                }
+                var noteIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_notes.json");
+                foreach (var noteID in noteIDs)
+                {
+                    ms.nDBS.SoftDeleteInvoiceNotes(noteID);
+                }
+                ms.iDBS.SoftDeleteInvoice(invoiceID);
+                loadInvoiceData();
+            }
+        }
         private void apptDel_Click(object sender, EventArgs e)
         {
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
@@ -150,7 +193,6 @@ namespace Groomy
                 ms.aDBS.SoftDeleteAppointment(appointmentID);
                 loadAppointmentData();
             }
-
         }
         private void loadAppointmentData()
         {
@@ -187,13 +229,63 @@ namespace Groomy
                 dataCustomers.Columns["Address"].Visible = false;
             }
         }
+
+        private void loadInvoiceData()
+        {
+            var invoiceIDs = ms.dbrs.GetInvoiceIDs();
+            var data = new DataTable();
+
+            // Define columns for the DataTable
+            data.Columns.Add("Date", typeof(string));
+            data.Columns.Add("InvoiceID", typeof(string));
+            data.Columns.Add("Customer", typeof(string));
+            data.Columns.Add("Total", typeof(string));
+            data.Columns.Add("Paid", typeof(string));
+
+            // Loop through each invoice
+            foreach (string invoiceID in invoiceIDs)
+            {
+                var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
+                var createDate = invoiceData["CreateDate"];
+                var isPaid = invoiceData["IsPaid"];
+
+                // Retrieve detail and customer data
+                var detailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_details.json");
+                var customerID = ms.dbrs.GetPrimaryIDFromForeignID(invoiceID, "customers_invoices.json");
+
+                var customerData = ms.cDBS.ReadCustomer(customerID);
+                var customerName = customerData["FirstName"] + " " + customerData["LastName"];
+
+
+                var invoiceSum = 0.0f;
+                // Sum up all invoice details
+                foreach (string detailID in detailIDs)
+                {
+                    var detailData = ms.iDBS.ReadDetailData(detailID);
+                    var detailQuantity = int.Parse(detailData["Quantity"]);
+
+                    var serviceID = detailData["ServiceID"];
+                    var serviceData = ms.sDBS.ReadServiceData(detailData["ServiceID"]);
+                    var servicePrice = float.Parse(serviceData["ServicePrice"]);
+                    invoiceSum += servicePrice * detailQuantity;
+                }
+
+                // Add the calculated row to the DataTable
+                data.Rows.Add(createDate, invoiceID, customerName, invoiceSum.ToString("F2"), isPaid);
+            }
+
+            // Assign the populated DataTable to your DataGridView
+            dataInvoices.DataSource = data;
+        }
         private void btnAppointmentView_Click(object sender, EventArgs e)
         {
             var appointmentID = Helpers.GetFieldFromSelection("AppointmentID", dataAppointments);
             if (!string.IsNullOrEmpty(appointmentID))
             {
+                canClickMenuButtons(false);
                 var appointmentData = ms.aDBS.ReadAppointmentData(appointmentID);
                 Form appointmentView = new Appointments.AppointmentView(appointmentData, this);
+                appointmentView.FormClosed += (s, args) => canClickMenuButtons(true);
                 appointmentView.Show();
             }
             else
@@ -207,8 +299,10 @@ namespace Groomy
             var serviceID = Helpers.GetFieldFromSelection("ServiceID", dataServices);
             if (!string.IsNullOrEmpty(serviceID))
             {
+                canClickMenuButtons(false);
                 var serviceData = ms.sDBS.ReadServiceData(serviceID);
                 Form serviceView = new Services.ServiceView(serviceData, this);
+                serviceView.FormClosed += (s, args) => canClickMenuButtons(true);
                 serviceView.Show();
             }
             else
@@ -218,13 +312,48 @@ namespace Groomy
 
         }
 
+        private void btnInvoiceView_Click(object sender, EventArgs e)
+        {
+            var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
+            if (!string.IsNullOrEmpty(invoiceID))
+            {
+                canClickMenuButtons(false);
+                var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
+                Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+                invoiceView.FormClosed += (s, args) => canClickMenuButtons(true);
+                invoiceView.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No invoice selected. Please select an invoice.");
+            }
+
+        }
+        private void btnPrintInvoice_Click(object sender, EventArgs e)
+        {
+            var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
+            if (!string.IsNullOrEmpty(invoiceID))
+            {
+                canClickMenuButtons(false);
+                var invoicePrice = Helpers.GetFieldFromSelection("Total", dataInvoices);
+                Form invoicePrint = new Invoices.InvoicePrint(invoiceID, invoicePrice);
+                invoicePrint.FormClosed += (s, args) => canClickMenuButtons(true);
+                invoicePrint.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No invoice selected. Please select an invoice.");
+            }
+        }
         private void btnCustomerView_Click(object sender, EventArgs e)
         {
             var customerID = Helpers.GetFieldFromSelection("CustomerID", dataCustomers);
             if (!string.IsNullOrEmpty(customerID))
             {
+                canClickMenuButtons(false);
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 Form customerView = new CustomerView(customerData, this);
+                customerView.FormClosed += (s, args) => canClickMenuButtons(true);
                 customerView.Show();
             }
             else
@@ -233,5 +362,47 @@ namespace Groomy
             }
         }
 
+        private void btnGenInv_Click(object sender, EventArgs e)
+        {
+            var customerID = Helpers.GetFieldFromSelection("CustomerID", dataInvoices);
+            if (!string.IsNullOrEmpty(customerID))
+            {
+                canClickMenuButtons(false);
+                var customerData = ms.cDBS.ReadCustomer(customerID);
+                Form invoiceForm = new Groomy.Invoice.Invoice(customerData, this);
+                invoiceForm.FormClosed += (s, args) => canClickMenuButtons(true);
+                invoiceForm.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No customer selected. Please select a customer.");
+            }
+        }
+        private void canClickMenuButtons(bool canClick)
+        {
+            btnWelcome.Enabled = canClick;
+            btnServices.Enabled = canClick;
+            btnCustomers.Enabled = canClick;
+            btnAppointment.Enabled = canClick;
+            btnInvoices.Enabled = canClick;
+
+            btnServiceView.Enabled = canClick;
+            btnServiceNew.Enabled = canClick;
+            btnServiceDelete.Enabled = canClick;
+
+            btnCustomerView.Enabled = canClick;
+            btnCustomerNew.Enabled = canClick;
+            btnCustomerDelete.Enabled = canClick;
+
+            btnAppointmentView.Enabled = canClick;
+            btnAppointmentNew.Enabled = canClick;
+            btnAppointmentDelete.Enabled = canClick;
+
+            btnInvoiceView.Enabled = canClick;
+            btnInvoiceNew.Enabled = canClick;
+            btnInvoiceDelete.Enabled = canClick;
+
+            btnPrintInvoice.Enabled = canClick;
+        }
     }
 }

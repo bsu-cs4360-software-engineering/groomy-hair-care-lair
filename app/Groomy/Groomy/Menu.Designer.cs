@@ -29,23 +29,24 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnInvoices = new Label();
             btnServices = new Label();
             btnAppointment = new Label();
             btnCustomers = new Label();
             btnWelcome = new Label();
             apptPanel = new Panel();
             dataAppointments = new DataGridView();
-            apptDel = new Button();
+            btnAppointmentDelete = new Button();
             btnAppointmentView = new Button();
-            apptNew = new Button();
+            btnAppointmentNew = new Button();
             label2 = new Label();
             label9 = new Label();
             panelWelcome = new Panel();
             panelCustomers = new Panel();
             btnCustomerView = new Button();
             dataCustomers = new DataGridView();
-            btnDelete = new Button();
-            btnNew = new Button();
+            btnCustomerDelete = new Button();
+            btnCustomerNew = new Button();
             lblGroomyCustomers = new Label();
             panelServices = new Panel();
             btnServiceView = new Button();
@@ -53,6 +54,13 @@
             btnServiceDelete = new Button();
             btnServiceNew = new Button();
             lblServices = new Label();
+            panelInvoices = new Panel();
+            btnInvoiceView = new Button();
+            btnInvoiceDelete = new Button();
+            btnInvoiceNew = new Button();
+            dataInvoices = new DataGridView();
+            label1 = new Label();
+            btnPrintInvoice = new Button();
             panel1.SuspendLayout();
             apptPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataAppointments).BeginInit();
@@ -61,11 +69,14 @@
             ((System.ComponentModel.ISupportInitialize)dataCustomers).BeginInit();
             panelServices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).BeginInit();
+            panelInvoices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataInvoices).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(21, 96, 130);
+            panel1.Controls.Add(btnInvoices);
             panel1.Controls.Add(btnServices);
             panel1.Controls.Add(btnAppointment);
             panel1.Controls.Add(btnCustomers);
@@ -74,6 +85,19 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(221, 566);
             panel1.TabIndex = 17;
+            // 
+            // btnInvoices
+            // 
+            btnInvoices.BackColor = Color.FromArgb(29, 129, 175);
+            btnInvoices.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnInvoices.ForeColor = Color.White;
+            btnInvoices.Location = new Point(0, 382);
+            btnInvoices.Name = "btnInvoices";
+            btnInvoices.Size = new Size(216, 44);
+            btnInvoices.TabIndex = 24;
+            btnInvoices.Text = "Invoices";
+            btnInvoices.TextAlign = ContentAlignment.MiddleCenter;
+            btnInvoices.Click += btnInvoices_Click;
             // 
             // btnServices
             // 
@@ -130,34 +154,34 @@
             // apptPanel
             // 
             apptPanel.Controls.Add(dataAppointments);
-            apptPanel.Controls.Add(apptDel);
+            apptPanel.Controls.Add(btnAppointmentDelete);
             apptPanel.Controls.Add(btnAppointmentView);
-            apptPanel.Controls.Add(apptNew);
+            apptPanel.Controls.Add(btnAppointmentNew);
             apptPanel.Controls.Add(label2);
             apptPanel.Location = new Point(1281, 18);
             apptPanel.Name = "apptPanel";
             apptPanel.Size = new Size(521, 553);
             apptPanel.TabIndex = 38;
             // 
-            // apptView
+            // dataAppointments
             // 
             dataAppointments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataAppointments.Location = new Point(36, 128);
-            dataAppointments.Name = "apptView";
+            dataAppointments.Name = "dataAppointments";
             dataAppointments.Size = new Size(449, 377);
             dataAppointments.TabIndex = 42;
             // 
             // apptDel
             // 
-            apptDel.BackColor = Color.FromArgb(21, 96, 130);
-            apptDel.ForeColor = Color.White;
-            apptDel.Location = new Point(325, 83);
-            apptDel.Name = "apptDel";
-            apptDel.Size = new Size(123, 23);
-            apptDel.TabIndex = 41;
-            apptDel.Text = "Delete Appointment";
-            apptDel.UseVisualStyleBackColor = false;
-            apptDel.Click += apptDel_Click;
+            btnAppointmentDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnAppointmentDelete.ForeColor = Color.White;
+            btnAppointmentDelete.Location = new Point(325, 83);
+            btnAppointmentDelete.Name = "apptDel";
+            btnAppointmentDelete.Size = new Size(123, 23);
+            btnAppointmentDelete.TabIndex = 41;
+            btnAppointmentDelete.Text = "Delete Appointment";
+            btnAppointmentDelete.UseVisualStyleBackColor = false;
+            btnAppointmentDelete.Click += apptDel_Click;
             // 
             // btnAppointmentView
             // 
@@ -173,15 +197,15 @@
             // 
             // apptNew
             // 
-            apptNew.BackColor = Color.FromArgb(21, 96, 130);
-            apptNew.ForeColor = Color.White;
-            apptNew.Location = new Point(67, 83);
-            apptNew.Name = "apptNew";
-            apptNew.Size = new Size(123, 23);
-            apptNew.TabIndex = 39;
-            apptNew.Text = "New Appointment";
-            apptNew.UseVisualStyleBackColor = false;
-            apptNew.Click += btnNewAppointment_Click;
+            btnAppointmentNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnAppointmentNew.ForeColor = Color.White;
+            btnAppointmentNew.Location = new Point(67, 83);
+            btnAppointmentNew.Name = "apptNew";
+            btnAppointmentNew.Size = new Size(123, 23);
+            btnAppointmentNew.TabIndex = 39;
+            btnAppointmentNew.Text = "New Appointment";
+            btnAppointmentNew.UseVisualStyleBackColor = false;
+            btnAppointmentNew.Click += btnNewAppointment_Click;
             // 
             // label2
             // 
@@ -219,8 +243,8 @@
             // 
             panelCustomers.Controls.Add(btnCustomerView);
             panelCustomers.Controls.Add(dataCustomers);
-            panelCustomers.Controls.Add(btnDelete);
-            panelCustomers.Controls.Add(btnNew);
+            panelCustomers.Controls.Add(btnCustomerDelete);
+            panelCustomers.Controls.Add(btnCustomerNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
             panelCustomers.Location = new Point(755, 18);
             panelCustomers.Name = "panelCustomers";
@@ -239,37 +263,37 @@
             btnCustomerView.UseVisualStyleBackColor = false;
             btnCustomerView.Click += btnCustomerView_Click;
             // 
-            // dataGridView1
+            // dataCustomers
             // 
             dataCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataCustomers.Location = new Point(33, 128);
-            dataCustomers.Name = "dataGridView1";
+            dataCustomers.Name = "dataCustomers";
             dataCustomers.Size = new Size(449, 377);
             dataCustomers.TabIndex = 37;
             // 
             // btnDelete
             // 
-            btnDelete.BackColor = Color.FromArgb(21, 96, 130);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(316, 83);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(103, 23);
-            btnDelete.TabIndex = 35;
-            btnDelete.Text = "Delete Customer";
-            btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnDeleteCustomer_Click;
+            btnCustomerDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnCustomerDelete.ForeColor = Color.White;
+            btnCustomerDelete.Location = new Point(316, 83);
+            btnCustomerDelete.Name = "btnDelete";
+            btnCustomerDelete.Size = new Size(103, 23);
+            btnCustomerDelete.TabIndex = 35;
+            btnCustomerDelete.Text = "Delete Customer";
+            btnCustomerDelete.UseVisualStyleBackColor = false;
+            btnCustomerDelete.Click += btnDeleteCustomer_Click;
             // 
             // btnNew
             // 
-            btnNew.BackColor = Color.FromArgb(21, 96, 130);
-            btnNew.ForeColor = Color.White;
-            btnNew.Location = new Point(98, 83);
-            btnNew.Name = "btnNew";
-            btnNew.Size = new Size(103, 23);
-            btnNew.TabIndex = 22;
-            btnNew.Text = "New Customer";
-            btnNew.UseVisualStyleBackColor = false;
-            btnNew.Click += btnCustomerNew_Click;
+            btnCustomerNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnCustomerNew.ForeColor = Color.White;
+            btnCustomerNew.Location = new Point(98, 83);
+            btnCustomerNew.Name = "btnNew";
+            btnCustomerNew.Size = new Size(103, 23);
+            btnCustomerNew.TabIndex = 22;
+            btnCustomerNew.Text = "New Customer";
+            btnCustomerNew.UseVisualStyleBackColor = false;
+            btnCustomerNew.Click += btnCustomerNew_Click;
             // 
             // lblGroomyCustomers
             // 
@@ -351,11 +375,93 @@
             lblServices.Text = "Groomy Services";
             lblServices.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // panelInvoices
+            // 
+            panelInvoices.Controls.Add(btnPrintInvoice);
+            panelInvoices.Controls.Add(btnInvoiceView);
+            panelInvoices.Controls.Add(btnInvoiceDelete);
+            panelInvoices.Controls.Add(btnInvoiceNew);
+            panelInvoices.Controls.Add(dataInvoices);
+            panelInvoices.Controls.Add(label1);
+            panelInvoices.Location = new Point(755, 577);
+            panelInvoices.Name = "panelInvoices";
+            panelInvoices.Size = new Size(520, 553);
+            panelInvoices.TabIndex = 40;
+            // 
+            // btnInvoiceView
+            // 
+            btnInvoiceView.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceView.ForeColor = Color.White;
+            btnInvoiceView.Location = new Point(152, 86);
+            btnInvoiceView.Name = "btnInvoiceView";
+            btnInvoiceView.Size = new Size(103, 23);
+            btnInvoiceView.TabIndex = 41;
+            btnInvoiceView.Text = "View Invoice";
+            btnInvoiceView.UseVisualStyleBackColor = false;
+            btnInvoiceView.Click += btnInvoiceView_Click;
+            // 
+            // btnInvoiceDelete
+            // 
+            btnInvoiceDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceDelete.ForeColor = Color.White;
+            btnInvoiceDelete.Location = new Point(370, 86);
+            btnInvoiceDelete.Name = "btnInvoiceDelete";
+            btnInvoiceDelete.Size = new Size(103, 23);
+            btnInvoiceDelete.TabIndex = 40;
+            btnInvoiceDelete.Text = "Delete Invoice";
+            btnInvoiceDelete.UseVisualStyleBackColor = false;
+            btnInvoiceDelete.Click += btnInvoiceDelete_Click;
+            // 
+            // btnInvoiceNew
+            // 
+            btnInvoiceNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceNew.ForeColor = Color.White;
+            btnInvoiceNew.Location = new Point(43, 86);
+            btnInvoiceNew.Name = "btnInvoiceNew";
+            btnInvoiceNew.Size = new Size(103, 23);
+            btnInvoiceNew.TabIndex = 39;
+            btnInvoiceNew.Text = "New Invoice";
+            btnInvoiceNew.UseVisualStyleBackColor = false;
+            btnInvoiceNew.Click += btnInvoiceNew_Click;
+            // 
+            // dataInvoices
+            // 
+            dataInvoices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataInvoices.Location = new Point(33, 128);
+            dataInvoices.Name = "dataInvoices";
+            dataInvoices.Size = new Size(449, 377);
+            dataInvoices.TabIndex = 37;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Arial Black", 24F, FontStyle.Bold);
+            label1.ForeColor = Color.FromArgb(21, 96, 130);
+            label1.Location = new Point(83, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(312, 45);
+            label1.TabIndex = 21;
+            label1.Text = "Groomy Invoices";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnPrintInvoice
+            // 
+            btnPrintInvoice.BackColor = Color.FromArgb(21, 96, 130);
+            btnPrintInvoice.ForeColor = Color.White;
+            btnPrintInvoice.Location = new Point(261, 86);
+            btnPrintInvoice.Name = "btnPrintInvoice";
+            btnPrintInvoice.Size = new Size(103, 23);
+            btnPrintInvoice.TabIndex = 42;
+            btnPrintInvoice.Text = "Print Invoice";
+            btnPrintInvoice.UseVisualStyleBackColor = false;
+            btnPrintInvoice.Click += btnPrintInvoice_Click;
+            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1924, 1061);
+            Controls.Add(panelInvoices);
             Controls.Add(panelServices);
             Controls.Add(apptPanel);
             Controls.Add(panelCustomers);
@@ -379,6 +485,9 @@
             panelServices.ResumeLayout(false);
             panelServices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).EndInit();
+            panelInvoices.ResumeLayout(false);
+            panelInvoices.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataInvoices).EndInit();
             ResumeLayout(false);
         }
 
@@ -390,16 +499,16 @@
         private Label btnCustomers;
         private Panel panelWelcome;
         private Panel panelCustomers;
-        private Button btnNew;
+        private Button btnCustomerNew;
         private Label lblGroomyCustomers;
-        private Button btnDelete;
+        private Button btnCustomerDelete;
         private DataGridView dataCustomers;
         private Label btnAppointment;
         private Panel apptPanel;
         private DataGridView dataAppointments;
-        private Button apptDel;
+        private Button btnAppointmentDelete;
         private Button btnAppointmentView;
-        private Button apptNew;
+        private Button btnAppointmentNew;
         private Label label2;
         private Label label5;
         private DateTimePicker apptDate;
@@ -411,5 +520,14 @@
         private Button btnServiceDelete;
         private Button btnServiceNew;
         private Label lblServices;
+        private Panel panelInvoices;
+        private Button btnGenInv;
+        private DataGridView dataInvoices;
+        private Label label1;
+        private Label btnInvoices;
+        private Button btnInvoiceView;
+        private Button btnInvoiceDelete;
+        private Button btnInvoiceNew;
+        private Button btnPrintInvoice;
     }
 }

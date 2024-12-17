@@ -87,6 +87,7 @@ namespace Groomy.Appointments
             {
                 if (validateAppointmentForms())
                 {
+                    //if new appointment
                     if (fieldAppointmentID.Text == "")
                     {
                         setsAppointmentNoteIDVisibility(false);
@@ -95,10 +96,10 @@ namespace Groomy.Appointments
                         var customerID = ms.cDBS.GetCustomerIDByFirstLast(selectedCustomer);
                         ms.aDBS.CreateAppointment(newAppointment, customerID);
                     }
+                    //if editing existing appointment
                     else
                     {
                         var editedAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeAppointmentStart.Value, timeAppointmentEnd.Value, txtLocation.Text, fieldAppointmentID.Text);
-                        //var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
                         var customerID = ms.dbrs.GetPrimaryIDFromForeignID(fieldAppointmentID.Text, "customers_appointments.json");
                         ms.aDBS.UpdateAppointmentData(editedAppointment, customerID);
                     }
@@ -107,6 +108,22 @@ namespace Groomy.Appointments
                 }
             }
         }
+
+        private void canPressAppointmentButton(bool canPress)
+        {
+            btnAppointmentEditSave.Enabled = canPress;
+        }
+
+        private void canPressNotesAllButtons(bool canPress)
+        {
+            btnNotesAppointmentNew.Enabled = canPress;
+            btnNotesAppointmentView.Enabled = canPress;
+            btnNotesAppointmentDelete.Enabled = canPress;
+
+            btnAppointmentNotesBack.Enabled = canPress;
+            btnAppointmentNotesEditSave.Enabled = canPress;
+        }
+
         private void setAppointmentEditMode(bool isEditable)
         {
             comboCustomer.Enabled = isEditable;
@@ -115,6 +132,25 @@ namespace Groomy.Appointments
             timeAppointmentStart.Enabled = isEditable;
             timeAppointmentEnd.Enabled = isEditable;
             txtLocation.ReadOnly = !isEditable;
+
+            // Disable all buttons except for the back button
+            canPressNotesAllButtons(!isEditable);
+        }
+
+
+        private void setNotesEditMode(bool isEditable)
+        {
+            if (!isEditable)
+            {
+                btnAppointmentNotesEditSave.Text = "Edit";
+            }
+            txtNotesAppointmentTitle.ReadOnly = !isEditable;
+            txtNotesAppointmentPayload.ReadOnly = !isEditable;
+            timeNotesAppointmentCreateDate.Enabled = isEditable;
+
+            // Disable all buttons except for the back button
+            canPressAppointmentButton(!isEditable);
+
         }
         private void btnBack_Click(object sender, EventArgs e)
         {
@@ -145,13 +181,14 @@ namespace Groomy.Appointments
         private void btnAppointmentNotesBack_Click(object sender, EventArgs e)
         {
             loadAppointmentNotes();
+            setNotesEditMode(false);
             Helpers.activatePanel(panelNotesAppointmentAll, panelSize, panelLocation);
         }
         private void btnAppointmentNotesEditSave_Click(object sender, EventArgs e)
         {
             if (btnAppointmentNotesEditSave.Text == "Edit")
             {
-                SetToggleNotesEditMode(true);
+                setNotesEditMode(true);
                 btnAppointmentNotesEditSave.Text = "Save";
             }
             else if (btnAppointmentNotesEditSave.Text == "Save")
@@ -166,21 +203,10 @@ namespace Groomy.Appointments
                 {
                     ms.nDBS.UpdateAppointmentNotesData(editedNote, fieldAppointmentID.Text);
                 }
-                SetToggleNotesEditMode(false);
+                setNotesEditMode(false);
                 btnAppointmentNotesEditSave.Text = "Edit";
                 loadAppointmentNotes();
             }
-        }
-        private void SetToggleNotesEditMode(bool isEditable)
-        {
-            txtNotesAppointmentTitle.ReadOnly = !isEditable;
-            txtNotesAppointmentPayload.ReadOnly = !isEditable;
-            timeNotesAppointmentCreateDate.Enabled = isEditable;
-        }
-        private void setAppointmentIDVisibility(bool isVisible)
-        {
-            fieldAppointmentID.Visible = isVisible;
-            lblAppointmentID.Visible = isVisible;
         }
         private void setsAppointmentNoteIDVisibility(bool isVisible)
         {
