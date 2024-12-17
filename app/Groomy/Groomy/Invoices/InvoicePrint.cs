@@ -33,10 +33,8 @@ namespace Groomy.Invoices
             generateInvoice(invoiceID);
             var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
             var isPaid = bool.Parse(invoiceData["IsPaid"]);
-            if (isPaid)
-            {
-                btnSaveInv.Enabled = false;
-            }
+
+            isPaidTick.Checked = isPaid;
         }
 
         private void printDocument_PrintPage(object sender, PrintPageEventArgs e)

@@ -527,8 +527,10 @@
             comboServices.Name = "comboServices";
             comboServices.Size = new Size(247, 23);
             comboServices.TabIndex = 118;
-            comboServices.SelectedIndexChanged += setDetailTotal;
-            comboServices.Leave += setDetailTotal;
+            comboServices.SelectedIndexChanged += otfQuantity_TextChanged;
+            comboServices.SelectedValueChanged += otfQuantity_TextChanged;
+            comboServices.TextChanged += otfQuantity_TextChanged;
+            comboServices.Leave += otfQuantity_TextChanged;
             // 
             // panelServiceInvoiceNewEdit
             // 

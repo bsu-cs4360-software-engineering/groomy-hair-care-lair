@@ -518,9 +518,12 @@ namespace Groomy.Invoices
                     detailQuantity = int.Parse(txtQuantity.Text);
                 }
 
-                var serviceID = detailData["ServiceID"];
-                var serviceData = ms.sDBS.ReadServiceData(serviceID);
-                var servicePrice = float.Parse(serviceData["ServicePrice"]);
+                var servicePrice = 0.0f;
+                var selectedService = ((string, string))comboServices.SelectedItem;
+                if (!string.IsNullOrEmpty(selectedService.Item2))
+                {
+                    servicePrice = float.Parse(selectedService.Item2);
+                }
                 txtServiceTotal.Text = calculateDetailTotalFromQuantityAndServicePrice(detailQuantity, servicePrice).ToString("C");
             }
         }
