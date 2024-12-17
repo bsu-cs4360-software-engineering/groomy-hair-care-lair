@@ -1,0 +1,10 @@
+[
+  {
+    "CustomerID": "0927c2a7a946a8a7f0b2be98c6b705e10ca3fe04584421d800bf4962bec37911",
+    "FirstName": "Test",
+    "LastName": "Test",
+    "Email": "test@gmail.com",
+    "PhoneNumber": "1231231234",
+    "Address": "Address"
+  }
+]
