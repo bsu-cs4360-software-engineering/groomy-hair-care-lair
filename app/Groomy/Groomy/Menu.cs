@@ -313,6 +313,20 @@ namespace Groomy
             }
 
         }
+        private void btnPrintInvoice_Click(object sender, EventArgs e)
+        {
+            var invoiceID = Helpers.GetFieldFromSelection("InvoiceID", dataInvoices);
+            if (!string.IsNullOrEmpty(invoiceID))
+            {
+                var invoicePrice = Helpers.GetFieldFromSelection("Total", dataInvoices);
+                Form invoicePrint = new Invoices.InvoicePrint(invoiceID, invoicePrice);
+                invoicePrint.Show();
+            }
+            else
+            {
+                Helpers.messageBoxError("No invoice selected. Please select an invoice.");
+            }
+        }
         private void btnCustomerView_Click(object sender, EventArgs e)
         {
             var customerID = Helpers.GetFieldFromSelection("CustomerID", dataCustomers);
@@ -342,6 +356,5 @@ namespace Groomy
                 Helpers.messageBoxError("No customer selected. Please select a customer.");
             }
         }
-
     }
 }

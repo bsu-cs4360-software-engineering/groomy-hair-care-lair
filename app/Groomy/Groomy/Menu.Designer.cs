@@ -60,6 +60,7 @@
             btnInvoiceNew = new Button();
             dataInvoices = new DataGridView();
             label1 = new Label();
+            btnPrintInvoice = new Button();
             panel1.SuspendLayout();
             apptPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataAppointments).BeginInit();
@@ -376,6 +377,7 @@
             // 
             // panelInvoices
             // 
+            panelInvoices.Controls.Add(btnPrintInvoice);
             panelInvoices.Controls.Add(btnInvoiceView);
             panelInvoices.Controls.Add(btnInvoiceDelete);
             panelInvoices.Controls.Add(btnInvoiceNew);
@@ -390,7 +392,7 @@
             // 
             btnInvoiceView.BackColor = Color.FromArgb(21, 96, 130);
             btnInvoiceView.ForeColor = Color.White;
-            btnInvoiceView.Location = new Point(192, 86);
+            btnInvoiceView.Location = new Point(152, 86);
             btnInvoiceView.Name = "btnInvoiceView";
             btnInvoiceView.Size = new Size(103, 23);
             btnInvoiceView.TabIndex = 41;
@@ -402,7 +404,7 @@
             // 
             btnInvoiceDelete.BackColor = Color.FromArgb(21, 96, 130);
             btnInvoiceDelete.ForeColor = Color.White;
-            btnInvoiceDelete.Location = new Point(301, 86);
+            btnInvoiceDelete.Location = new Point(370, 86);
             btnInvoiceDelete.Name = "btnInvoiceDelete";
             btnInvoiceDelete.Size = new Size(103, 23);
             btnInvoiceDelete.TabIndex = 40;
@@ -414,7 +416,7 @@
             // 
             btnInvoiceNew.BackColor = Color.FromArgb(21, 96, 130);
             btnInvoiceNew.ForeColor = Color.White;
-            btnInvoiceNew.Location = new Point(83, 86);
+            btnInvoiceNew.Location = new Point(43, 86);
             btnInvoiceNew.Name = "btnInvoiceNew";
             btnInvoiceNew.Size = new Size(103, 23);
             btnInvoiceNew.TabIndex = 39;
@@ -441,6 +443,18 @@
             label1.TabIndex = 21;
             label1.Text = "Groomy Invoices";
             label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnPrintInvoice
+            // 
+            btnPrintInvoice.BackColor = Color.FromArgb(21, 96, 130);
+            btnPrintInvoice.ForeColor = Color.White;
+            btnPrintInvoice.Location = new Point(261, 86);
+            btnPrintInvoice.Name = "btnPrintInvoice";
+            btnPrintInvoice.Size = new Size(103, 23);
+            btnPrintInvoice.TabIndex = 42;
+            btnPrintInvoice.Text = "Print Invoice";
+            btnPrintInvoice.UseVisualStyleBackColor = false;
+            btnPrintInvoice.Click += btnPrintInvoice_Click;
             // 
             // Menu
             // 
@@ -514,5 +528,6 @@
         private Button btnInvoiceView;
         private Button btnInvoiceDelete;
         private Button btnInvoiceNew;
+        private Button btnPrintInvoice;
     }
 }
