@@ -87,6 +87,7 @@ namespace Groomy.Appointments
             {
                 if (validateAppointmentForms())
                 {
+                    //if new appointment
                     if (fieldAppointmentID.Text == "")
                     {
                         setsAppointmentNoteIDVisibility(false);
@@ -95,10 +96,10 @@ namespace Groomy.Appointments
                         var customerID = ms.cDBS.GetCustomerIDByFirstLast(selectedCustomer);
                         ms.aDBS.CreateAppointment(newAppointment, customerID);
                     }
+                    //if editing existing appointment
                     else
                     {
                         var editedAppointment = new Appointment(txtTitle.Text, txtDescription.Text, timeAppointmentStart.Value, timeAppointmentEnd.Value, txtLocation.Text, fieldAppointmentID.Text);
-                        //var customerID = ms.dbrs.GetCustomerIDFromAppointmentID(fieldAppointmentID.Text);
                         var customerID = ms.dbrs.GetPrimaryIDFromForeignID(fieldAppointmentID.Text, "customers_appointments.json");
                         ms.aDBS.UpdateAppointmentData(editedAppointment, customerID);
                     }
