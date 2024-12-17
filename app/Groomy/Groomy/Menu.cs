@@ -76,7 +76,7 @@ namespace Groomy
         }
         private void btnInvoiceNew_Click(object sender, EventArgs e)
         {
-            var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false);
+            var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false, "");
             var invoiceData = newInvoice.GetFields()["InvoiceData"];
             Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
             invoiceView.Show();
@@ -235,7 +235,6 @@ namespace Groomy
             // Loop through each invoice
             foreach (string invoiceID in invoiceIDs)
             {
-                var invoiceSum = 0;
                 var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
                 var createDate = invoiceData["CreateDate"];
                 var isPaid = invoiceData["IsPaid"];
@@ -247,16 +246,18 @@ namespace Groomy
                 var customerData = ms.cDBS.ReadCustomer(customerID);
                 var customerName = customerData["FirstName"] + " " + customerData["LastName"];
 
+
+                var invoiceSum = 0.0f;
                 // Sum up all invoice details
                 foreach (string detailID in detailIDs)
                 {
                     var detailData = ms.iDBS.ReadDetailData(detailID);
-                    var quantity = int.Parse(detailData["Quantity"]);
+                    var detailQuantity = int.Parse(detailData["Quantity"]);
 
-                    var serviceID = ms.dbrs.GetPrimaryIDFromForeignID(detailID, "services_details.json");
-                    var serviceData = ms.sDBS.ReadServiceData(serviceID);
-                    var servicePrice = serviceData["ServicePrice"];
-                    invoiceSum += int.Parse(servicePrice) * quantity;
+                    var serviceID = detailData["ServiceID"];
+                    var serviceData = ms.sDBS.ReadServiceData(detailData["ServiceID"]);
+                    var servicePrice = float.Parse(serviceData["Price"]);
+                    invoiceSum += servicePrice * detailQuantity;
                 }
 
                 // Add the calculated row to the DataTable

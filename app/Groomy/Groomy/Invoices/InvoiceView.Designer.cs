@@ -32,7 +32,7 @@
             btnNotesServiceDelete = new Button();
             btnNotesServiceView = new Button();
             btnNotesServiceNew = new Button();
-            serviceNotesDataGridView = new DataGridView();
+            invoiceNotesDataGridView = new DataGridView();
             lblNotes = new Label();
             btnInvoiceEditSave = new Button();
             btnBack = new Button();
@@ -77,7 +77,7 @@
             txtQuantity = new TextBox();
             lblQuantity = new Label();
             panelNotesInvoiceAll.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)serviceNotesDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)invoiceNotesDataGridView).BeginInit();
             panelNotesServiceNewEdit.SuspendLayout();
             panelServicesInvoiceAll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -89,7 +89,7 @@
             panelNotesInvoiceAll.Controls.Add(btnNotesServiceDelete);
             panelNotesInvoiceAll.Controls.Add(btnNotesServiceView);
             panelNotesInvoiceAll.Controls.Add(btnNotesServiceNew);
-            panelNotesInvoiceAll.Controls.Add(serviceNotesDataGridView);
+            panelNotesInvoiceAll.Controls.Add(invoiceNotesDataGridView);
             panelNotesInvoiceAll.Controls.Add(lblNotes);
             panelNotesInvoiceAll.Location = new Point(651, 93);
             panelNotesInvoiceAll.Name = "panelNotesInvoiceAll";
@@ -106,6 +106,7 @@
             btnNotesServiceDelete.TabIndex = 77;
             btnNotesServiceDelete.Text = "Delete";
             btnNotesServiceDelete.UseVisualStyleBackColor = false;
+            btnNotesServiceDelete.Click += btnNotesServiceDelete_Click;
             // 
             // btnNotesServiceView
             // 
@@ -117,6 +118,7 @@
             btnNotesServiceView.TabIndex = 76;
             btnNotesServiceView.Text = "View";
             btnNotesServiceView.UseVisualStyleBackColor = false;
+            btnNotesServiceView.Click += btnNotesServiceView_Click;
             // 
             // btnNotesServiceNew
             // 
@@ -128,14 +130,15 @@
             btnNotesServiceNew.TabIndex = 74;
             btnNotesServiceNew.Text = "New";
             btnNotesServiceNew.UseVisualStyleBackColor = false;
+            btnNotesServiceNew.Click += btnNotesServiceNew_Click;
             // 
-            // serviceNotesDataGridView
+            // invoiceNotesDataGridView
             // 
-            serviceNotesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            serviceNotesDataGridView.Location = new Point(9, 66);
-            serviceNotesDataGridView.Name = "serviceNotesDataGridView";
-            serviceNotesDataGridView.Size = new Size(307, 221);
-            serviceNotesDataGridView.TabIndex = 73;
+            invoiceNotesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            invoiceNotesDataGridView.Location = new Point(9, 66);
+            invoiceNotesDataGridView.Name = "invoiceNotesDataGridView";
+            invoiceNotesDataGridView.Size = new Size(307, 221);
+            invoiceNotesDataGridView.TabIndex = 73;
             // 
             // lblNotes
             // 
@@ -228,6 +231,7 @@
             btnInvoiceNotesEditSave.TabIndex = 75;
             btnInvoiceNotesEditSave.Text = "Edit";
             btnInvoiceNotesEditSave.UseVisualStyleBackColor = false;
+            btnInvoiceNotesEditSave.Click += btnInvoiceNotesEditSave_Click;
             // 
             // btnInvoiceNotesBack
             // 
@@ -239,6 +243,7 @@
             btnInvoiceNotesBack.TabIndex = 74;
             btnInvoiceNotesBack.Text = "Back";
             btnInvoiceNotesBack.UseVisualStyleBackColor = false;
+            btnInvoiceNotesBack.Click += btnInvoiceNotesBack_Click;
             // 
             // lblNotesInvoiceCreateDate
             // 
@@ -597,7 +602,7 @@
             Text = "InvoiceView";
             panelNotesInvoiceAll.ResumeLayout(false);
             panelNotesInvoiceAll.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)serviceNotesDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)invoiceNotesDataGridView).EndInit();
             panelNotesServiceNewEdit.ResumeLayout(false);
             panelNotesServiceNewEdit.PerformLayout();
             panelServicesInvoiceAll.ResumeLayout(false);
@@ -617,7 +622,7 @@
         private Button btnNotesServiceDelete;
         private Button btnNotesServiceView;
         private Button btnNotesServiceNew;
-        private DataGridView serviceNotesDataGridView;
+        private DataGridView invoiceNotesDataGridView;
         private Label lblNotes;
         private Button btnInvoiceEditSave;
         private Button btnBack;
