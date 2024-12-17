@@ -29,12 +29,30 @@ namespace Groomy.Invoices
         }
         public void onLoad(object sender, EventArgs e)
         {
-            this.Size = new Size(778, 493);
+            this.Size = new Size(988, 493);
         }
 
         private void btnInvoiceServicesBack_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.parentForm.reloadData();
+            this.Close();
+        }
+
+        private void btnInvoiceEditSave_Click(object sender, EventArgs e)
+        {
+            if (btnInvoiceEditSave.Text == "Edit")
+            {
+
+            } 
+            else if (btnInvoiceEditSave.Text == "Save")
+            {
+
+            }
         }
     }
 }

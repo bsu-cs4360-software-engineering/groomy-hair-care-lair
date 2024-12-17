@@ -72,10 +72,10 @@
             lblServiceMulti = new Label();
             comboServices = new ComboBox();
             panelServiceInvoiceNewEdit = new Panel();
-            txtQuantity = new TextBox();
-            lblQuantity = new Label();
             txtServiceTotal = new TextBox();
             lblServiceTotal = new Label();
+            txtQuantity = new TextBox();
+            lblQuantity = new Label();
             panelNotesInvoiceAll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)serviceNotesDataGridView).BeginInit();
             panelNotesServiceNewEdit.SuspendLayout();
@@ -159,6 +159,7 @@
             btnInvoiceEditSave.TabIndex = 107;
             btnInvoiceEditSave.Text = "Edit";
             btnInvoiceEditSave.UseVisualStyleBackColor = false;
+            btnInvoiceEditSave.Click += btnInvoiceEditSave_Click;
             // 
             // btnBack
             // 
@@ -170,6 +171,7 @@
             btnBack.TabIndex = 106;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
             // 
             // panelNotesServiceNewEdit
             // 
@@ -534,23 +536,6 @@
             panelServiceInvoiceNewEdit.Size = new Size(319, 308);
             panelServiceInvoiceNewEdit.TabIndex = 114;
             // 
-            // txtQuantity
-            // 
-            txtQuantity.Location = new Point(42, 121);
-            txtQuantity.Name = "txtQuantity";
-            txtQuantity.ReadOnly = true;
-            txtQuantity.Size = new Size(247, 23);
-            txtQuantity.TabIndex = 120;
-            // 
-            // lblQuantity
-            // 
-            lblQuantity.AutoSize = true;
-            lblQuantity.Location = new Point(42, 103);
-            lblQuantity.Name = "lblQuantity";
-            lblQuantity.Size = new Size(56, 15);
-            lblQuantity.TabIndex = 119;
-            lblQuantity.Text = "Quantity:";
-            // 
             // txtServiceTotal
             // 
             txtServiceTotal.Location = new Point(44, 168);
@@ -567,6 +552,23 @@
             lblServiceTotal.Size = new Size(35, 15);
             lblServiceTotal.TabIndex = 121;
             lblServiceTotal.Text = "Total:";
+            // 
+            // txtQuantity
+            // 
+            txtQuantity.Location = new Point(42, 121);
+            txtQuantity.Name = "txtQuantity";
+            txtQuantity.ReadOnly = true;
+            txtQuantity.Size = new Size(247, 23);
+            txtQuantity.TabIndex = 120;
+            // 
+            // lblQuantity
+            // 
+            lblQuantity.AutoSize = true;
+            lblQuantity.Location = new Point(42, 103);
+            lblQuantity.Name = "lblQuantity";
+            lblQuantity.Size = new Size(56, 15);
+            lblQuantity.TabIndex = 119;
+            lblQuantity.Text = "Quantity:";
             // 
             // InvoiceView
             // 
