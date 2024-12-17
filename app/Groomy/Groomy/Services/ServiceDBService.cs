@@ -58,5 +58,19 @@ namespace Groomy.Services
             }
             return services;
         }
+        public string GetServiceIDByName(string name)
+        {
+            var services = dbm.GetObjectsByKeyValue("ServiceName", name, Service.FilePaths["ServiceData"]);
+            if (services.Count == 0)
+            {
+                return null;
+            }
+            if (services.Count > 1)
+            {
+                throw new Exception("Multiple services with the same name");
+            }
+            return services[0]["ServiceID"];
+
+        }
     }
 }
