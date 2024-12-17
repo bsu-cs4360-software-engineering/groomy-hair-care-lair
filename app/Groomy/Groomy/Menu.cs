@@ -41,6 +41,11 @@ namespace Groomy
             loadServiceData();
             Helpers.activatePanel(panelServices, panelWH, panelLoc);
         }
+        private void btnInvoices_Click(object sender, EventArgs e)
+        {
+            loadInvoiceData();
+            Helpers.activatePanel(panelInvoices, panelWH, panelLoc);
+        }
 
 
         private void btnAppointment_Click(object sender, EventArgs e)
@@ -190,16 +195,49 @@ namespace Groomy
 
         private void loadInvoiceData()
         {
-            var customers = ms.cDBS.GetCustomers();
-            dataCusInvoice.DataSource = Helpers.ConvertToDataTable(customers);
-            if (dataCusInvoice.Columns["CustomerID"] != null)
+            var invoiceIDs = ms.dbrs.GetInvoiceIDs();
+            var data = new DataTable();
+
+            // Define columns for the DataTable
+            data.Columns.Add("Date", typeof(string));
+            data.Columns.Add("InvoiceID", typeof(string));
+            data.Columns.Add("Customer", typeof(string));
+            data.Columns.Add("Total", typeof(string));
+            data.Columns.Add("Paid", typeof(string));
+
+            // Loop through each invoice
+            foreach (string invoiceID in invoiceIDs)
             {
-                dataCusInvoice.Columns["CustomerID"].Visible = false;
+                var invoiceSum = 0;
+                var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
+                var createDate = invoiceData["CreateDate"];
+                var isPaid = invoiceData["IsPaid"];
+
+                // Retrieve detail and customer data
+                var detailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_details.json");
+                var customerID = ms.dbrs.GetPrimaryIDFromForeignID(invoiceID, "customers_invoices.json");
+
+                var customerData = ms.cDBS.ReadCustomer(customerID);
+                var customerName = customerData["FirstName"] + " " + customerData["LastName"];
+
+                // Sum up all invoice details
+                foreach (string detailID in detailIDs)
+                {
+                    var detailData = ms.iDBS.ReadDetailData(detailID);
+                    var quantity = int.Parse(detailData["Quantity"]);
+
+                    var serviceID = ms.dbrs.GetPrimaryIDFromForeignID(detailID, "services_details.json");
+                    var serviceData = ms.sDBS.ReadServiceData(serviceID);
+                    var servicePrice = serviceData["ServicePrice"];
+                    invoiceSum += int.Parse(servicePrice) * quantity;
+                }
+
+                // Add the calculated row to the DataTable
+                data.Rows.Add(createDate, invoiceID, customerName, invoiceSum.ToString("F2"), isPaid);
             }
-            if (dataCusInvoice.Columns["Address"] != null)
-            {
-                dataCusInvoice.Columns["Address"].Visible = false;
-            }
+
+            // Assign the populated DataTable to your DataGridView
+            dataCusInvoice.DataSource = data;
         }
         private void btnAppointmentView_Click(object sender, EventArgs e)
         {
@@ -245,12 +283,6 @@ namespace Groomy
             {
                 Helpers.messageBoxError("No customer selected. Please select a customer.");
             }
-        }
-
-        private void btnInvoices_Click(object sender, EventArgs e)
-        {
-            loadInvoiceData();
-            Helpers.activatePanel(panelInvoices, panelWH, panelLoc);
         }
 
         private void btnGenInv_Click(object sender, EventArgs e)
