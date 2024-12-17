@@ -36,17 +36,17 @@
             btnWelcome = new Label();
             apptPanel = new Panel();
             dataAppointments = new DataGridView();
-            apptDel = new Button();
+            btnAppointmentDelete = new Button();
             btnAppointmentView = new Button();
-            apptNew = new Button();
+            btnAppointmentNew = new Button();
             label2 = new Label();
             label9 = new Label();
             panelWelcome = new Panel();
             panelCustomers = new Panel();
             btnCustomerView = new Button();
             dataCustomers = new DataGridView();
-            btnDelete = new Button();
-            btnNew = new Button();
+            btnCustomerDelete = new Button();
+            btnCustomerNew = new Button();
             lblGroomyCustomers = new Label();
             panelServices = new Panel();
             btnServiceView = new Button();
@@ -154,9 +154,9 @@
             // apptPanel
             // 
             apptPanel.Controls.Add(dataAppointments);
-            apptPanel.Controls.Add(apptDel);
+            apptPanel.Controls.Add(btnAppointmentDelete);
             apptPanel.Controls.Add(btnAppointmentView);
-            apptPanel.Controls.Add(apptNew);
+            apptPanel.Controls.Add(btnAppointmentNew);
             apptPanel.Controls.Add(label2);
             apptPanel.Location = new Point(1281, 18);
             apptPanel.Name = "apptPanel";
@@ -173,15 +173,15 @@
             // 
             // apptDel
             // 
-            apptDel.BackColor = Color.FromArgb(21, 96, 130);
-            apptDel.ForeColor = Color.White;
-            apptDel.Location = new Point(325, 83);
-            apptDel.Name = "apptDel";
-            apptDel.Size = new Size(123, 23);
-            apptDel.TabIndex = 41;
-            apptDel.Text = "Delete Appointment";
-            apptDel.UseVisualStyleBackColor = false;
-            apptDel.Click += apptDel_Click;
+            btnAppointmentDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnAppointmentDelete.ForeColor = Color.White;
+            btnAppointmentDelete.Location = new Point(325, 83);
+            btnAppointmentDelete.Name = "apptDel";
+            btnAppointmentDelete.Size = new Size(123, 23);
+            btnAppointmentDelete.TabIndex = 41;
+            btnAppointmentDelete.Text = "Delete Appointment";
+            btnAppointmentDelete.UseVisualStyleBackColor = false;
+            btnAppointmentDelete.Click += apptDel_Click;
             // 
             // btnAppointmentView
             // 
@@ -197,15 +197,15 @@
             // 
             // apptNew
             // 
-            apptNew.BackColor = Color.FromArgb(21, 96, 130);
-            apptNew.ForeColor = Color.White;
-            apptNew.Location = new Point(67, 83);
-            apptNew.Name = "apptNew";
-            apptNew.Size = new Size(123, 23);
-            apptNew.TabIndex = 39;
-            apptNew.Text = "New Appointment";
-            apptNew.UseVisualStyleBackColor = false;
-            apptNew.Click += btnNewAppointment_Click;
+            btnAppointmentNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnAppointmentNew.ForeColor = Color.White;
+            btnAppointmentNew.Location = new Point(67, 83);
+            btnAppointmentNew.Name = "apptNew";
+            btnAppointmentNew.Size = new Size(123, 23);
+            btnAppointmentNew.TabIndex = 39;
+            btnAppointmentNew.Text = "New Appointment";
+            btnAppointmentNew.UseVisualStyleBackColor = false;
+            btnAppointmentNew.Click += btnNewAppointment_Click;
             // 
             // label2
             // 
@@ -243,8 +243,8 @@
             // 
             panelCustomers.Controls.Add(btnCustomerView);
             panelCustomers.Controls.Add(dataCustomers);
-            panelCustomers.Controls.Add(btnDelete);
-            panelCustomers.Controls.Add(btnNew);
+            panelCustomers.Controls.Add(btnCustomerDelete);
+            panelCustomers.Controls.Add(btnCustomerNew);
             panelCustomers.Controls.Add(lblGroomyCustomers);
             panelCustomers.Location = new Point(755, 18);
             panelCustomers.Name = "panelCustomers";
@@ -273,27 +273,27 @@
             // 
             // btnDelete
             // 
-            btnDelete.BackColor = Color.FromArgb(21, 96, 130);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(316, 83);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(103, 23);
-            btnDelete.TabIndex = 35;
-            btnDelete.Text = "Delete Customer";
-            btnDelete.UseVisualStyleBackColor = false;
-            btnDelete.Click += btnDeleteCustomer_Click;
+            btnCustomerDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnCustomerDelete.ForeColor = Color.White;
+            btnCustomerDelete.Location = new Point(316, 83);
+            btnCustomerDelete.Name = "btnDelete";
+            btnCustomerDelete.Size = new Size(103, 23);
+            btnCustomerDelete.TabIndex = 35;
+            btnCustomerDelete.Text = "Delete Customer";
+            btnCustomerDelete.UseVisualStyleBackColor = false;
+            btnCustomerDelete.Click += btnDeleteCustomer_Click;
             // 
             // btnNew
             // 
-            btnNew.BackColor = Color.FromArgb(21, 96, 130);
-            btnNew.ForeColor = Color.White;
-            btnNew.Location = new Point(98, 83);
-            btnNew.Name = "btnNew";
-            btnNew.Size = new Size(103, 23);
-            btnNew.TabIndex = 22;
-            btnNew.Text = "New Customer";
-            btnNew.UseVisualStyleBackColor = false;
-            btnNew.Click += btnCustomerNew_Click;
+            btnCustomerNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnCustomerNew.ForeColor = Color.White;
+            btnCustomerNew.Location = new Point(98, 83);
+            btnCustomerNew.Name = "btnNew";
+            btnCustomerNew.Size = new Size(103, 23);
+            btnCustomerNew.TabIndex = 22;
+            btnCustomerNew.Text = "New Customer";
+            btnCustomerNew.UseVisualStyleBackColor = false;
+            btnCustomerNew.Click += btnCustomerNew_Click;
             // 
             // lblGroomyCustomers
             // 
@@ -499,16 +499,16 @@
         private Label btnCustomers;
         private Panel panelWelcome;
         private Panel panelCustomers;
-        private Button btnNew;
+        private Button btnCustomerNew;
         private Label lblGroomyCustomers;
-        private Button btnDelete;
+        private Button btnCustomerDelete;
         private DataGridView dataCustomers;
         private Label btnAppointment;
         private Panel apptPanel;
         private DataGridView dataAppointments;
-        private Button apptDel;
+        private Button btnAppointmentDelete;
         private Button btnAppointmentView;
-        private Button apptNew;
+        private Button btnAppointmentNew;
         private Label label2;
         private Label label5;
         private DateTimePicker apptDate;
