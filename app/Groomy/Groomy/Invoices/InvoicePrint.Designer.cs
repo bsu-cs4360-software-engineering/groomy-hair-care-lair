@@ -65,6 +65,7 @@
             btnPrint.TabIndex = 76;
             btnPrint.Text = "Print Invoice";
             btnPrint.UseVisualStyleBackColor = true;
+            btnPrint.Click += btnPrint_Click;
             // 
             // isPaidTick
             // 

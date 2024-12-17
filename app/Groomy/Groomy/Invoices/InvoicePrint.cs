@@ -1,13 +1,8 @@
 ﻿using Groomy.Utilities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace Groomy.Invoices
@@ -17,14 +12,22 @@ namespace Groomy.Invoices
         string invoiceID = "";
         string invoiceTotal = "";
         ManagerSingleton ms;
+        private PrintDocument printDocument; // PrintDocument object
+
         public InvoicePrint(string invoiceID, string invoiceTotal)
         {
             InitializeComponent();
             this.invoiceID = invoiceID;
             this.invoiceTotal = invoiceTotal;
             ms = ManagerSingleton.GetInstance();
+
+            // Initialize PrintDocument
+            printDocument = new PrintDocument();
+            printDocument.PrintPage += new PrintPageEventHandler(printDocument_PrintPage);
+
             this.Load += new EventHandler(onLoad);
         }
+
         public void onLoad(object sender, EventArgs e)
         {
             generateInvoice(invoiceID);
@@ -35,15 +38,53 @@ namespace Groomy.Invoices
                 btnSaveInv.Enabled = false;
             }
         }
+
+        private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // Print the contents of invRichText
+            string content = invRichText.Text; // Get text content from the RichTextBox
+            Font printFont = new Font("Courier New", 10); // Font used for printing
+            float yPos = 0; // Y-coordinate for text placement
+            int count = 0;
+            float leftMargin = e.MarginBounds.Left;
+            float topMargin = e.MarginBounds.Top;
+
+            // Split content into lines for printing
+            string[] lines = content.Split(new[] { '\n' }, StringSplitOptions.None);
+
+            // Loop through lines and print them
+            foreach (string line in lines)
+            {
+                yPos = topMargin + (count * printFont.GetHeight(e.Graphics));
+                e.Graphics.DrawString(line, printFont, Brushes.Black, leftMargin, yPos);
+                count++;
+            }
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            // Show a print dialog before printing
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = printDocument;
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDocument.Print();
+            }
+        }
+
         private void AppendFormattedText(string text, FontStyle style, int size = 10)
         {
-            invRichText.SelectionFont = new Font("Microsoft Sans Serif", size, style);
+            invRichText.SelectionFont = new Font("Courier New", size, style);
             invRichText.AppendText(text);
             invRichText.SelectionFont = invRichText.Font;
         }
+
         private void generateInvoice(string invoiceID)
         {
             invRichText.Clear();
+            invRichText.Font = new Font("Courier New", 10); // Use a fixed-width font for consistent alignment
+
             var invoiceData = ms.iDBS.ReadInvoiceData(invoiceID);
             var customerID = ms.dbrs.GetPrimaryIDFromForeignID(invoiceID, "customers_invoices.json");
             var customerData = ms.cDBS.ReadCustomer(customerID);
@@ -51,90 +92,67 @@ namespace Groomy.Invoices
             var userData = ms.uDBS.ReadUserData(userID);
 
             string currentDateTime = DateTime.Now.ToString("MMMM dd, yyyy HH:mm");
-            AppendFormattedText($"Date: {currentDateTime}\n", FontStyle.Bold | FontStyle.Bold, 12);
-            AppendFormattedText($"You Were Serviced By: ", FontStyle.Bold | FontStyle.Bold, 12);
-            invRichText.AppendText($"{userData["FirstName"]} {userData["LastName"]}\n");
+            AppendFormattedText($"Date: {currentDateTime}\n", FontStyle.Bold, 12);
+            AppendFormattedText($"You Were Serviced By: {userData["FirstName"]} {userData["LastName"]}\n", FontStyle.Bold, 12);
 
-            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 16);
-            AppendFormattedText("INVOICE\n", FontStyle.Bold | FontStyle.Underline, 16);
-            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 16);
+            AppendFormattedText(new string('=', 50) + "\n", FontStyle.Bold, 12);
+            AppendFormattedText("INVOICE\n", FontStyle.Bold, 14);
+            AppendFormattedText(new string('=', 50) + "\n\n", FontStyle.Bold, 12);
 
-            invRichText.AppendText("\n========================================\n");
-
+            // Payment Status
             bool isInvPaid = bool.Parse(invoiceData["IsPaid"]);
-            bool hasDueDate = !isInvPaid;
-            DateTime? dueDate = null;
+            AppendFormattedText(isInvPaid ? "PAID\n" : "UNPAID\n", FontStyle.Bold, 12);
 
             if (!isInvPaid)
             {
-                dueDate = DateTime.Now.AddDays(7);
+                DateTime dueDate = DateTime.Now.AddDays(7);
+                AppendFormattedText($"Invoice Due By: {dueDate:MMMM dd, yyyy}\n\n", FontStyle.Bold, 12);
             }
 
-            if (isInvPaid)
-            {
-                AppendFormattedText("PAID\n", FontStyle.Bold, 14);
-            }
-            else
-            {
-                AppendFormattedText("UNPAID\n", FontStyle.Bold, 14);
-            }
-            if (hasDueDate && dueDate.HasValue)
-            {
-                AppendFormattedText("Invoice Due By: ", FontStyle.Bold, 14);
-                invRichText.AppendText($"{dueDate.Value.ToString("MMMM dd, yyyy")}\n");
-            }
+            AppendFormattedText("Customer Information:\n", FontStyle.Underline | FontStyle.Bold, 12);
+            AppendFormattedText("Name: ".PadRight(12) + $"{customerData["FirstName"]} {customerData["LastName"]}\n", FontStyle.Regular);
+            AppendFormattedText("Phone: ".PadRight(12) + $"{customerData["PhoneNumber"]}\n", FontStyle.Regular);
+            AppendFormattedText("Email: ".PadRight(12) + $"{customerData["Email"]}\n", FontStyle.Regular);
+            AppendFormattedText("Address: ".PadRight(12) + $"{customerData["Address"]}\n\n", FontStyle.Regular);
 
-            invRichText.AppendText("\n========================================\n");
+            // Invoice Details Header
+            AppendFormattedText("Invoice Details:\n", FontStyle.Underline | FontStyle.Bold, 12);
+            AppendFormattedText($"{"Item",-25}{"Price",-12}{"Qty",-8}{"Total",-12}\n", FontStyle.Bold);
+            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular);
 
-            AppendFormattedText("Customer Information:\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("Name: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["FirstName"]} {customerData["LastName"]}\n");
-            AppendFormattedText("Phone: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["PhoneNumber"]}\n");
-            AppendFormattedText("Email: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["Email"]}\n");
-            AppendFormattedText("Address: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["Address"]}\n");
-            invRichText.AppendText("\n");
-
-            AppendFormattedText("Invoice Details:\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("Item\t\tPrice\t\tQty\t\tTotal\n", FontStyle.Bold, 10);
-            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular, 10);
-            
+            // Invoice Details Data
             decimal totalAmount = 0;
-
             var detailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceID, "invoices_details.json");
-            foreach ( var detailID in detailIDs )
+
+            foreach (var detailID in detailIDs)
             {
                 var detailData = ms.iDBS.ReadDetailData(detailID);
                 var serviceData = ms.sDBS.ReadServiceData(detailData["ServiceID"]);
                 var serviceName = serviceData["ServiceName"];
                 var servicePrice = decimal.Parse(serviceData["ServicePrice"]);
-
-                var quantity = int.Parse(ms.iDBS.ReadDetailData(detailID)["Quantity"]);
-
+                var quantity = int.Parse(detailData["Quantity"]);
                 var detailTotal = servicePrice * quantity;
+
                 totalAmount += detailTotal;
-                invRichText.AppendText($"{serviceName,-25}\t\t{servicePrice,-15:C}\t\t{quantity,-10}\t\t{totalAmount,-15:C}\n");
+
+                // Align columns properly
+                invRichText.AppendText($"{serviceName,-25}{servicePrice,-12:C}{quantity,-8}{detailTotal,-12:C}\n");
             }
 
-            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular, 10);
-            invRichText.AppendText("\n");
-            invRichText.AppendText($"Total Amount Due: {invoiceTotal:C}\n");
-            invRichText.AppendText("\n========================================\n");
-            invRichText.AppendText("Thank you for your business!\n");
-            invRichText.AppendText("========================================\n");
+            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular);
+            AppendFormattedText($"{"Total Amount " + (isInvPaid ? "Paid" : "Due") + ":".PadRight(40)}{totalAmount:C}\n", FontStyle.Bold);
+            AppendFormattedText("\n" + new string('=', 50) + "\n", FontStyle.Bold);
+            AppendFormattedText("Thank you for your business!\n", FontStyle.Italic);
+            AppendFormattedText(new string('=', 50) + "\n", FontStyle.Bold);
         }
+
+
         private void btnSaveInv_Click(object sender, EventArgs e)
         {
-            //Opens windows dialog box for saving invoice to file
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            //Saves as rich text file or txt file
             saveFileDialog.Filter = "Rich Text Format (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
             saveFileDialog.Title = "Save Invoice";
-            saveFileDialog.FileName = $"Invoice_{DateTime.Now.ToString("yyyyMMddHHmmss")}";
+            saveFileDialog.FileName = $"Invoice_{DateTime.Now:yyyyMMddHHmmss}";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 invRichText.SaveFile(saveFileDialog.FileName);
