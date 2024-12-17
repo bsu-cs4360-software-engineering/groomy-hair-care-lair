@@ -34,6 +34,8 @@
             btnPrint = new Button();
             btnGenInv = new Button();
             servicesTickBox = new CheckedListBox();
+            button1 = new Button();
+            saveInv = new SaveFileDialog();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -61,6 +63,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(btnPrint);
             groupBox1.Controls.Add(btnGenInv);
             groupBox1.Controls.Add(servicesTickBox);
@@ -83,7 +86,7 @@
             // 
             // btnGenInv
             // 
-            btnGenInv.Location = new Point(6, 328);
+            btnGenInv.Location = new Point(6, 302);
             btnGenInv.Name = "btnGenInv";
             btnGenInv.Size = new Size(570, 23);
             btnGenInv.TabIndex = 1;
@@ -98,6 +101,16 @@
             servicesTickBox.Name = "servicesTickBox";
             servicesTickBox.Size = new Size(576, 274);
             servicesTickBox.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.Enabled = false;
+            button1.Location = new Point(6, 330);
+            button1.Name = "button1";
+            button1.Size = new Size(570, 23);
+            button1.TabIndex = 3;
+            button1.Text = "Save Invoice";
+            button1.UseVisualStyleBackColor = true;
             // 
             // Invoice
             // 
@@ -122,5 +135,7 @@
         private Button btnPrint;
         private Button btnGenInv;
         private CheckedListBox servicesTickBox;
+        private Button button1;
+        private SaveFileDialog saveInv;
     }
 }

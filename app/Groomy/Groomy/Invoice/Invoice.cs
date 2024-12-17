@@ -84,7 +84,7 @@ namespace Groomy.Invoice
 
         private void btnGenInv_Click(object sender, EventArgs e)
         {
-            // Enable the print button
+            // Enable the print and save button
             btnPrint.Enabled = true;
 
             invRichText.Clear();
