@@ -63,7 +63,7 @@ namespace Groomy.Invoices
 
         public Dictionary<string, string> ReadDetailData(string detailID)
         {
-            return dbm.ReadObjectFromDB(detailID, InvoiceDetail.FilePaths["DetailData"]);
+            return dbm.ReadObjectFromDB(detailID, InvoiceDetail.FilePaths["InvoiceDetailData"]);
         }
         public void UpdateDetailData(InvoiceDetail detail, string invoiceID)
         {
