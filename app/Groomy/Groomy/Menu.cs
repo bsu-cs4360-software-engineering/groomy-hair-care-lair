@@ -74,6 +74,12 @@ namespace Groomy
             Form serviceView = new Services.ServiceView(serviceData, this);
             serviceView.Show();
         }
+        private void btnInvoiceNew_Click(object sender, EventArgs e)
+        {
+            var newInvoice = new Invoices.Invoice("", DateTime.Now, DateTime.Now, false);
+            var invoiceData = newInvoice.GetFields()["InvoiceData"];
+            Form invoiceView = new Invoices.InvoiceView(invoiceData, this);
+        }
         private void btnBackToCustomers_Click(object sender, EventArgs e)
         {
             Helpers.activatePanel(panelCustomers, panelWH, panelLoc);
@@ -83,6 +89,7 @@ namespace Groomy
             loadAppointmentData();
             loadCustomerData();
             loadServiceData();
+            loadInvoiceData();
         }
         private void btnDeleteCustomer_Click(object sender, EventArgs e)
         {
@@ -237,7 +244,7 @@ namespace Groomy
             }
 
             // Assign the populated DataTable to your DataGridView
-            dataCusInvoice.DataSource = data;
+            dataInvoices.DataSource = data;
         }
         private void btnAppointmentView_Click(object sender, EventArgs e)
         {
@@ -287,7 +294,7 @@ namespace Groomy
 
         private void btnGenInv_Click(object sender, EventArgs e)
         {
-            var customerID = Helpers.GetFieldFromSelection("CustomerID", dataCusInvoice);
+            var customerID = Helpers.GetFieldFromSelection("CustomerID", dataInvoices);
             if (!string.IsNullOrEmpty(customerID))
             {
                 var customerData = ms.cDBS.ReadCustomer(customerID);

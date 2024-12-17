@@ -55,8 +55,10 @@
             btnServiceNew = new Button();
             lblServices = new Label();
             panelInvoices = new Panel();
-            btnGenInv = new Button();
-            dataCusInvoice = new DataGridView();
+            btnInvoiceView = new Button();
+            btnInvoiceDelete = new Button();
+            btnInvoiceNew = new Button();
+            dataInvoices = new DataGridView();
             label1 = new Label();
             panel1.SuspendLayout();
             apptPanel.SuspendLayout();
@@ -67,7 +69,7 @@
             panelServices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataServices).BeginInit();
             panelInvoices.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataCusInvoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataInvoices).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -374,33 +376,57 @@
             // 
             // panelInvoices
             // 
-            panelInvoices.Controls.Add(btnGenInv);
-            panelInvoices.Controls.Add(dataCusInvoice);
+            panelInvoices.Controls.Add(btnInvoiceView);
+            panelInvoices.Controls.Add(btnInvoiceDelete);
+            panelInvoices.Controls.Add(btnInvoiceNew);
+            panelInvoices.Controls.Add(dataInvoices);
             panelInvoices.Controls.Add(label1);
             panelInvoices.Location = new Point(755, 577);
             panelInvoices.Name = "panelInvoices";
             panelInvoices.Size = new Size(520, 553);
             panelInvoices.TabIndex = 40;
             // 
-            // btnGenInv
+            // btnInvoiceView
             // 
-            btnGenInv.BackColor = Color.FromArgb(21, 96, 130);
-            btnGenInv.ForeColor = Color.White;
-            btnGenInv.Location = new Point(33, 83);
-            btnGenInv.Name = "btnGenInv";
-            btnGenInv.Size = new Size(449, 23);
-            btnGenInv.TabIndex = 38;
-            btnGenInv.Text = "Generate Invoice From Customer";
-            btnGenInv.UseVisualStyleBackColor = false;
-            btnGenInv.Click += btnGenInv_Click;
+            btnInvoiceView.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceView.ForeColor = Color.White;
+            btnInvoiceView.Location = new Point(192, 86);
+            btnInvoiceView.Name = "btnInvoiceView";
+            btnInvoiceView.Size = new Size(103, 23);
+            btnInvoiceView.TabIndex = 41;
+            btnInvoiceView.Text = "View Invoice";
+            btnInvoiceView.UseVisualStyleBackColor = false;
             // 
-            // dataCusInvoice
+            // btnInvoiceDelete
             // 
-            dataCusInvoice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataCusInvoice.Location = new Point(33, 128);
-            dataCusInvoice.Name = "dataCusInvoice";
-            dataCusInvoice.Size = new Size(449, 377);
-            dataCusInvoice.TabIndex = 37;
+            btnInvoiceDelete.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceDelete.ForeColor = Color.White;
+            btnInvoiceDelete.Location = new Point(301, 86);
+            btnInvoiceDelete.Name = "btnInvoiceDelete";
+            btnInvoiceDelete.Size = new Size(103, 23);
+            btnInvoiceDelete.TabIndex = 40;
+            btnInvoiceDelete.Text = "Delete Invoice";
+            btnInvoiceDelete.UseVisualStyleBackColor = false;
+            // 
+            // btnInvoiceNew
+            // 
+            btnInvoiceNew.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceNew.ForeColor = Color.White;
+            btnInvoiceNew.Location = new Point(83, 86);
+            btnInvoiceNew.Name = "btnInvoiceNew";
+            btnInvoiceNew.Size = new Size(103, 23);
+            btnInvoiceNew.TabIndex = 39;
+            btnInvoiceNew.Text = "New Invoice";
+            btnInvoiceNew.UseVisualStyleBackColor = false;
+            btnInvoiceNew.Click += btnInvoiceNew_Click;
+            // 
+            // dataInvoices
+            // 
+            dataInvoices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataInvoices.Location = new Point(33, 128);
+            dataInvoices.Name = "dataInvoices";
+            dataInvoices.Size = new Size(449, 377);
+            dataInvoices.TabIndex = 37;
             // 
             // label1
             // 
@@ -445,7 +471,7 @@
             ((System.ComponentModel.ISupportInitialize)dataServices).EndInit();
             panelInvoices.ResumeLayout(false);
             panelInvoices.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataCusInvoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataInvoices).EndInit();
             ResumeLayout(false);
         }
 
@@ -480,8 +506,11 @@
         private Label lblServices;
         private Panel panelInvoices;
         private Button btnGenInv;
-        private DataGridView dataCusInvoice;
+        private DataGridView dataInvoices;
         private Label label1;
         private Label btnInvoices;
+        private Button btnInvoiceView;
+        private Button btnInvoiceDelete;
+        private Button btnInvoiceNew;
     }
 }
