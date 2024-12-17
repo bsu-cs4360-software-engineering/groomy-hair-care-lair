@@ -140,12 +140,17 @@ namespace Groomy.Appointments
 
         private void setNotesEditMode(bool isEditable)
         {
+            if (!isEditable)
+            {
+                btnAppointmentNotesEditSave.Text = "Edit";
+            }
             txtNotesAppointmentTitle.ReadOnly = !isEditable;
             txtNotesAppointmentPayload.ReadOnly = !isEditable;
             timeNotesAppointmentCreateDate.Enabled = isEditable;
 
             // Disable all buttons except for the back button
             canPressAppointmentButton(!isEditable);
+
         }
         private void btnBack_Click(object sender, EventArgs e)
         {

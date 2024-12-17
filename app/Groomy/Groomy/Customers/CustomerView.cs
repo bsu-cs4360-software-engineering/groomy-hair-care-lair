@@ -97,15 +97,45 @@ namespace Groomy.Customers
                 }
             }
         }
+        private void canPressCustomerButtons(bool canPress)
+        {
+            btnCustomerEditSave.Enabled = canPress;
+        }
+        private void canPressNotesCustomerButtons(bool canPress)
+        {
+            btnNotesCustomerNew.Enabled = canPress;
+            btnNotesCustomerView.Enabled = canPress;
+            btnNotesCustomerDelete.Enabled = canPress;
+
+            btnCustomerNotesBack.Enabled = canPress;
+            btnCustomerNotesEditSave.Enabled = canPress;
+        }
         private void SetCustomerEditMode(bool isEditable)
         {
+            if (!isEditable)
+            {
+                btnCustomerNotesEditSave.Text = "Edit";
+            }
             txtFirst.ReadOnly = !isEditable;
             txtLast.ReadOnly = !isEditable;
             txtPN.ReadOnly = !isEditable;
             txtEmail.ReadOnly = !isEditable;
             txtAddress.ReadOnly = !isEditable;
-        }
 
+            canPressNotesCustomerButtons(!isEditable);
+        }
+        private void SetNotesEditMode(bool isEditable)
+        {
+            if (!isEditable)
+            {
+                btnCustomerNotesEditSave.Text = "Edit";
+            }
+            txtNotesCustomerTitle.ReadOnly = !isEditable;
+            txtNotesCustomerPayload.ReadOnly = !isEditable;
+            timeNotesCustomersCreateDate.Enabled = isEditable;
+
+            canPressCustomerButtons(!isEditable);
+        }
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.parentForm.reloadData();
@@ -136,6 +166,8 @@ namespace Groomy.Customers
         private void btnCustomerNotesBack_Click(object sender, EventArgs e)
         {
             loadCustomerNotes();
+            canPressCustomerButtons(true);
+            SetCustomerEditMode(false);
             Helpers.activatePanel(panelNotesCustomerAll, panelSize, panelLocation);
         }
 
@@ -162,13 +194,6 @@ namespace Groomy.Customers
                 btnCustomerNotesEditSave.Text = "Edit";
                 loadCustomerNotes();
             }
-        }
-
-        private void SetNotesEditMode(bool isEditable)
-        {
-            txtNotesCustomerTitle.ReadOnly = !isEditable;
-            txtNotesCustomerPayload.ReadOnly = !isEditable;
-            timeNotesCustomersCreateDate.Enabled = isEditable;
         }
         private void setCustomerNoteIDVisibility(bool isVisible)
         {

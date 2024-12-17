@@ -66,7 +66,7 @@
             lblTotal = new Label();
             txtInvoiceTotal = new TextBox();
             btnInvoiceServicesBack = new Button();
-            btnInvoiceServiceEditSave = new Button();
+            btnInvoiceDetailEditSave = new Button();
             lblDetailID = new Label();
             fieldDetailID = new Label();
             lblServiceMulti = new Label();
@@ -483,15 +483,15 @@
             // 
             // btnInvoiceServiceEditSave
             // 
-            btnInvoiceServiceEditSave.BackColor = Color.FromArgb(21, 96, 130);
-            btnInvoiceServiceEditSave.ForeColor = Color.White;
-            btnInvoiceServiceEditSave.Location = new Point(176, 30);
-            btnInvoiceServiceEditSave.Name = "btnInvoiceServiceEditSave";
-            btnInvoiceServiceEditSave.Size = new Size(113, 23);
-            btnInvoiceServiceEditSave.TabIndex = 75;
-            btnInvoiceServiceEditSave.Text = "Edit";
-            btnInvoiceServiceEditSave.UseVisualStyleBackColor = false;
-            btnInvoiceServiceEditSave.Click += btnInvoiceDetailEditSave_Click;
+            btnInvoiceDetailEditSave.BackColor = Color.FromArgb(21, 96, 130);
+            btnInvoiceDetailEditSave.ForeColor = Color.White;
+            btnInvoiceDetailEditSave.Location = new Point(176, 30);
+            btnInvoiceDetailEditSave.Name = "btnInvoiceServiceEditSave";
+            btnInvoiceDetailEditSave.Size = new Size(113, 23);
+            btnInvoiceDetailEditSave.TabIndex = 75;
+            btnInvoiceDetailEditSave.Text = "Edit";
+            btnInvoiceDetailEditSave.UseVisualStyleBackColor = false;
+            btnInvoiceDetailEditSave.Click += btnInvoiceDetailEditSave_Click;
             // 
             // lblDetailID
             // 
@@ -543,7 +543,7 @@
             panelServiceInvoiceNewEdit.Controls.Add(lblServiceMulti);
             panelServiceInvoiceNewEdit.Controls.Add(fieldDetailID);
             panelServiceInvoiceNewEdit.Controls.Add(lblDetailID);
-            panelServiceInvoiceNewEdit.Controls.Add(btnInvoiceServiceEditSave);
+            panelServiceInvoiceNewEdit.Controls.Add(btnInvoiceDetailEditSave);
             panelServiceInvoiceNewEdit.Location = new Point(976, 93);
             panelServiceInvoiceNewEdit.Name = "panelServiceInvoiceNewEdit";
             panelServiceInvoiceNewEdit.Size = new Size(319, 308);
@@ -666,7 +666,7 @@
         private Label lblTotal;
         private TextBox txtInvoiceTotal;
         private Button btnInvoiceServicesBack;
-        private Button btnInvoiceServiceEditSave;
+        private Button btnInvoiceDetailEditSave;
         private Label lblDetailID;
         private Label fieldDetailID;
         private Label lblServiceMulti;

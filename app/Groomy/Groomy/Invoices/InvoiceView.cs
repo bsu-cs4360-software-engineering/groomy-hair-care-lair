@@ -107,7 +107,7 @@ namespace Groomy.Invoices
             btnDeleteInvoiceService.Enabled = canPress;
 
             btnInvoiceServicesBack.Enabled = canPress;
-            btnInvoiceServiceEditSave.Enabled = canPress;
+            btnInvoiceDetailEditSave.Enabled = canPress;
         }
         private void canPressNotesAllButtons(bool canPress)
         {
@@ -133,7 +133,10 @@ namespace Groomy.Invoices
         }
         private void setDetailEditMode(bool isEditable)
         {
-            btnInvoiceServicesBack.Enabled = !isEditable;
+            if (!isEditable)
+            {
+                btnInvoiceDetailEditSave.Text = "Edit";
+            }
             comboServices.Enabled = isEditable;
             txtQuantity.ReadOnly = !isEditable;
 
@@ -147,6 +150,10 @@ namespace Groomy.Invoices
 
         private void SetNotesEditMode(bool isEditable)
         {
+            if (!isEditable)
+            {
+                btnInvoiceNotesEditSave.Text = "Edit";
+            }
             txtNotesInvoiceTitle.ReadOnly = !isEditable;
             txtNotesInvoicePayload.ReadOnly = !isEditable;
             timeNoteInvoiceCreateDate.Enabled = isEditable;
@@ -274,6 +281,7 @@ namespace Groomy.Invoices
             txtNotesInvoiceTitle.Text = "";
             txtNotesInvoicePayload.Text = "";
             timeNoteInvoiceCreateDate.Value = DateTime.Now;
+            fieldNotesInvoiceNoteID.Text = "";
             setInvoiceNotesIdVisibility(false);
         }
         private void btnNotesServiceNew_Click(object sender, EventArgs e)
@@ -329,9 +337,11 @@ namespace Groomy.Invoices
         }
         private void clearDetailFields()
         {
+            btnInvoiceDetailEditSave.Text = "Edit";
             txtQuantity.Text = "";
             txtInvoiceTotal.Text = "";
             txtServiceTotal.Text = "";
+            fieldDetailID.Text = "";
             setDetailIdVisibility(false);
         }
         private void setDetailIdVisibility(bool isVisible)
@@ -342,12 +352,12 @@ namespace Groomy.Invoices
 
         private void btnInvoiceDetailEditSave_Click(object sender, EventArgs e)
         {
-            if (btnInvoiceServiceEditSave.Text == "Edit")
+            if (btnInvoiceDetailEditSave.Text == "Edit")
             {
                 setDetailEditMode(true);
-                btnInvoiceServiceEditSave.Text = "Save";
+                btnInvoiceDetailEditSave.Text = "Save";
             }
-            else if (btnInvoiceServiceEditSave.Text == "Save")
+            else if (btnInvoiceDetailEditSave.Text == "Save")
             {
                 var invoiceID = fieldInvoiceID.Text;
                 if (validateInvoiceDetail())
@@ -367,7 +377,7 @@ namespace Groomy.Invoices
                         ms.iDBS.UpdateDetailData(editedDetail, invoiceID);
                     }
                     setDetailEditMode(false);
-                    btnInvoiceServiceEditSave.Text = "Edit";
+                    btnInvoiceDetailEditSave.Text = "Edit";
                     setInvoiceTotal();
                     loadInvoiceDetails();
                 }
