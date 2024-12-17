@@ -256,7 +256,7 @@ namespace Groomy
 
                     var serviceID = detailData["ServiceID"];
                     var serviceData = ms.sDBS.ReadServiceData(detailData["ServiceID"]);
-                    var servicePrice = float.Parse(serviceData["Price"]);
+                    var servicePrice = float.Parse(serviceData["ServicePrice"]);
                     invoiceSum += servicePrice * detailQuantity;
                 }
 
