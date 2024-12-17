@@ -35,6 +35,10 @@ namespace Groomy.Invoices
             loadCustomers();
             loadServices();
 
+            setInvoiceEditMode(false);
+            setDetailEditMode(false);
+            SetToggleNotesEditMode(false);
+
             //Load invoice data
             this.timeInvoiceCreateDate.Value = DateTime.Parse(invoiceData["CreateDate"]);
             this.timeInvoiceDueDate.Value = DateTime.Parse(invoiceData["DueDate"]);
@@ -148,7 +152,7 @@ namespace Groomy.Invoices
             timeNoteInvoiceCreateDate.Value = DateTime.Parse(noteData["CreateDate"]);
             fieldNotesInvoiceNoteID.Text = noteData["NoteID"];
         }
-        private void btnNotesServiceView_Click(object sender, EventArgs e)
+        private void btnNotesInvoiceView_Click(object sender, EventArgs e)
         {
             setInvoiceNotesIdVisibility(true);
             var noteID = Helpers.GetFieldFromSelection("NoteID", invoiceNotesDataGridView);
@@ -261,7 +265,7 @@ namespace Groomy.Invoices
         private void btnNewInvoiceService_Click(object sender, EventArgs e)
         {
             clearDetailFields();
-            btnInvoiceNotesEditSave_Click(sender, e);
+            btnInvoiceDetailEditSave_Click(sender, e);
             Helpers.activatePanel(panelServiceInvoiceNewEdit, panelSize, servicePanelLoc);
         }
 
@@ -285,6 +289,7 @@ namespace Groomy.Invoices
         {
             txtQuantity.Text = "";
             txtInvoiceTotal.Text = "";
+            txtServiceTotal.Text = "";
             setDetailIdVisibility(false);
         }
         private void setDetailIdVisibility(bool isVisible)
@@ -293,7 +298,7 @@ namespace Groomy.Invoices
             fieldDetailID.Visible = isVisible;
         }
 
-        private void btnInvoiceServiceEditSave_Click(object sender, EventArgs e)
+        private void btnInvoiceDetailEditSave_Click(object sender, EventArgs e)
         {
             if (btnInvoiceServiceEditSave.Text == "Edit")
             {
@@ -302,23 +307,22 @@ namespace Groomy.Invoices
             }
             else if (btnInvoiceServiceEditSave.Text == "Save")
             {
+                var invoiceID = fieldInvoiceID.Text;
                 if (validateInvoiceDetail())
                 {
                     var selectedService = ((string, string))comboServices.SelectedItem;
                     var serviceID = ms.sDBS.GetServiceIDByName(selectedService.Item1);
+                    var editedDetail = new InvoiceDetail(serviceID, int.Parse(txtQuantity.Text), fieldDetailID.Text);
                     //If new detail
                     if (lblDetailID.Visible == false)
                     {
-                        setInvoiceDetaiIDVisibility(false);
                         var newDetail = new InvoiceDetail(serviceID, int.Parse(txtQuantity.Text));
-                        ms.iDBS.CreateDetail(newDetail, fieldInvoiceID.Text);
+                        ms.iDBS.CreateDetail(newDetail, invoiceID);
                     }
                     //If existing detail
                     else
-                    {
-                        var editedDetail = new InvoiceDetail(serviceID, int.Parse(txtQuantity.Text), fieldDetailID.Text);
-                        var invoiceID = ms.dbrs.GetPrimaryIDFromForeignID(fieldDetailID.Text, "invoices_details.json");
-                        ms.iDBS.UpdateDetailData(editedDetail, fieldDetailID.Text);
+                    { 
+                        ms.iDBS.UpdateDetailData(editedDetail, invoiceID);
                     }
                     setDetailEditMode(false);
                     btnInvoiceServiceEditSave.Text = "Edit";
@@ -328,7 +332,7 @@ namespace Groomy.Invoices
                 loadInvoiceDetails();
             }
         }
-        private void setInvoiceDetaiIDVisibility(bool isVisible)
+        private void setInvoiceDetaiIlDVisibility(bool isVisible)
         {
             lblDetailID.Visible = isVisible;
             fieldDetailID.Visible = isVisible;
@@ -374,9 +378,10 @@ namespace Groomy.Invoices
             Helpers.activatePanel(panelServicesInvoiceAll, panelSize, servicePanelLoc);
         }
 
-        private void btnViewInvoiceService_Click(object sender, EventArgs e)
+        private void btnViewInvoiceDetail_Click(object sender, EventArgs e)
         {
-            setInvoiceDetaiIDVisibility(true);
+            setInvoiceDetaiIlDVisibility(true);
+
             var detailID = Helpers.GetFieldFromSelection("DetailID", invoiceDetailsDatagridview);
             if (detailID != null)
             {
@@ -395,7 +400,7 @@ namespace Groomy.Invoices
             var servicePrice = float.Parse(detailService["ServicePrice"]);
             selectServiceByName(detailService["ServiceName"]);
             txtQuantity.Text = detailData["Quantity"];
-
+            fieldDetailID.Text = detailData["DetailID"];
 
             if (detailService != null)
             {

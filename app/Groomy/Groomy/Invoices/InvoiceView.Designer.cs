@@ -118,7 +118,7 @@
             btnNotesServiceView.TabIndex = 76;
             btnNotesServiceView.Text = "View";
             btnNotesServiceView.UseVisualStyleBackColor = false;
-            btnNotesServiceView.Click += btnNotesServiceView_Click;
+            btnNotesServiceView.Click += btnNotesInvoiceView_Click;
             // 
             // btnNotesServiceNew
             // 
@@ -353,7 +353,7 @@
             btnViewInvoiceService.TabIndex = 76;
             btnViewInvoiceService.Text = "View";
             btnViewInvoiceService.UseVisualStyleBackColor = false;
-            btnViewInvoiceService.Click += btnViewInvoiceService_Click;
+            btnViewInvoiceService.Click += btnViewInvoiceDetail_Click;
             // 
             // btnNewInvoiceService
             // 
@@ -491,7 +491,7 @@
             btnInvoiceServiceEditSave.TabIndex = 75;
             btnInvoiceServiceEditSave.Text = "Edit";
             btnInvoiceServiceEditSave.UseVisualStyleBackColor = false;
-            btnInvoiceServiceEditSave.Click += btnInvoiceServiceEditSave_Click;
+            btnInvoiceServiceEditSave.Click += btnInvoiceDetailEditSave_Click;
             // 
             // lblDetailID
             // 
