@@ -54,7 +54,7 @@
             btnDeleteInvoiceService = new Button();
             btnViewInvoiceService = new Button();
             btnNewInvoiceService = new Button();
-            dataGridView1 = new DataGridView();
+            invoiceDetailsDatagridview = new DataGridView();
             lblIServices = new Label();
             comboCustomer = new ComboBox();
             lblCustomer = new Label();
@@ -64,7 +64,7 @@
             timeInvoiceDueDate = new DateTimePicker();
             chkIsPaid = new CheckBox();
             lblTotal = new Label();
-            txtTotal = new TextBox();
+            txtInvoiceTotal = new TextBox();
             btnInvoiceServicesBack = new Button();
             btnInvoiceServiceEditSave = new Button();
             lblDetailID = new Label();
@@ -80,7 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)invoiceNotesDataGridView).BeginInit();
             panelNotesServiceNewEdit.SuspendLayout();
             panelServicesInvoiceAll.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)invoiceDetailsDatagridview).BeginInit();
             panelServiceInvoiceNewEdit.SuspendLayout();
             SuspendLayout();
             // 
@@ -324,7 +324,7 @@
             panelServicesInvoiceAll.Controls.Add(btnDeleteInvoiceService);
             panelServicesInvoiceAll.Controls.Add(btnViewInvoiceService);
             panelServicesInvoiceAll.Controls.Add(btnNewInvoiceService);
-            panelServicesInvoiceAll.Controls.Add(dataGridView1);
+            panelServicesInvoiceAll.Controls.Add(invoiceDetailsDatagridview);
             panelServicesInvoiceAll.Controls.Add(lblIServices);
             panelServicesInvoiceAll.Location = new Point(326, 93);
             panelServicesInvoiceAll.Name = "panelServicesInvoiceAll";
@@ -341,6 +341,7 @@
             btnDeleteInvoiceService.TabIndex = 77;
             btnDeleteInvoiceService.Text = "Delete";
             btnDeleteInvoiceService.UseVisualStyleBackColor = false;
+            btnDeleteInvoiceService.Click += btnDeleteInvoiceService_Click;
             // 
             // btnViewInvoiceService
             // 
@@ -352,6 +353,7 @@
             btnViewInvoiceService.TabIndex = 76;
             btnViewInvoiceService.Text = "View";
             btnViewInvoiceService.UseVisualStyleBackColor = false;
+            btnViewInvoiceService.Click += btnViewInvoiceService_Click;
             // 
             // btnNewInvoiceService
             // 
@@ -363,14 +365,15 @@
             btnNewInvoiceService.TabIndex = 74;
             btnNewInvoiceService.Text = "New";
             btnNewInvoiceService.UseVisualStyleBackColor = false;
+            btnNewInvoiceService.Click += btnNewInvoiceService_Click;
             // 
-            // dataGridView1
+            // invoiceDetailsDatagridview
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(9, 66);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(307, 221);
-            dataGridView1.TabIndex = 73;
+            invoiceDetailsDatagridview.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            invoiceDetailsDatagridview.Location = new Point(9, 66);
+            invoiceDetailsDatagridview.Name = "invoiceDetailsDatagridview";
+            invoiceDetailsDatagridview.Size = new Size(307, 221);
+            invoiceDetailsDatagridview.TabIndex = 73;
             // 
             // lblIServices
             // 
@@ -458,13 +461,13 @@
             lblTotal.TabIndex = 123;
             lblTotal.Text = "Total:";
             // 
-            // txtTotal
+            // txtInvoiceTotal
             // 
-            txtTotal.Location = new Point(47, 279);
-            txtTotal.Name = "txtTotal";
-            txtTotal.ReadOnly = true;
-            txtTotal.Size = new Size(247, 23);
-            txtTotal.TabIndex = 124;
+            txtInvoiceTotal.Location = new Point(47, 279);
+            txtInvoiceTotal.Name = "txtInvoiceTotal";
+            txtInvoiceTotal.ReadOnly = true;
+            txtInvoiceTotal.Size = new Size(247, 23);
+            txtInvoiceTotal.TabIndex = 124;
             // 
             // btnInvoiceServicesBack
             // 
@@ -488,6 +491,7 @@
             btnInvoiceServiceEditSave.TabIndex = 75;
             btnInvoiceServiceEditSave.Text = "Edit";
             btnInvoiceServiceEditSave.UseVisualStyleBackColor = false;
+            btnInvoiceServiceEditSave.Click += btnInvoiceServiceEditSave_Click;
             // 
             // lblDetailID
             // 
@@ -523,6 +527,8 @@
             comboServices.Name = "comboServices";
             comboServices.Size = new Size(247, 23);
             comboServices.TabIndex = 118;
+            comboServices.SelectedIndexChanged += setDetailTotal;
+            comboServices.Leave += setDetailTotal;
             // 
             // panelServiceInvoiceNewEdit
             // 
@@ -565,6 +571,8 @@
             txtQuantity.ReadOnly = true;
             txtQuantity.Size = new Size(247, 23);
             txtQuantity.TabIndex = 120;
+            txtQuantity.TextChanged += setDetailTotal;
+            txtQuantity.Leave += setDetailTotal;
             // 
             // lblQuantity
             // 
@@ -580,7 +588,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1855, 454);
-            Controls.Add(txtTotal);
+            Controls.Add(txtInvoiceTotal);
             Controls.Add(lblTotal);
             Controls.Add(chkIsPaid);
             Controls.Add(timeInvoiceDueDate);
@@ -607,7 +615,7 @@
             panelNotesServiceNewEdit.PerformLayout();
             panelServicesInvoiceAll.ResumeLayout(false);
             panelServicesInvoiceAll.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)invoiceDetailsDatagridview).EndInit();
             panelServiceInvoiceNewEdit.ResumeLayout(false);
             panelServiceInvoiceNewEdit.PerformLayout();
             ResumeLayout(false);
@@ -644,7 +652,7 @@
         private Button btnDeleteInvoiceService;
         private Button btnViewInvoiceService;
         private Button btnNewInvoiceService;
-        private DataGridView dataGridView1;
+        private DataGridView invoiceDetailsDatagridview;
         private Label lblIServices;
         private ComboBox comboCustomer;
         private Label lblCustomer;
@@ -654,7 +662,7 @@
         private DateTimePicker timeInvoiceDueDate;
         private CheckBox chkIsPaid;
         private Label lblTotal;
-        private TextBox txtTotal;
+        private TextBox txtInvoiceTotal;
         private Button btnInvoiceServicesBack;
         private Button btnInvoiceServiceEditSave;
         private Label lblDetailID;

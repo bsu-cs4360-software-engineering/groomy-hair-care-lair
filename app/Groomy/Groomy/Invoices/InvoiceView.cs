@@ -15,6 +15,7 @@ namespace Groomy.Invoices
     {
         Dictionary<string, string> invoiceData;
         List<Dictionary<string, string>> invoiceNotes;
+        List<Dictionary<string, string>> invoiceDetails;
         Menu parentForm;
         Size panelSize = new Size(319, 308);
         Point servicePanelLoc = new Point(326, 93);
@@ -32,6 +33,7 @@ namespace Groomy.Invoices
         {
             this.Size = new Size(988, 493);
             loadCustomers();
+            loadServices();
 
             //Load invoice data
             this.timeInvoiceCreateDate.Value = DateTime.Parse(invoiceData["CreateDate"]);
@@ -39,8 +41,7 @@ namespace Groomy.Invoices
             this.chkIsPaid.Checked = bool.Parse(invoiceData["IsPaid"]);
             fieldInvoiceID.Text = invoiceData["InvoiceID"];
 
-            var invoiceTotal = calculateInvoiceTotal(invoiceData["InvoiceID"]);
-            this.txtTotal.Text = invoiceTotal.ToString();
+            setInvoiceTotal();
 
             //If invoice not attached to customer (new invoice)
             if (fieldInvoiceID.Text == "")
@@ -60,6 +61,8 @@ namespace Groomy.Invoices
             }
             //Load invoice notes
             loadInvoiceNotes();
+            //Load invoice details
+            loadInvoiceDetails();
         }
 
         private float calculateInvoiceTotal(string invoiceID)
@@ -73,10 +76,10 @@ namespace Groomy.Invoices
 
                 var serviceID = detailData["ServiceID"];
                 var serviceData = ms.sDBS.ReadServiceData(detailData["ServiceID"]);
-                var servicePrice = float.Parse(serviceData["Price"]);
+                var servicePrice = float.Parse(serviceData["ServicePrice"]);
                 invoiceSum += servicePrice * detailQuantity;
             }
-            return 0.0f;
+            return invoiceSum;
         }
 
         private void loadInvoiceNotes()
@@ -97,12 +100,6 @@ namespace Groomy.Invoices
                 invoiceNotesDataGridView.Columns["Payload"].DisplayIndex = 2;
             }
         }
-
-        private void btnInvoiceServicesBack_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnInvoiceEditSave_Click(object sender, EventArgs e)
         {
             if (btnInvoiceEditSave.Text == "Edit")
@@ -259,6 +256,196 @@ namespace Groomy.Invoices
                     break;
                 }
             }
+        }
+
+        private void btnNewInvoiceService_Click(object sender, EventArgs e)
+        {
+            clearDetailFields();
+            btnInvoiceNotesEditSave_Click(sender, e);
+            Helpers.activatePanel(panelServiceInvoiceNewEdit, panelSize, servicePanelLoc);
+        }
+
+        private void btnDeleteInvoiceService_Click(object sender, EventArgs e)
+        {
+            var detailToDelete = Helpers.GetFieldFromSelection("DetailID", invoiceDetailsDatagridview);
+            if (detailToDelete != null)
+            {
+                if (Helpers.messageBoxConfirm("Are you sure you want to delete this service?"))
+                {
+                    ms.iDBS.SoftDeleteDetail(detailToDelete);
+                    loadInvoiceDetails();
+                }
+            }
+            else
+            {
+                Helpers.messageBoxError("Please select a service to delete.");
+            }
+        }
+        private void clearDetailFields()
+        {
+            txtQuantity.Text = "";
+            txtInvoiceTotal.Text = "";
+            setDetailIdVisibility(false);
+        }
+        private void setDetailIdVisibility(bool isVisible)
+        {
+            lblDetailID.Visible = isVisible;
+            fieldDetailID.Visible = isVisible;
+        }
+
+        private void btnInvoiceServiceEditSave_Click(object sender, EventArgs e)
+        {
+            if (btnInvoiceServiceEditSave.Text == "Edit")
+            {
+                setDetailEditMode(true);
+                btnInvoiceServiceEditSave.Text = "Save";
+            }
+            else if (btnInvoiceServiceEditSave.Text == "Save")
+            {
+                if (validateInvoiceDetail())
+                {
+                    var selectedService = ((string, string))comboServices.SelectedItem;
+                    var serviceID = ms.sDBS.GetServiceIDByName(selectedService.Item1);
+                    //If new detail
+                    if (lblDetailID.Visible == false)
+                    {
+                        setInvoiceDetaiIDVisibility(false);
+                        var newDetail = new InvoiceDetail(serviceID, int.Parse(txtQuantity.Text));
+                        ms.iDBS.CreateDetail(newDetail, fieldInvoiceID.Text);
+                    }
+                    //If existing detail
+                    else
+                    {
+                        var editedDetail = new InvoiceDetail(serviceID, int.Parse(txtQuantity.Text), fieldDetailID.Text);
+                        var invoiceID = ms.dbrs.GetPrimaryIDFromForeignID(fieldDetailID.Text, "invoices_details.json");
+                        ms.iDBS.UpdateDetailData(editedDetail, fieldDetailID.Text);
+                    }
+                    setDetailEditMode(false);
+                    btnInvoiceServiceEditSave.Text = "Edit";
+                    setInvoiceTotal();
+                    loadInvoiceDetails();
+                }
+                loadInvoiceDetails();
+            }
+        }
+        private void setInvoiceDetaiIDVisibility(bool isVisible)
+        {
+            lblDetailID.Visible = isVisible;
+            fieldDetailID.Visible = isVisible;
+        }
+        private bool validateInvoiceDetail()
+        {
+            if (comboCustomer.SelectedIndex == -1)
+            {
+                Helpers.messageBoxError("Please select a customer.");
+                return false;
+            }
+            if (txtQuantity.Text == "")
+            {
+                Helpers.messageBoxError("Please enter a quantity.");
+                return false;
+            }
+            return true;
+        }
+        private void loadInvoiceDetails()
+        {
+            this.invoiceDetails = new List<Dictionary<string, string>>();
+            var invoiceDetailIDs = ms.dbrs.GetForeignIDsFromPrimaryID(invoiceData["InvoiceID"], "invoices_details.json");
+            foreach (var detailID in invoiceDetailIDs)
+            {
+                invoiceDetails.Add(ms.iDBS.ReadDetailData(detailID));
+
+            }
+            invoiceDetailsDatagridview.DataSource = Helpers.ConvertToDataTable(invoiceDetails);
+            if (invoiceDetailsDatagridview.Columns.Count > 0)
+            {
+                invoiceDetailsDatagridview.Columns["ServiceID"].DisplayIndex = 0;
+                invoiceDetailsDatagridview.Columns["Quantity"].DisplayIndex = 1;
+            }
+        }
+        private void setDetailEditMode(bool isEditable)
+        {
+            comboServices.Enabled = isEditable;
+            txtQuantity.ReadOnly = !isEditable;
+        }
+        private void btnInvoiceServicesBack_Click(object sender, EventArgs e)
+        {
+            loadInvoiceDetails();
+            Helpers.activatePanel(panelServicesInvoiceAll, panelSize, servicePanelLoc);
+        }
+
+        private void btnViewInvoiceService_Click(object sender, EventArgs e)
+        {
+            setInvoiceDetaiIDVisibility(true);
+            var detailID = Helpers.GetFieldFromSelection("DetailID", invoiceDetailsDatagridview);
+            if (detailID != null)
+            {
+                loadDetailData(ms.iDBS.ReadDetailData(detailID));
+                Helpers.activatePanel(panelServiceInvoiceNewEdit, panelSize, servicePanelLoc);
+            }
+            else
+            {
+                Helpers.messageBoxError("Please select a service to view.");
+            }
+        }
+        private void loadDetailData(Dictionary<string, string> detailData)
+        {
+            var detailService = ms.sDBS.ReadServiceData(detailData["ServiceID"]);
+
+            var servicePrice = float.Parse(detailService["ServicePrice"]);
+            selectServiceByName(detailService["ServiceName"]);
+            txtQuantity.Text = detailData["Quantity"];
+
+
+            if (detailService != null)
+            {
+                txtServiceTotal.Text = calculateDetailTotal(detailData["DetailID"]).ToString();
+            }
+        }
+        private void selectServiceByName(string serviceName)
+        {
+            loadServices();
+            for (int i = 0; i < comboServices.Items.Count; i++)
+            {
+                var item = ((string, string))comboServices.Items[i];
+                if (item.Item1 == serviceName)
+                {
+                    comboServices.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+        private float calculateDetailTotal(string detailID)
+        {
+            var detailData = ms.iDBS.ReadDetailData(detailID);
+
+            if (detailData == null)
+            {
+                return 0.0f;
+            }
+            var detailQuantity = int.Parse(detailData["Quantity"]);
+            var serviceID = detailData["ServiceID"];
+            var serviceData = ms.sDBS.ReadServiceData(serviceID);
+            var servicePrice = float.Parse(serviceData["ServicePrice"]);
+            return servicePrice * detailQuantity;
+        }
+        private void loadServices()
+        {
+            var services = ms.sDBS.GetServices();
+
+            comboServices.DataSource = services
+                .Where(s => s != null && s.ContainsKey("ServiceName"))
+                .Select(s => (s["ServiceName"], s["ServicePrice"]))
+                .ToList();
+        }
+
+        private void setDetailTotal(object sender, EventArgs e)
+        {
+            txtServiceTotal.Text = calculateDetailTotal(fieldDetailID.Text).ToString();
+        }
+        private void setInvoiceTotal()
+        {
+            txtInvoiceTotal.Text = calculateInvoiceTotal(fieldInvoiceID.Text).ToString();
         }
     }
 }
