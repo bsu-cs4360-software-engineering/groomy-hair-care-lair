@@ -1,5 +1,6 @@
 ﻿using Groomy.Appointments;
 using Groomy.Customers;
+using Groomy.Invoices;
 using Groomy.Notes;
 using Groomy.Services;
 using Groomy.Users;
@@ -22,6 +23,7 @@ namespace Groomy.Utilities
         public AppointmentDBService aDBS;
         public NotesDBService nDBS;
         public ServiceDBService sDBS;
+        public InvoiceDBService iDBS;
 
         public ManagerSingleton()
         {
@@ -33,6 +35,7 @@ namespace Groomy.Utilities
             aDBS = new AppointmentDBService(this);
             nDBS = new NotesDBService(this);
             sDBS = new ServiceDBService(this);
+            iDBS = new InvoiceDBService(this);
         }
 
         public static ManagerSingleton GetInstance()
