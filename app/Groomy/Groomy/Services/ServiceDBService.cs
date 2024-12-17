@@ -11,39 +11,47 @@ namespace Groomy.Services
 {
     public class ServiceDBService
     {
-        private ManagerSingleton ms;
+        private DatabaseManager dbm;
+        private DBRelationshipService dbrs;
         public ServiceDBService(ManagerSingleton ms)
         {
-            this.ms = ms;
+            this.dbm = ms.dbm;
+            this.dbrs = ms.dbrs;
         }
+        public ServiceDBService(DatabaseManager dbm, DBRelationshipService dbrs)
+        {
+            this.dbm = dbm;
+            this.dbrs = dbrs;
+        }
+
         public void CreateService(Service service)
         {
-            ms.dbm.CreateObjectInDB(service);
+            dbm.CreateObjectInDB(service);
         }
         public Dictionary<string, string> ReadServiceData(string serviceID)
         {
-            return ms.dbm.ReadObjectFromDB(serviceID, Service.FilePaths["ServiceData"]);
+            return dbm.ReadObjectFromDB(serviceID, Service.FilePaths["ServiceData"]);
         }
         public void UpdateServiceData(Service service)
         {
             var serviceID = service.GetKey();
             var serviceData = service.GetFields()["ServiceData"];
 
-            ms.dbm.UpdateObjectInDB(serviceID, serviceData, Service.FilePaths["ServiceData"]);
+            dbm.UpdateObjectInDB(serviceID, serviceData, Service.FilePaths["ServiceData"]);
         }
         public void DeleteService(string serviceID)
         {
-            ms.dbm.DeleteObjectFromDB(serviceID, Service.FilePaths["ServiceData"]);
+            dbm.DeleteObjectFromDB(serviceID, Service.FilePaths["ServiceData"]);
         }
         public void SoftDeleteService(string serviceID)
         {
-            ms.dbm.SoftDeleteObjectInDB(serviceID, Service.FilePaths["ServiceData"]);
+            dbm.SoftDeleteObjectInDB(serviceID, Service.FilePaths["ServiceData"]);
         }
         public List<Dictionary<string, string>> GetServices()
         {
             Debug.WriteLine("Getting services");
             var services = new List<Dictionary<string, string>>();
-            var serviceIDs = ms.dbrs.GetServiceIDs();
+            var serviceIDs = dbrs.GetServiceIDs();
             foreach (var customerID in serviceIDs)
             {
                 services.Add(ReadServiceData(customerID));

@@ -26,10 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Appointments\" />
-    <Folder Include="Services\" />
     <Folder Include="Relationships\" />
-    <Folder Include="Notes\" />
   </ItemGroup>
 
 </Project>

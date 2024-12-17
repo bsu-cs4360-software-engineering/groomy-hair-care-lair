@@ -4,29 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Groomy.Relationships
+namespace Groomy.Relationships.Notes
 {
-    internal class ServiceNotesRelationship: IRelationship
+    internal class InvoiceNotesRelationship : IRelationship
     {
-        string serviceID;
+        string invoiceID;
         string noteID;
-        public static string relationshipFilePath = "services_notes.json";
-        public ServiceNotesRelationship(string sID, string nID)
+        public static string relationshipFilePath = "invoices_notes.json";
+        public InvoiceNotesRelationship(string iID, string nID)
         {
-            serviceID = sID;
+            invoiceID = iID;
             noteID = nID;
         }
         public string GetFilePath()
         {
             return relationshipFilePath;
         }
-        public Dictionary<string, string> GetIDs()
+        public Dictionary<string,string> GetIDs()
         {
             var ids = new Dictionary<string, string>();
-            ids.Add("serviceID", serviceID);
+            ids.Add("invoiceID", invoiceID);
             ids.Add("noteID", noteID);
             return ids;
         }
     }
 }
-

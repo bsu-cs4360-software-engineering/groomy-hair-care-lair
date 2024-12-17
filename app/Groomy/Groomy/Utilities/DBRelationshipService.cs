@@ -1,15 +1,30 @@
-﻿namespace Groomy.Utilities
+﻿using Groomy.Customers;
+using Groomy.Relationships;
+using Groomy.Users;
+
+namespace Groomy.Utilities
 {
     public class DBRelationshipService
     {
-        ManagerSingleton ms;
+        DatabaseManager dbm;
+        IUserAuth ua;
+        
         public DBRelationshipService(ManagerSingleton ms)
         {
-            this.ms = ms;
+            this.dbm = ms.dbm;
+            this.ua = ms.ua;
         }
+        public DBRelationshipService(DatabaseManager dbm, IUserAuth ua)
+        {
+            this.dbm = dbm;
+            this.ua = ua;
+        }
+
+        string uc_rp = "users_customers.json";
+        string ci_rp = "customers_invoices.json";
         public List<string> GetCustomerIDs()
         {
-            var user_customer_relationships = ms.dbm.ReadRelationshipEntry(ms.ua.getID(), "users_customers.json");
+            var user_customer_relationships = dbm.ReadRelationshipEntry(ua.getID(), uc_rp);
             var customerIDs = new List<string>();
             foreach (var relationship in user_customer_relationships)
             {
@@ -17,85 +32,75 @@
             }
             return customerIDs;
         }
+
+        public List<string> GetInvoiceIDs()
+        {
+            var customerIDs = GetCustomerIDs();
+            var invoiceIDs = new List<string>();
+            foreach (var customerID in customerIDs)
+            {
+                var customer_invoice_relationships = dbm.ReadRelationshipEntry(customerID, ci_rp);
+                foreach (var relationship in customer_invoice_relationships)
+                {
+                    invoiceIDs.Add(relationship["invoiceID"]);
+                }
+            }
+            
+            return invoiceIDs;
+        }
         public List<string> GetServiceIDs()
         {
             var serviceIDs = new List<string>();
-            var serviceDB = ms.dbm.LoadJsonsFromDB("services.json");
+            var serviceDB = dbm.LoadJsonsFromDB("services.json");
             foreach (var service in serviceDB)
             {
                 serviceIDs.Add(service["ServiceID"]);
             }
             return serviceIDs;
         }
-        public List<string> GetAppointmentsFromCustomerID(string customerID)
+        public List<string> GetForeignIDsFromPrimaryID(string primaryID, string relationshipPath)
         {
-            var customer_appointment_relationships = ms.dbm.ReadRelationshipEntry(customerID, "customers_appointments.json");
-            var appointmentIDs = new List<string>();
-            foreach (var relationship in customer_appointment_relationships)
-            {
-                appointmentIDs.Add(relationship["appointmentID"]);
-            }
-            return appointmentIDs;
-        }
-        public string GetCustomerIDFromAppointmentID(string appointmentID)
-        {
-            var appointment_customer_relationships = ms.dbm.ReadRelationshipEntry(appointmentID, "customers_appointments.json");
-            return appointment_customer_relationships[0]["customerID"];
-        }
-        public string GetUserIDFromCustomerID(string customerID)
-        {
-            var user_customer_relationships = ms.dbm.ReadRelationshipEntry(customerID, "users_customers.json");
-            return user_customer_relationships[0]["userID"];
-        }
-        public List<string> GetNotesIDFromCustomerID(string customerID)
-        {
-            var customer_notes_relationships = ms.dbm.ReadRelationshipEntry(customerID, "customers_notes.json");
+            //each primaryID can have multiple foreign IDs
+            var object_relationships = dbm.ReadRelationshipEntry(primaryID, relationshipPath);
 
-            var noteIDs = new List<string>();
-            foreach (var relationship in customer_notes_relationships)
+            var foreignIDs = new List<string>();
+
+            //find the key that is not the primaryID, should be the foreign ID
+            foreach (var relationship in object_relationships) 
             {
-                noteIDs.Add(relationship["noteID"]);
+                foreach (var key in relationship.Keys)
+                {
+                    if (relationship[key] != primaryID)
+                    {
+                        //add the foreign ID to the list
+                        foreignIDs.Add(relationship[key]);
+                    }
+                }
             }
-            return noteIDs;
+            //return the list of foreign IDs
+            return foreignIDs;
         }
-        public List<string> GetNotesIDFromAppointmentID(string appointmentID)
+        public string GetPrimaryIDFromForeignID(string foreignID, string relationshipPath)
         {
-            var appointment_notes_relationships = ms.dbm.ReadRelationshipEntry(appointmentID, "appointments_notes.json");
-            var noteIDs = new List<string>();
-            foreach (var relationship in appointment_notes_relationships)
+            //each foreignID should have only one primary ID
+            var object_relationships = dbm.ReadRelationshipEntry(foreignID, relationshipPath);
+            if (object_relationships.Count == 0)
             {
-                noteIDs.Add(relationship["noteID"]);
+                return null;
             }
-            return noteIDs;
-        }
-        public List<string> GetNotesIDFromServiceID(string serviceID)
-        {
-            var service_notes_relationships = ms.dbm.ReadRelationshipEntry(serviceID, "services_notes.json");
-            var noteIDs = new List<string>();
-            foreach (var relationship in service_notes_relationships)
+            var relationship = object_relationships[0];
+
+            //find the key that is not the foreignID, should be the primary ID
+            foreach (var key in relationship.Keys)
             {
-                noteIDs.Add(relationship["noteID"]);
+                if (relationship[key] != foreignID)
+                {
+                    //return the primary ID
+                    return relationship[key];
+                }
             }
-            return noteIDs;
-        }
-         public string GetCustomerIDFromNotesID(string noteID)
-        {
-            var customer_notes_relationships = ms.dbm.ReadRelationshipEntry(noteID, "customers_notes.json");
-            if (customer_notes_relationships.Count == 0)
-            {
-                throw new Exception("No relationships found for the provided noteID.");
-            }
-            return customer_notes_relationships[0]["customerID"];
-        }
-        public string GetAppointmentIDFromNotesID(string noteID)
-        {
-            var appointment_notes_relationships = ms.dbm.ReadRelationshipEntry(noteID, "appointments_notes.json");
-            return appointment_notes_relationships[0]["appointmentID"];
-        }
-        public string GetServiceIDFromNotesID(string noteID)
-        {
-            var service_notes_relationships = ms.dbm.ReadRelationshipEntry(noteID, "services_notes.json");
-            return service_notes_relationships[0]["serviceID"];
+
+            throw new Exception("Primary ID not found in the relationship entry.");
         }
     }
 }

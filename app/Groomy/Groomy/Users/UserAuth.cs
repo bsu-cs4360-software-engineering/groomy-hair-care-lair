@@ -1,6 +1,10 @@
 ﻿namespace Groomy.Users
 {
-    public class UserAuth
+    public interface IUserAuth
+    {
+        string getID();
+    }
+    public class UserAuth : IUserAuth
     {
         private static readonly object _lock = new object(); // Lock for thread safety
         private static UserAuth _instance;

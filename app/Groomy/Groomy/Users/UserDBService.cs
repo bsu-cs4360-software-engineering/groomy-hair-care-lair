@@ -2,16 +2,20 @@
 
 namespace Groomy.Users
 {
-    internal class UserDBService
+    public class UserDBService
     {
-        private DatabaseManager dbManager;
+        private DatabaseManager dbm;
+        public UserDBService(ManagerSingleton ms)
+        {
+            this.dbm = ms.dbm;
+        }
         public UserDBService(DatabaseManager dbm)
         {
-            dbManager = dbm;
+            this.dbm = dbm;
         }
         public bool IsUser(string userID)
         {
-            return dbManager.KeyExists(userID, User.FilePaths["PasswordData"]);
+            return dbm.KeyExists(userID, User.FilePaths["PasswordData"]);
         }
         public bool IsCorrectPassword(string userID, string hashedPassword)
         {
@@ -28,20 +32,20 @@ namespace Groomy.Users
         }
         public void CreateUser(User user)
         {
-            dbManager.CreateObjectInDB(user);
+            dbm.CreateObjectInDB(user);
         }
         public Dictionary<string, string> ReadUserData(string userID)
         {
-            return dbManager.ReadObjectFromDB(userID, User.FilePaths["UserData"]);
+            return dbm.ReadObjectFromDB(userID, User.FilePaths["UserData"]);
         }
         public Dictionary<string, string> ReadPasswordData(string userID)
         {
-            return dbManager.ReadObjectFromDB(userID, User.FilePaths["PasswordData"]);
+            return dbm.ReadObjectFromDB(userID, User.FilePaths["PasswordData"]);
         }
         public void DeleteUser(string userID)
         {
-            dbManager.DeleteObjectFromDB(userID, User.FilePaths["UserData"]);
-            dbManager.DeleteObjectFromDB(userID, User.FilePaths["PasswordData"]);
+            dbm.DeleteObjectFromDB(userID, User.FilePaths["UserData"]);
+            dbm.DeleteObjectFromDB(userID, User.FilePaths["PasswordData"]);
         }
     }
 }
