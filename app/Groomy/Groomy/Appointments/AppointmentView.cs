@@ -177,11 +177,6 @@ namespace Groomy.Appointments
             txtNotesAppointmentPayload.ReadOnly = !isEditable;
             timeNotesAppointmentCreateDate.Enabled = isEditable;
         }
-        private void setAppointmentIDVisibility(bool isVisible)
-        {
-            fieldAppointmentID.Visible = isVisible;
-            lblAppointmentID.Visible = isVisible;
-        }
         private void setsAppointmentNoteIDVisibility(bool isVisible)
         {
             lblNotesAppointmentNoteID.Visible = isVisible;
