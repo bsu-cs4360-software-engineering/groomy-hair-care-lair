@@ -31,80 +31,20 @@ namespace Groomy.Invoice
 
         public void onLoad(object sender, EventArgs e)
         {
-            this.Size = new Size(971, 699);
+            this.Size = new Size(1249, 493);
             invRichText.Clear();
-
-            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("INVOICE\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("Customer Information:\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("Name: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["FirstName"]} {customerData["LastName"]}\n");
-            AppendFormattedText("Phone: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["PhoneNumber"]}\n");
-            AppendFormattedText("Email: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["Email"]}\n");
-            AppendFormattedText("Address: ", FontStyle.Bold, 10);
-            invRichText.AppendText($"{customerData["Address"]}\n");
-            invRichText.AppendText("\n");
-
-            AppendFormattedText("Appointments:\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
-
-            // Fetch and display appointments
-            //var appointments = GetAppointmentsForCustomer(customerData["CustomerID"]);
-            var appointmentIDs = ms.dbrs.GetForeignIDsFromPrimaryID(customerData["CustomerID"], "customers_appointments.json");
-            if (appointmentIDs.Any())
+            var services = ms.sDBS.GetServices();
+            servicesTickBox.Items.Clear();
+            foreach (var service in services)
             {
-                foreach (var appointment in appointmentIDs)
+                if (service.ContainsKey("ServiceName") && service.ContainsKey("ServiceID"))
                 {
-                    var appointmentData = ms.aDBS.ReadAppointmentData(appointment);
-                    var apptName = appointmentData["Description"];
-                    var timeStart = DateTime.Parse(appointmentData["StartTime"]);
-                    var timeEnd = DateTime.Parse(appointmentData["EndTime"]);
-                    var location = appointmentData["Location"];
-                    invRichText.AppendText($"- {apptName} at {location}\n");
-                    invRichText.AppendText($" Time In: {timeStart} | Time Out: {timeEnd}\n");
-                    invRichText.AppendText($"\n");
+                    string serviceName = service["ServiceName"];
+                    string serviceId = service["ServiceID"];
+                    servicesTickBox.Items.Add(serviceName, false);
+                    servicesTickBox.Tag = serviceId;
                 }
             }
-            else
-            {
-                invRichText.AppendText("No appointments found.\n");
-            }
-            invRichText.AppendText("\n");
-
-            AppendFormattedText("Invoice Details:\n", FontStyle.Bold | FontStyle.Underline, 14);
-            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
-
-            string[] items = { "Example Product" }; // Replace with actual items
-            decimal[] prices = { 100.00m }; // Replace with actual prices
-            int[] quantities = { 1 }; // Replace with actual quantities
-            decimal totalAmount = 0;
-
-            // Table-like structure for items
-            AppendFormattedText("Item\t\tPrice\t\tQty\t\tTotal\n", FontStyle.Bold, 10);
-            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular, 10);
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                decimal itemTotal = prices[i] * quantities[i];
-                totalAmount += itemTotal;
-                invRichText.AppendText($"{items[i],-25}{prices[i],-15:C}{quantities[i],-10}{itemTotal,-15:C}\n");
-            }
-
-            // Add a separator before the totals
-            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular, 10);
-            invRichText.AppendText("\n");
-
-            // Add the total amount
-            invRichText.AppendText($"Total Amount Due: {totalAmount:C}\n");
-
-            // Add footer and final notes
-            invRichText.AppendText("\n========================================\n");
-            invRichText.AppendText("Thank you for your business!\n");
-            invRichText.AppendText("========================================\n");
         }
 
 
@@ -135,12 +75,66 @@ namespace Groomy.Invoice
             return appointments;
         }
 
-        // Helper method to append formatted text to the RichTextBox
         private void AppendFormattedText(string text, FontStyle style, int size = 10)
         {
             invRichText.SelectionFont = new Font("Microsoft Sans Serif", size, style);
             invRichText.AppendText(text);
-            invRichText.SelectionFont = invRichText.Font; // Reset to default
+            invRichText.SelectionFont = invRichText.Font;
         }
+
+        private void btnGenInv_Click(object sender, EventArgs e)
+        {
+            // Enable the print button
+            btnPrint.Enabled = true;
+
+            invRichText.Clear();
+            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("INVOICE\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("========================================\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("Customer Information:\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("Name: ", FontStyle.Bold, 10);
+            invRichText.AppendText($"{customerData["FirstName"]} {customerData["LastName"]}\n");
+            AppendFormattedText("Phone: ", FontStyle.Bold, 10);
+            invRichText.AppendText($"{customerData["PhoneNumber"]}\n");
+            AppendFormattedText("Email: ", FontStyle.Bold, 10);
+            invRichText.AppendText($"{customerData["Email"]}\n");
+            AppendFormattedText("Address: ", FontStyle.Bold, 10);
+            invRichText.AppendText($"{customerData["Address"]}\n");
+            invRichText.AppendText("\n");
+            AppendFormattedText("Invoice Details:\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("----------------------------------------\n", FontStyle.Bold | FontStyle.Underline, 14);
+            AppendFormattedText("Item\t\tPrice\t\tQty\t\tTotal\n", FontStyle.Bold, 10);
+            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular, 10);
+
+            decimal totalAmount = 0;
+            List<string> selectedServices = new List<string>();
+            foreach (var checkedItem in servicesTickBox.CheckedItems)
+            {
+                selectedServices.Add(checkedItem.ToString());
+            }
+            foreach (string serviceName in selectedServices)
+            {
+                var serviceData = ms.sDBS.GetServices()
+                    .FirstOrDefault(service => service.ContainsKey("ServiceName") && service["ServiceName"] == serviceName);
+                if (serviceData != null)
+                {
+                    string serviceId = serviceData["ServiceID"];
+                    decimal price = decimal.Parse(serviceData["ServicePrice"]);
+                    decimal itemTotal = price * 1;
+                    totalAmount += itemTotal;
+                    invRichText.AppendText($"{serviceName,-25}{price,-15:C}{1,-10}{itemTotal,-15:C}\n");
+                }
+            }
+
+            AppendFormattedText(new string('-', 60) + "\n", FontStyle.Regular, 10);
+            invRichText.AppendText("\n");
+            invRichText.AppendText($"Total Amount Due: {totalAmount:C}\n");
+            invRichText.AppendText("\n========================================\n");
+            invRichText.AppendText("Thank you for your business!\n");
+            invRichText.AppendText("========================================\n");
+        }
+
+
     }
 }

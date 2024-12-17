@@ -30,6 +30,11 @@
         {
             lblGroomyCustomers = new Label();
             invRichText = new RichTextBox();
+            groupBox1 = new GroupBox();
+            btnPrint = new Button();
+            btnGenInv = new Button();
+            servicesTickBox = new CheckedListBox();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // lblGroomyCustomers
@@ -37,7 +42,7 @@
             lblGroomyCustomers.AutoSize = true;
             lblGroomyCustomers.Font = new Font("Arial Black", 24F, FontStyle.Bold);
             lblGroomyCustomers.ForeColor = Color.FromArgb(21, 96, 130);
-            lblGroomyCustomers.Location = new Point(192, 9);
+            lblGroomyCustomers.Location = new Point(424, 9);
             lblGroomyCustomers.Name = "lblGroomyCustomers";
             lblGroomyCustomers.Size = new Size(312, 45);
             lblGroomyCustomers.TabIndex = 72;
@@ -47,22 +52,64 @@
             // invRichText
             // 
             invRichText.Font = new Font("Arial Narrow", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            invRichText.Location = new Point(12, 66);
+            invRichText.Location = new Point(600, 56);
             invRichText.Name = "invRichText";
             invRichText.ReadOnly = true;
-            invRichText.Size = new Size(674, 582);
+            invRichText.Size = new Size(621, 386);
             invRichText.TabIndex = 73;
             invRichText.Text = "";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnPrint);
+            groupBox1.Controls.Add(btnGenInv);
+            groupBox1.Controls.Add(servicesTickBox);
+            groupBox1.Location = new Point(12, 56);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(582, 386);
+            groupBox1.TabIndex = 74;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Services Offered";
+            // 
+            // btnPrint
+            // 
+            btnPrint.Enabled = false;
+            btnPrint.Location = new Point(6, 357);
+            btnPrint.Name = "btnPrint";
+            btnPrint.Size = new Size(570, 23);
+            btnPrint.TabIndex = 2;
+            btnPrint.Text = "Print Invoice";
+            btnPrint.UseVisualStyleBackColor = true;
+            // 
+            // btnGenInv
+            // 
+            btnGenInv.Location = new Point(6, 328);
+            btnGenInv.Name = "btnGenInv";
+            btnGenInv.Size = new Size(570, 23);
+            btnGenInv.TabIndex = 1;
+            btnGenInv.Text = "Generate Invoice";
+            btnGenInv.UseVisualStyleBackColor = true;
+            btnGenInv.Click += btnGenInv_Click;
+            // 
+            // servicesTickBox
+            // 
+            servicesTickBox.FormattingEnabled = true;
+            servicesTickBox.Location = new Point(0, 22);
+            servicesTickBox.Name = "servicesTickBox";
+            servicesTickBox.Size = new Size(576, 274);
+            servicesTickBox.TabIndex = 0;
             // 
             // Invoice
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(698, 660);
+            ClientSize = new Size(1233, 454);
+            Controls.Add(groupBox1);
             Controls.Add(invRichText);
             Controls.Add(lblGroomyCustomers);
             Name = "Invoice";
             Text = "Invoices";
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -71,5 +118,9 @@
 
         private Label lblGroomyCustomers;
         private RichTextBox invRichText;
+        private GroupBox groupBox1;
+        private Button btnPrint;
+        private Button btnGenInv;
+        private CheckedListBox servicesTickBox;
     }
 }
